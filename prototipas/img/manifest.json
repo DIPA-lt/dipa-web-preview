@@ -1,0 +1,52 @@
+[
+  {
+    "file": "path-four-stages.png",
+    "alt": "Keturi etapai: Žmogus, Komanda, Procesas, Verslas",
+    "ratio": "16:9"
+  },
+  {
+    "file": "value-chain.png",
+    "alt": "Signalai → įžvalgos → sprendimai → procesai → vertė",
+    "ratio": "16:9"
+  },
+  {
+    "file": "three-tracks.png",
+    "alt": "Trys kryptys: Transformacija, Produktai, Akademija",
+    "ratio": "16:9"
+  },
+  {
+    "file": "five-filters.png",
+    "alt": "Penki filtrai: Eliminate, Simplify, AI, Human+AI, Human",
+    "ratio": "16:9"
+  },
+  {
+    "file": "sprint-phases.png",
+    "alt": "Aštuonios sprinto fazės iki GATE",
+    "ratio": "16:9"
+  },
+  {
+    "file": "gate-decision.png",
+    "alt": "GATE sprendimas: SCALE, CHANGE, STOP",
+    "ratio": "4:3"
+  },
+  {
+    "file": "oppm-overlay.png",
+    "alt": "OPPM kaip komunikacijos sluoksnis virš darbo sistemų",
+    "ratio": "16:9"
+  },
+  {
+    "file": "human-in-loop.png",
+    "alt": "AI siūlo, žmogus sprendžia",
+    "ratio": "4:3"
+  },
+  {
+    "file": "products-map.png",
+    "alt": "Šeši produktai dviejose grupėse",
+    "ratio": "16:9"
+  },
+  {
+    "file": "academy-loop.png",
+    "alt": "Akademijos metodas: užduotis, metodas, praktika, fiksavimas",
+    "ratio": "4:3"
+  }
+]

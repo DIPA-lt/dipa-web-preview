@@ -1,0 +1,13 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 492 160" fill="none" role="img" aria-label="DIPA" color="#130F18">
+  <g stroke="currentColor" stroke-width="22" stroke-linecap="round" stroke-linejoin="round">
+    <!-- D: open C -->
+    <path d="M30 39h63a47 47 0 0 1 0 94H30"/>
+    <!-- I -->
+    <path d="M185.5 39v94"/>
+    <!-- P: stem below + open rounded-rect bowl (not a closed circular P) -->
+    <path d="M236 133V89h81a18 18 0 0 0 18-18V57a18 18 0 0 0-18-18H236"/>
+    <!-- A: two legs joined by a real rounded arch -->
+    <path d="M348.5 133 386 56A17 17 0 0 1 420 56L456.5 133"/>
+  </g>
+  <path fill="currentColor" d="M19 86 89 75v22Z"/>
+</svg>

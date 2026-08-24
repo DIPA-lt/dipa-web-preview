@@ -1,0 +1,8 @@
+.DS_Store
+.env
+.env.*
+*.docx
+*.pdf
+*.pptx
+*.key
+node_modules/
