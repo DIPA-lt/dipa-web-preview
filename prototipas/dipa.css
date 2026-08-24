@@ -642,7 +642,7 @@ nav.main .wrap{height:var(--nav-h);display:flex;align-items:center;gap:36px}
 /* ---------- Aksioma ---------- */
 .axiom{
   position:relative; margin:64px 0 0; max-width:none;
-  padding:36px 40px 36px 44px;
+  padding:clamp(40px,5vw,64px) clamp(32px,6vw,72px) clamp(40px,5vw,64px) clamp(36px,6vw,76px);
   border:1px solid var(--line); background:#fff;
   overflow:hidden;
 }
@@ -652,7 +652,7 @@ nav.main .wrap{height:var(--nav-h);display:flex;align-items:center;gap:36px}
 }
 .rv.in .axiom::before{animation:axiom-draw .75s var(--out) .08s forwards}
 .axiom::after{
-  content:"“"; position:absolute; top:8px; left:28px;
+  content:"“"; position:absolute; top:28px; left:48px;
   font-family:"Instrument Serif",Georgia,serif; font-style:italic;
   font-size:5.5rem; line-height:.7; color:var(--brand); opacity:.14;
   pointer-events:none;
