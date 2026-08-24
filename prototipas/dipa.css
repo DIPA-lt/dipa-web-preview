@@ -642,9 +642,12 @@ nav.main .wrap{height:var(--nav-h);display:flex;align-items:center;gap:36px}
 /* ---------- Aksioma ---------- */
 .axiom{
   position:relative; margin:64px 0 0; max-width:none;
-  padding:clamp(40px,5vw,64px) clamp(32px,6vw,72px) clamp(40px,5vw,64px) clamp(36px,6vw,76px);
+  padding:72px 80px 80px 88px;
   border:1px solid var(--line); background:#fff;
   overflow:hidden;
+}
+@media(max-width:700px){
+  .axiom{padding:48px 28px 52px 32px}
 }
 .axiom::before{
   content:""; position:absolute; left:0; top:0; bottom:0; width:2px;
@@ -652,14 +655,14 @@ nav.main .wrap{height:var(--nav-h);display:flex;align-items:center;gap:36px}
 }
 .rv.in .axiom::before{animation:axiom-draw .75s var(--out) .08s forwards}
 .axiom::after{
-  content:"“"; position:absolute; top:28px; left:48px;
+  content:"“"; display:block; margin:0 0 12px;
   font-family:"Instrument Serif",Georgia,serif; font-style:italic;
-  font-size:5.5rem; line-height:.7; color:var(--brand); opacity:.14;
+  font-size:4.5rem; line-height:.7; color:var(--brand); opacity:.28;
   pointer-events:none;
 }
 .axiom p{
-  position:relative; margin:0; max-width:22em;
-  font-size:clamp(1.4rem,2.6vw,2rem); line-height:1.28;
+  position:relative; margin:0; max-width:36em;
+  font-size:clamp(1.4rem,2.6vw,2rem); line-height:1.35;
   color:var(--ink); letter-spacing:-.025em; font-weight:500;
 }
 .axiom:hover{background:var(--brand-dim)}
