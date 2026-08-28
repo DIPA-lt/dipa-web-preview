@@ -639,34 +639,39 @@ nav.main .wrap{height:var(--nav-h);display:flex;align-items:center;gap:36px}
 .vs-no .m{color:var(--warn)}
 .vs-yes .m{color:var(--brand-lift)}
 
-/* ---------- Aksioma ---------- */
+/* ---------- Aksioma / Quotes ---------- */
 .axiom{
-  position:relative; margin:64px 0 0; max-width:none;
-  padding:72px 80px 80px 88px;
-  border:1px solid var(--line); background:#fff;
+  position:relative; margin:48px 0 0; max-width:none;
+  padding:36px 44px 36px 48px;
+  border:1px solid var(--line); border-left:3px solid var(--brand);
+  background:#fff;
   overflow:hidden;
+  transition:background .2s ease, border-color .2s ease;
 }
 @media(max-width:700px){
-  .axiom{padding:48px 28px 52px 32px}
+  .axiom{padding:24px 20px 24px 24px; margin-top:36px}
 }
-.axiom::before{
-  content:""; position:absolute; left:0; top:0; bottom:0; width:2px;
-  background:var(--brand); transform:scaleY(0); transform-origin:top;
+.axiom .ax-tag{
+  display:inline-flex; align-items:center; gap:8px;
+  font-family:var(--mono); font-size:.6875rem; letter-spacing:.12em;
+  text-transform:uppercase; color:var(--brand); font-weight:600;
+  margin-bottom:12px;
 }
-.rv.in .axiom::before{animation:axiom-draw .75s var(--out) .08s forwards}
-.axiom::after{
-  content:"“"; display:block; margin:0 0 12px;
-  font-family:"Instrument Serif",Georgia,serif; font-style:italic;
-  font-size:4.5rem; line-height:.7; color:var(--brand); opacity:.28;
-  pointer-events:none;
+.axiom .ax-tag::before{
+  content:""; display:inline-block; width:6px; height:6px; border-radius:50%;
+  background:var(--brand);
 }
 .axiom p{
-  position:relative; margin:0; max-width:36em;
-  font-size:clamp(1.4rem,2.6vw,2rem); line-height:1.35;
-  color:var(--ink); letter-spacing:-.025em; font-weight:500;
+  position:relative; margin:0; max-width:44em;
+  font-size:clamp(1.2rem,2.2vw,1.55rem); line-height:1.42;
+  color:var(--ink); letter-spacing:-.02em; font-weight:500;
 }
-.axiom:hover{background:var(--brand-dim)}
-@keyframes axiom-draw{to{transform:scaleY(1)}}
+.axiom p em.acc{
+  font-family:"Instrument Serif",Georgia,serif; font-style:italic;
+  font-size:1.15em; font-weight:400; color:var(--brand-lift);
+  letter-spacing:-.01em;
+}
+.axiom:hover{background:var(--brand-dim); border-color:#CBD0DC; border-left-color:var(--brand)}
 .callout{margin-top:32px;padding:28px 32px;border:1px solid var(--line);border-left:2px solid var(--signal);background:var(--surface)}
 
 /* ---------- ROI formulė ---------- */
