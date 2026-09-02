@@ -28,6 +28,10 @@
     "vadovu-ai-produktyvumas.html": "executive-ai.html",
     "komandos-ai-standartas.html": "team-standard.html",
     "atvejis.html": "case.html",
+    "kaip-dirbame.html": "philosophy.html",
+    "ai-produktyvumo-programa.html": "executive-ai.html",
+    "rezultatai.html": "case.html",
+    "diagnostika.html": "contact.html",
     "kontaktai.html": "contact.html",
     "apie.html": "about.html",
     "izvalgos.html": "insights.html",
@@ -68,11 +72,11 @@
 
   var COPY = IS_EN
     ? {
-        proto: "Prototype v6 · light enterprise · path: Person → Team → Process → Business",
-        assess: "AI maturity check",
-        client0: "Client Zero",
-        path: "Path",
-        cta: "Submit an enquiry",
+        proto: "Prototype v7 · measurable Human + AI work change",
+        assess: "AI value diagnostic",
+        client0: "Results",
+        path: "How we work",
+        cta: "Find the biggest AI value opportunity",
         menu: "Menu",
         close: "Close",
         write: "Write to us",
@@ -80,9 +84,9 @@
         jobs: "Careers →",
         city: "Vilnius, Lithuania",
         company: "Company",
-        catalog: "Products",
+        catalog: "Solutions",
         sub: "Subscribe",
-        subLead: "One insight a month on AI economics and governance.",
+        subLead: "One insight a month on AI economics, processes and governance.",
         email: "Email",
         subscribe: "Subscribe",
         code: "Company code · to be filled",
@@ -92,11 +96,11 @@
         warn: "Prototype: no figure here is a validated client result."
       }
     : {
-        proto: "Prototipas v6 · B2B sprendimai · kelias: Žmogus → Komanda → Procesas → Verslas",
-        assess: "DI brandos vertinimas",
-        client0: "Client Zero",
-        path: "Kelias",
-        cta: "Pateikti užklausą",
+        proto: "Prototipas v7 · Pamatuojamas žmogaus ir DI darbo pokytis",
+        assess: "DI vertės diagnostika",
+        client0: "Rezultatai",
+        path: "Kaip dirbame",
+        cta: "Rasti, kur DI kuria daugiausia vertės",
         menu: "Meniu",
         close: "Uždaryti",
         write: "Rašykite mums",
@@ -104,9 +108,9 @@
         jobs: "Karjera →",
         city: "Vilnius, Lietuva",
         company: "Organizacija",
-        catalog: "Produktai",
+        catalog: "Sprendimai",
         sub: "Naujienlaiškis",
-        subLead: "Viena gili įžvalga per mėnesį apie DI ekonomiką, procesus ir valdyseną.",
+        subLead: "Viena įžvalga per mėnesį apie DI ekonomiką, procesus ir valdyseną.",
         email: "El. paštas",
         subscribe: "Prenumeruoti",
         code: "Įmonės kodas · pildoma",
@@ -118,289 +122,155 @@
 
   var NAV = IS_EN
     ? [
+        { label: "How we work", href: "philosophy.html" },
         {
-          label: "Path",
+          label: "Solutions",
           href: "path.html",
           cols: [
             {
-              title: "1 · Person",
+              title: "By problem",
               items: [
-                { label: "Executive AI productivity", href: "executive-ai.html", strong: true },
-                { label: "A stronger person", href: "path.html#person" }
+                { label: "AI productivity programme", href: "executive-ai.html", strong: true },
+                { label: "Team AI working standard", href: "team-standard.html" }
               ]
             },
             {
-              title: "2 · Team",
+              title: "Process and business",
               items: [
-                { label: "Team AI working standard", href: "team-standard.html", strong: true },
-                { label: "A stronger team", href: "path.html#team" }
-              ]
-            },
-            {
-              title: "3 · Process",
-              items: [
-                { label: "Transformation Sprint", href: "transformation-sprint.html", strong: true },
-                { label: "OPPM — how we run the sprint", href: "oppm.html" },
-                { label: "Process redesign and pilot", href: "path.html#process" }
+                { label: "Human + AI processes", href: "path.html#process", strong: true },
+                { label: "AI business opportunities", href: "path.html#business" }
               ],
-              title2: "4 · Business",
-              items2: [{ label: "When the process pays back", href: "path.html#business" }],
-              more: { label: "Full path →", href: "path.html" }
+              more: { label: "All solutions →", href: "path.html" }
             }
           ]
         },
-        {
-          label: "Products",
-          href: "products.html",
-          cols: [
-            {
-              title: "Smart work partners",
-              items: [
-                { label: "Virtual assistants", href: "products.html#partners" },
-                { label: "Data-driven AI solutions", href: "products.html#partners" },
-                { label: "Chatbot solutions", href: "products.html#partners" }
-              ]
-            },
-            {
-              title: "Automated tools",
-              items: [
-                { label: "LinkedIn outreach", href: "products.html#tools" },
-                { label: "Cold-call workflow", href: "products.html#tools" },
-                { label: "Smart AI dictaphone", href: "products.html#tools" }
-              ],
-              more: { label: "All products →", href: "products.html" }
-            }
-          ]
-        },
-        {
-          label: "Academy",
-          href: "academy.html",
-          cols: [
-            {
-              title: "Programmes",
-              items: [
-                { label: "The Great AI Workshops", href: "academy.html#programmes" },
-                { label: "Self-paced learning", href: "academy.html#programmes" },
-                { label: "AI training for companies", href: "academy.html#programmes" }
-              ],
-              more: { label: "All programmes →", href: "academy.html" }
-            }
-          ]
-        },
-        {
-          label: "Insights",
-          href: "insights.html",
-          cols: [
-            {
-              title: "Thinking",
-              items: [
-                { label: "Insights", href: "insights.html", strong: true },
-                { label: "Philosophy", href: "philosophy.html" }
-              ]
-            },
-            {
-              title: "Evidence",
-              items: [
-                { label: "Client Zero", href: "case.html", strong: true },
-                { label: "Cases", href: "case.html" }
-              ],
-              title2: "Free tools",
-              items2: [{ label: "Diagnostics and AI IQ", href: "tools.html" }]
-            }
-          ]
-        },
-        { label: "About", href: "about.html" }
+        { label: "Transformation Sprint", href: "transformation-sprint.html" },
+        { label: "Results", href: "case.html" },
+        { label: "About DIPA", href: "about.html" }
       ]
     : [
+        { label: "Kaip dirbame", href: "kaip-dirbame.html" },
         {
-          label: "Kelias",
+          label: "Sprendimai",
           href: "sprendimai.html",
           cols: [
             {
-              title: "1 · Žmogus",
+              title: "Pagal problemą",
               items: [
-                { label: "Vadovų AI produktyvumas", href: "vadovu-ai-produktyvumas.html", strong: true },
-                { label: "Stipresnis darbuotojas", href: "sprendimai.html#zmogus" }
+                { label: "DI produktyvumo programa", href: "ai-produktyvumo-programa.html", strong: true },
+                { label: "Komandos DI darbo standartas", href: "komandos-ai-standartas.html" }
               ]
             },
             {
-              title: "2 · Komanda",
+              title: "Procesas ir verslas",
               items: [
-                { label: "Komandos AI darbo standartas", href: "komandos-ai-standartas.html", strong: true },
-                { label: "Komandos gebėjimai", href: "sprendimai.html#komanda" }
-              ]
-            },
-            {
-              title: "3 · Procesas",
-              items: [
-                { label: "Transformation Sprint", href: "transformation-sprint.html", strong: true },
-                { label: "OPPM — sprinto valdysena", href: "oppm.html" },
-                { label: "Proceso perprojektavimas ir pilotas", href: "sprendimai.html#procesas" }
+                { label: "Žmogaus ir DI procesai", href: "sprendimai.html#procesas", strong: true },
+                { label: "DI verslo galimybės", href: "sprendimai.html#verslas" }
               ],
-              title2: "4 · Verslas",
-              items2: [{ label: "DI transformuotas verslo modelis", href: "sprendimai.html#verslas" }],
-              more: { label: "Visas transformacijos kelias →", href: "sprendimai.html" }
+              more: { label: "Visi sprendimai →", href: "sprendimai.html" }
             }
           ]
         },
-        {
-          label: "Produktai",
-          href: "produktai.html",
-          cols: [
-            {
-              title: "Išmanūs darbo partneriai",
-              items: [
-                { label: "Universalūs virtualūs asistentai", href: "produktas-asistentai.html" },
-                { label: "Duomenimis grįsti DI sprendimai", href: "produktas-duomenys.html" },
-                { label: "Išmanieji pokalbių robotai (Chatbot)", href: "produktas-chatbot.html" }
-              ]
-            },
-            {
-              title: "Automatizuoti asistentai",
-              items: [
-                { label: "LinkedIn kontaktų asistentas", href: "produktas-linkedin.html" },
-                { label: "B2B skambučių asistentas", href: "produktas-skambuciai.html" },
-                { label: "Išmanusis susitikimų diktofonas", href: "produktas-diktofonas.html" }
-              ],
-              more: { label: "Visi produktai ir įrankiai →", href: "produktai.html" }
-            }
-          ]
-        },
-        {
-          label: "Akademija",
-          href: "akademija.html",
-          cols: [
-            {
-              title: "Mokymų programos",
-              items: [
-                { label: "Praktinės DI dirbtuvės", href: "akademija-dirbtuves.html" },
-                { label: "Savarankiškas tobulėjimas", href: "akademija-savarankiskai.html" },
-                { label: "DI mokymai organizacijoms", href: "akademija-imonems.html" }
-              ],
-              more: { label: "Visos mokymų programos →", href: "akademija.html" }
-            }
-          ]
-        },
-        {
-          label: "Įžvalgos",
-          href: "izvalgos.html",
-          cols: [
-            {
-              title: "Ekspertizė",
-              items: [
-                { label: "Analitinės įžvalgos", href: "izvalgos.html", strong: true },
-                { label: "DIPA filosofija", href: "filosofija.html" }
-              ]
-            },
-            {
-              title: "Praktikos įrodymai",
-              items: [
-                { label: "Client Zero atvejis", href: "atvejis.html", strong: true },
-                { label: "DIPA OS sistemos ataskaita", href: "atvejis.html" }
-              ],
-              title2: "Diagnostika",
-              items2: [{ label: "Diagnostikos įrankiai ir DI IQ", href: "irankiai.html" }]
-            }
-          ]
-        },
+        { label: "Transformation Sprint", href: "transformation-sprint.html" },
+        { label: "Rezultatai", href: "rezultatai.html" },
         { label: "Apie DIPA", href: "apie.html" }
       ];
 
   var FOOT_PATH = IS_EN
     ? [
-        ["Executive AI productivity", "executive-ai.html"],
+        ["How we work", "philosophy.html"],
+        ["AI productivity programme", "executive-ai.html"],
         ["Team AI standard", "team-standard.html"],
         ["Transformation Sprint", "transformation-sprint.html"],
-        ["OPPM method", "oppm.html"],
-        ["Business model", "path.html#business"],
-        ["Full path →", "path.html"]
+        ["AI business opportunities", "path.html#business"],
+        ["All solutions →", "path.html"]
       ]
     : [
-        ["Vadovų AI produktyvumas", "vadovu-ai-produktyvumas.html"],
-        ["Komandos AI standartas", "komandos-ai-standartas.html"],
+        ["Kaip dirbame", "kaip-dirbame.html"],
+        ["DI produktyvumo programa", "ai-produktyvumo-programa.html"],
+        ["Komandos DI standartas", "komandos-ai-standartas.html"],
         ["Transformation Sprint", "transformation-sprint.html"],
-        ["OPPM metodas", "oppm.html"],
-        ["Verslo modelis", "sprendimai.html#verslas"],
-        ["Visas kelias →", "sprendimai.html"]
+        ["DI verslo galimybės", "sprendimai.html#verslas"],
+        ["Visi sprendimai →", "sprendimai.html"]
       ];
 
   var FOOT_CATALOG = IS_EN
     ? [
-        ["Virtual assistants", "products.html#partners"],
-        ["Chatbot solutions", "products.html#partners"],
-        ["Automated tools", "products.html#tools"],
-        ["Academy", "academy.html"],
-        ["All products →", "products.html"]
+        ["AI productivity programme", "executive-ai.html"],
+        ["Transformation Sprint", "transformation-sprint.html"],
+        ["AI value diagnostic", "contact.html"],
+        ["Results", "case.html"],
+        ["Academy", "academy.html"]
       ]
     : [
-        ["Virtualūs asistentai", "produktas-asistentai.html"],
-        ["Chatbot sprendimai", "produktas-chatbot.html"],
-        ["Automatizuoti asistentai", "produktai.html#irankiai"],
-        ["Akademija", "akademija.html"],
-        ["Visi produktai →", "produktai.html"]
+        ["DI produktyvumo programa", "ai-produktyvumo-programa.html"],
+        ["Transformation Sprint", "transformation-sprint.html"],
+        ["DI vertės diagnostika", "diagnostika.html"],
+        ["Rezultatai", "rezultatai.html"],
+        ["Akademija", "akademija.html"]
       ];
 
   var FOOT_CO = IS_EN
     ? [
-        ["Philosophy", "philosophy.html"],
-        ["Client Zero", "case.html"],
+        ["About DIPA", "about.html"],
+        ["How we work", "philosophy.html"],
+        ["Results", "case.html"],
         ["Insights", "insights.html"],
-        ["Free tools", "tools.html"],
         ["Contact", "contact.html"]
       ]
     : [
-        ["DIPA filosofija", "filosofija.html"],
-        ["Client Zero atvejis", "atvejis.html"],
+        ["Apie DIPA", "apie.html"],
+        ["Kaip dirbame", "kaip-dirbame.html"],
+        ["Rezultatai", "rezultatai.html"],
         ["Įžvalgos", "izvalgos.html"],
-        ["Diagnostikos įrankiai", "irankiai.html"],
         ["Kontaktai", "kontaktai.html"]
       ];
 
   var VERDICTS = IS_EN
     ? {
         1: {
-          lvl: "Stage 1 · Person",
+          lvl: "Individual",
           title: "AI is still an individual skill",
-          body: "People already use AI at work, but their method is not captured or transferred. You have AI users, not capability. The rational next step is a stronger person — and a method for leaders to judge AI competence.",
-          cta: { label: "Executive AI productivity · Stage 1", href: "executive-ai.html" },
-          check: "Do you know which AI competences each role needs — and what you can require of the team?"
+          body: "People already use AI, but each person works differently. The method is not captured, and leaders do not know what they can reasonably require. The rational next step is an AI productivity programme: real tasks, a before-and-after comparison, and a way for managers to judge the work.",
+          cta: { label: "AI productivity programme", href: "executive-ai.html" },
+          check: "Do you know what result you can require from each role when the work is done with AI?"
         },
         2: {
-          lvl: "Stage 2 · Team",
-          title: "Strong users, practice still in heads",
-          body: "The team uses AI, but everyone works their own way. If the best user left tomorrow, the method would leave with them. The rational next step is to turn one person's best way of working into a team standard.",
-          cta: { label: "Team AI working standard · Stage 2", href: "team-standard.html" },
-          check: "If your best AI user left tomorrow, would their method remain as a skill, playbook or workflow?"
+          lvl: "Team",
+          title: "Strong users, practice still in people's heads",
+          body: "The team can use AI, but everyone works differently. If your best specialist left tomorrow, the method would leave with them. The rational next step is to turn one person's best practice into a team standard.",
+          cta: { label: "Team AI working standard", href: "team-standard.html" },
+          check: "If your best AI user left tomorrow, would their way of working remain with the team?"
         },
         3: {
-          lvl: "Stage 3 · Process",
-          title: "The team can use AI, the work itself has not changed",
-          body: "You have team practice, but the process is still the pre-AI process. This is where AI usually speeds up work that may not need to exist. The rational next step is redesigning one process until the number is proven.",
-          cta: { label: "Transformation Sprint · Stage 3", href: "transformation-sprint.html" },
-          check: "Name a process where AI does a defined part of the work and the human role has been redesigned."
+          lvl: "Process",
+          title: "AI speeds up the old work, but the process has not changed",
+          body: "The team has a practice, but the process is still the pre-AI process. This is usually where work gets faster even when it may no longer need to exist. The rational next step is redesigning one process until the result is measured.",
+          cta: { label: "Discuss a Transformation Sprint", href: "transformation-sprint.html" },
+          check: "Do you have a process where it is clear what the human does, what AI does, and who owns the result?"
         }
       }
     : {
         1: {
-          lvl: "1 etapas · Žmogus",
-          title: "DI yra tik pavienių specialistų įprotis",
-          body: "Organizacijoje jau yra darbuotojų, naudojančių DI savo darbe, tačiau jų metodika nėra užfiksuota ar perduodama komandai. Turite pavienių naudotojų, bet neturite tvarios organizacijos kompetencijos. Racionalus kitas žingsnis — sustiprinti vadovo asmeninį gebėjimą ir įsidiegti metodą komandos kompetencijai vertinti.",
-          cta: { label: "Vadovų AI produktyvumas · 1 etapas", href: "vadovu-ai-produktyvumas.html" },
-          check: "Ar tiksliai žinote, kokių DI kompetencijų reikia skirtingoms rolėms jūsų įmonėje — ir kokių rezultatų galite reikalauti iš komandos?"
+          lvl: "Žmogus",
+          title: "DI vis dar yra pavienių žmonių įgūdis",
+          body: "Darbuotojai jau naudoja DI, bet kiekvienas savaip. Metodas nėra užfiksuotas, vadovas nežino, ko reikalauti. Racionalus kitas žingsnis — DI produktyvumo programa: realios užduotys, palyginimas prieš ir po, ir vadovo vertinimo logika.",
+          cta: { label: "DI produktyvumo programa", href: "ai-produktyvumo-programa.html" },
+          check: "Ar žinote, kokio rezultato galite reikalauti iš kiekvienos rolės, kai darbas atliekamas su DI?"
         },
         2: {
-          lvl: "2 etapas · Komanda",
-          title: "Yra stiprių naudotojų, tačiau praktika lieka jų galvose",
-          body: "Komanda jau naudoja DI, tačiau kiekvienas dirba pagal savo asmeninius įpročius. Jei geriausias specialistas rytoj išeitų, jo žinios išeitų kartu. Racionalus kitas žingsnis — vieno žmogaus gerąją praktiką paversti bendru komandos standartu (playbook, workflow ir KPI).",
-          cta: { label: "Komandos AI darbo standartas · 2 etapas", href: "komandos-ai-standartas.html" },
-          check: "Jei geriausias DI naudotojas rytoj paliktų organizaciją — ar jo metodika liktų kaip užfiksuotas veiksmų gidas (playbook) ar procesas?"
+          lvl: "Komanda",
+          title: "Yra stiprių naudotojų, bet praktika lieka galvose",
+          body: "Komanda moka naudoti DI, tačiau kiekvienas dirba kitaip. Jei geriausias specialistas išeitų, išeitų ir metodas. Racionalus kitas žingsnis — vieno žmogaus geriausią praktiką paversti komandos standartu.",
+          cta: { label: "Komandos DI darbo standartas", href: "komandos-ai-standartas.html" },
+          check: "Jei geriausias DI naudotojas išeitų rytoj — ar jo darbo būdas liktų komandai?"
         },
         3: {
-          lvl: "3 etapas · Procesas",
-          title: "Komanda moka naudotis DI, tačiau patys veiklos procesai nepakeisti",
-          body: "Turite komandos praktiką, tačiau pats procesas vis dar veikia pagal seną modelį. Tokioje situacijoje DI dažniausiai tik pagreitina tai, ko apskritai nereikėtų daryti. Racionalus kitas žingsnis — vieno kritinio proceso perprojektavimas iki aiškiai įrodyto finansinio efekto.",
-          cta: { label: "Transformation Sprint · 3 etapas", href: "transformation-sprint.html" },
-          check: "Įvardykite bent vieną procesą, kuriame DI atlieka apibrėžtą dalį, o žmogaus rolė ir atsakomybės yra perprojektuotos."
+          lvl: "Procesas",
+          title: "DI pagreitina seną darbą, bet pats procesas nesikeitė",
+          body: "Komanda jau turi praktiką, tačiau procesas vis dar toks, koks buvo iki DI. Čia dažniausiai greičiau atliekamas darbas, kurio galbūt visai nereikia. Racionalus kitas žingsnis — vieno proceso perprojektavimas iki pamatuoto rezultato.",
+          cta: { label: "Aptarti Transformation Sprint", href: "transformation-sprint.html" },
+          check: "Ar turite procesą, kuriame aišku, ką daro žmogus, ką — DI, ir kas atsako už rezultatą?"
         }
       };
 
@@ -460,10 +330,10 @@
       enCur +
       ">EN</a></span>";
 
-    var assessHref = IS_EN ? "index.html#assess" : "index.html#vertinimas";
-    var c0Href = IS_EN ? "case.html" : "atvejis.html";
-    var pathHref = IS_EN ? "path.html" : "sprendimai.html";
-    var contactHref = IS_EN ? "contact.html" : "kontaktai.html";
+    var assessHref = IS_EN ? "contact.html" : "diagnostika.html";
+    var c0Href = IS_EN ? "case.html" : "rezultatai.html";
+    var pathHref = IS_EN ? "philosophy.html" : "kaip-dirbame.html";
+    var contactHref = IS_EN ? "contact.html" : "diagnostika.html";
     var homeHref = "index.html";
 
     var drawerLinks = NAV.map(function (n) {
@@ -651,6 +521,37 @@
         form.classList.add("is-sent");
         var ok = form.querySelector(".form-ok");
         if (ok) ok.focus();
+      });
+    });
+  }
+
+  function initAnalytics() {
+    function track(name, properties) {
+      var detail = Object.assign(
+        {
+          event: name,
+          page_path: location.pathname,
+          device: matchMedia("(max-width: 700px)").matches ? "mobile" : "desktop",
+          language: IS_EN ? "en" : "lt"
+        },
+        properties || {}
+      );
+      window.dispatchEvent(new CustomEvent("dipa:analytics", { detail: detail }));
+      if (Array.isArray(window.dataLayer)) window.dataLayer.push(detail);
+    }
+
+    document.addEventListener("click", function (event) {
+      var target = event.target.closest("[data-event]");
+      if (!target) return;
+      track(target.getAttribute("data-event"), {
+        cta_location: target.closest("section") ? target.closest("section").id || "section" : "navigation",
+        selected_path: target.getAttribute("data-path") || undefined
+      });
+    });
+
+    Array.prototype.forEach.call(document.querySelectorAll(".faq details"), function (details) {
+      details.addEventListener("toggle", function () {
+        if (details.open) track("faq_open", { selected_path: details.querySelector("summary").textContent.trim() });
       });
     });
   }
@@ -994,6 +895,7 @@
 
     initAssessment();
     initForms();
+    initAnalytics();
     initDrawer();
     initOsx();
 

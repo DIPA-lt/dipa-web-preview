@@ -1,0 +1,71 @@
+<!DOCTYPE html>
+<html lang="lt">
+<head>
+<meta name="robots" content="noindex, nofollow, noarchive, nosnippet">
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>DI vertės diagnostika | DIPA</title>
+<meta name="description" content="Nustatykite, kur šiandien yra didžiausia DI vertės spraga ir koks vienas pamatuojamas pokytis būtų racionaliausias.">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600&family=Instrument+Serif:ital@1&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="dipa.css">
+</head>
+<body>
+<a class="skip-link" href="#turinys">Pereiti prie pagrindinio turinio</a>
+<div id="chrome-top"></div>
+<div class="wrap crumbs"><a href="index.html">Pradžia</a><span>/</span>DI vertės diagnostika</div>
+<main id="turinys">
+  <section class="hero inner">
+    <div class="wrap">
+      <div class="eyebrow">DI vertės diagnostika</div>
+      <h1>Kur šiandien yra didžiausia DI vertės spraga — ir koks <em class="acc">racionalus kitas žingsnis?</em></h1>
+      <p class="lead" style="margin-top:28px">Diagnostikos tikslas nėra parduoti visą transformaciją. Tikslas — suprasti dabartinę situaciją, įvertinti problemos ekonominį dydį ir rasti vieną artimiausią pamatuojamą galimybę.</p>
+    </div>
+  </section>
+
+  <section class="rv">
+    <div class="wrap">
+      <div class="sec-head">
+        <h2>Ką gausite po <em class="acc">diagnostikos?</em></h2>
+        <p class="lead">Rekomendacija gali būti ir nieko nepirkti iš DIPA, jei geriausią kitą žingsnį galite atlikti patys.</p>
+      </div>
+      <div class="hg hg-3">
+        <div><div class="mono">01</div><h3 class="sm">Dabartinė situacija</h3><p class="t-muted small" style="margin-top:12px">Kur DI jau naudojamas ir kas dėl jo realiai pasikeitė.</p></div>
+        <div><div class="mono">02</div><h3 class="sm">Pagrindinė vertės spraga</h3><p class="t-muted small" style="margin-top:12px">Žmogaus darbas, komandos standartas, procesas ar verslo modelis.</p></div>
+        <div><div class="mono">03</div><h3 class="sm">Ekonominis dydis</h3><p class="t-muted small" style="margin-top:12px">Kiek problema kainuoja ir kokio dydžio pokytį verta svarstyti.</p></div>
+        <div><div class="mono">04</div><h3 class="sm">Racionalus kitas žingsnis</h3><p class="t-muted small" style="margin-top:12px">Vienas veiksmas, o ne ilgas abstrakčios transformacijos planas.</p></div>
+        <div><div class="mono">05</div><h3 class="sm">Pagrindinis KPI</h3><p class="t-muted small" style="margin-top:12px">Rodiklis, pagal kurį bus galima objektyviai vertinti pokytį.</p></div>
+        <div class="cell-hi"><div class="mono">06</div><h3 class="sm">Rekomenduojamas kelias</h3><p class="t-muted small" style="margin-top:12px">Produktyvumo programa, Transformation Sprint arba vidinis veiksmas.</p></div>
+      </div>
+    </div>
+  </section>
+
+  <section class="rv">
+    <div class="wrap">
+      <div class="sec-head">
+        <h2>Trumpai aprašykite <em class="acc">savo situaciją.</em></h2>
+        <p class="lead">Ši prototipo forma niekur nesiunčia duomenų. Produkcinėje versijoje bus taikoma serverio patikra, apsauga nuo šlamšto ir aiškus sutikimų valdymas.</p>
+      </div>
+      <form class="form" data-demo-form data-event="diagnostic_form_submit">
+        <div class="form-fields">
+          <div class="hg hg-2" style="margin-bottom:18px">
+            <div class="field"><label for="d-name">Vardas ir pavardė</label><input id="d-name" name="name" autocomplete="name" required></div>
+            <div class="field"><label for="d-company">Organizacija</label><input id="d-company" name="company" autocomplete="organization" required></div>
+            <div class="field"><label for="d-email">Darbo el. paštas</label><input id="d-email" name="email" type="email" autocomplete="email" required></div>
+            <div class="field"><label for="d-role">Jūsų vaidmuo</label><select id="d-role" name="role" required><option value="">Pasirinkite</option><option>Įmonės vadovas ar savininkas</option><option>Padalinio ar proceso vadovas</option><option>DI iniciatyvų vadovas</option><option>Kitas vaidmuo</option></select></div>
+          </div>
+          <div class="field"><label for="d-situation">Kur šiandien matote didžiausią neaiškumą ar prarandamą vertę?</label><textarea id="d-situation" name="situation" required placeholder="Trumpai aprašykite procesą, komandą arba iniciatyvą."></textarea></div>
+          <div class="field" style="margin-top:18px"><label><input type="checkbox" required> Sutinku, kad mano duomenys būtų naudojami atsakant į šią užklausą.</label></div>
+          <div class="field" style="margin-top:10px"><label><input type="checkbox"> Noriu gauti DIPA įžvalgas el. paštu (nebūtina).</label></div>
+          <button class="btn btn-p" type="submit" style="margin-top:24px">Pateikti diagnostikos užklausą</button>
+        </div>
+        <div class="form-ok" tabindex="-1">Ačiū. Prototipe forma niekur nesiunčiama.</div>
+      </form>
+    </div>
+  </section>
+</main>
+<div id="chrome-bottom"></div>
+<script src="dipa.js"></script>
+</body>
+</html>

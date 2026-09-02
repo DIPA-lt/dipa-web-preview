@@ -4,113 +4,62 @@
 <meta name="robots" content="noindex, nofollow, noarchive, nosnippet">
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1">
-<title>Contact — we start with qualification | DIPA</title>
-<meta name="description" content="Describe the process that costs you the most. We reply within two working days. If we cannot help — we will say so immediately.">
+<title>AI Value Diagnostic | DIPA</title>
+<meta name="description" content="Identify your largest AI value gap and the single measurable intervention that makes the most economic sense now.">
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600&family=Instrument+Serif:ital@1&display=swap" rel="stylesheet">
 <link rel="stylesheet" href="../dipa.css">
 </head>
 <body>
+<a class="skip-link" href="#main-content">Skip to main content</a>
 <div id="chrome-top"></div>
-<div class="wrap crumbs"><a href="index.html">Home</a><span>/</span>Contact</div>
+<div class="wrap crumbs"><a href="index.html">Home</a><span>/</span>AI Value Diagnostic</div>
 
+<main id="main-content">
 <section class="hero inner">
   <div class="wrap">
-    <div class="eyebrow">Contact</div>
-    <h1>We start with <em class="acc">qualification</em>, not a sale</h1>
-    <p class="lead" style="margin-top:28px">The first conversation is whether we can help at all. If we cannot — we will say so immediately, with no proposal.</p>
+    <div class="eyebrow">AI Value Diagnostic</div>
+    <h1>Where is your largest AI value gap—and what is the <em class="acc">most rational next step?</em></h1>
+    <p class="lead" style="margin-top:28px">The diagnostic is not designed to sell an enterprise-wide transformation. It clarifies the current position, sizes the constraint and identifies one near-term opportunity that can be measured.</p>
   </div>
 </section>
 
 <section class="rv">
   <div class="wrap">
-    <div class="hg hg-3" style="margin-bottom:56px">
-      <div><div class="mono" style="color:var(--brand);margin-bottom:14px">01</div><h3 class="sm">Qualification</h3><p class="t-muted small" style="margin-top:12px">Is the problem measurable, is there a process owner, and are you looking for a result — not the cheapest proposal.</p></div>
-      <div><div class="mono" style="color:var(--brand);margin-bottom:14px">02</div><h3 class="sm">Where the largest constraint is</h3><p class="t-muted small" style="margin-top:12px">We look for where the most value is lost today — not where a tool is easiest to install.</p></div>
-      <div><div class="mono" style="color:var(--brand);margin-bottom:14px">03</div><h3 class="sm">One stage</h3><p class="t-muted small" style="margin-top:12px">We recommend the nearest rational stage. Not the whole path.</p></div>
+    <div class="sec-head"><h2>What will you leave the <em class="acc">diagnostic with?</em></h2><p class="lead">The recommendation may be to buy nothing from DIPA if the best next step is one your team can take independently.</p></div>
+    <div class="hg hg-3">
+      <div><div class="mono">01</div><h3 class="sm">Current position</h3><p class="t-muted small" style="margin-top:12px">Where AI is already in use and what has materially changed.</p></div>
+      <div><div class="mono">02</div><h3 class="sm">Primary value gap</h3><p class="t-muted small" style="margin-top:12px">Individual performance, team capability, process design or business model.</p></div>
+      <div><div class="mono">03</div><h3 class="sm">Economic size</h3><p class="t-muted small" style="margin-top:12px">What the constraint costs and what scale of intervention is justified.</p></div>
+      <div><div class="mono">04</div><h3 class="sm">Rational next step</h3><p class="t-muted small" style="margin-top:12px">One action—not a long, abstract transformation roadmap.</p></div>
+      <div><div class="mono">05</div><h3 class="sm">Primary KPI</h3><p class="t-muted small" style="margin-top:12px">The metric that will allow the change to be assessed objectively.</p></div>
+      <div class="cell-hi"><div class="mono">06</div><h3 class="sm">Recommended route</h3><p class="t-muted small" style="margin-top:12px">A productivity programme, Transformation Sprint or internal action.</p></div>
     </div>
+  </div>
+</section>
 
-    <div class="sec-head">
-      <h2>Describe the process that <em class="acc">costs you the most</em></h2>
-      <p class="lead">We reply within two working days. The form is not sent anywhere — this is a prototype mock. In production it will go to CRM.</p>
-    </div>
-
-    <form class="form" data-demo-form>
+<section class="rv">
+  <div class="wrap">
+    <div class="sec-head"><h2>Briefly describe <em class="acc">your situation.</em></h2><p class="lead">This prototype form does not send or store data. The production version will use server-side validation, anti-spam protection and explicit consent controls.</p></div>
+    <form class="form" data-demo-form data-event="diagnostic_form_submit">
       <div class="form-fields">
         <div class="hg hg-2" style="margin-bottom:18px">
-          <div class="field"><label for="name">Name</label><input id="name" name="name" required></div>
-          <div class="field"><label for="company">Company</label><input id="company" name="company" required></div>
-          <div class="field"><label for="email">Work email</label><input id="email" name="email" type="email" required></div>
-          <div class="field">
-            <label for="size">Organisation size</label>
-            <select id="size" name="size" required>
-              <option value="">Select</option>
-              <option>&lt; 50</option>
-              <option>50–150</option>
-              <option>150–500</option>
-              <option>500+</option>
-            </select>
-          </div>
+          <div class="field"><label for="d-name">Full name</label><input id="d-name" name="name" autocomplete="name" required></div>
+          <div class="field"><label for="d-company">Organisation</label><input id="d-company" name="company" autocomplete="organization" required></div>
+          <div class="field"><label for="d-email">Work email</label><input id="d-email" name="email" type="email" autocomplete="email" required></div>
+          <div class="field"><label for="d-role">Your role</label><select id="d-role" name="role" required><option value="">Select</option><option>CEO or business owner</option><option>Functional or process leader</option><option>AI initiative lead</option><option>Other</option></select></div>
         </div>
-        <div class="field">
-          <label for="process">Which process costs you the most?</label>
-          <textarea id="process" name="process" required placeholder="e.g. proposal writing, estimates, customer service…"></textarea>
-        </div>
-        <div class="hg hg-2" style="margin-top:18px">
-          <div class="field">
-            <label for="baseline">Do you know the current numbers for this process?</label>
-            <select id="baseline" name="baseline" required>
-              <option value="">Select</option>
-              <option>Yes — we have a baseline</option>
-              <option>Partly</option>
-              <option>No</option>
-            </select>
-          </div>
-          <div class="field">
-            <label for="role">Your role in the decision</label>
-            <select id="role" name="role" required>
-              <option value="">Select</option>
-              <option>Owner / CEO</option>
-              <option>Executive</option>
-              <option>I recommend to leadership</option>
-            </select>
-          </div>
-        </div>
-        <div style="margin-top:24px" class="btn-row">
-          <button class="btn btn-p" type="submit">Submit an enquiry</button>
-          <a class="btn btn-s" href="index.html#assess">First — the 60 s check</a>
-        </div>
+        <div class="field"><label for="d-situation">Where do you see the greatest uncertainty or loss of value today?</label><textarea id="d-situation" name="situation" required placeholder="Briefly describe the process, team or initiative."></textarea></div>
+        <div class="field" style="margin-top:18px"><label><input type="checkbox" required> I agree that my data may be used to respond to this enquiry.</label></div>
+        <div class="field" style="margin-top:10px"><label><input type="checkbox"> I would like to receive DIPA insights by email (optional).</label></div>
+        <button class="btn btn-p" type="submit" style="margin-top:24px">Request the diagnostic</button>
       </div>
-      <div class="form-ok" tabindex="-1">Thank you. In production this would confirm a reply within two working days. In the prototype the form is not sent anywhere.</div>
+      <div class="form-ok" tabindex="-1">Thank you. This prototype does not send or store form data.</div>
     </form>
   </div>
 </section>
-
-<section class="rv">
-  <div class="wrap">
-    <div class="vs">
-      <div class="vs-yes">
-        <h4>We fit if</h4>
-        <ul>
-          <li><span class="m">→</span> 50–500 employees, repeating decision processes</li>
-          <li><span class="m">→</span> The decision is made by the owner or CEO</li>
-          <li><span class="m">→</span> You are looking for a financial result, not training</li>
-        </ul>
-      </div>
-      <div class="vs-no">
-        <h4>We do not fit if</h4>
-        <ul>
-          <li><span class="m">✕</span> The problem is unmeasurable</li>
-          <li><span class="m">✕</span> There is no process owner</li>
-          <li><span class="m">✕</span> You want only a tool, with no change in the work</li>
-          <li><span class="m">✕</span> The choice is the cheapest proposal</li>
-        </ul>
-      </div>
-    </div>
-  </div>
-</section>
-
+</main>
 <div id="chrome-bottom"></div>
 <script src="../dipa.js"></script>
 </body>
