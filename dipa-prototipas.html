@@ -1,0 +1,1722 @@
+<!DOCTYPE html>
+<html lang="lt">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>DIPA — svetainės prototipas v4 · IA pagal Digital Positioning Blueprint</title>
+<link href="https://fonts.googleapis.com/css2?family=Open+Sans:wght@300;400;600;700&family=Poppins:wght@300;400;600;700&family=Inter:wght@300;400;500;600&display=swap" rel="stylesheet">
+<style>
+/* ==========================================================================
+   STILISTIKA — Big4 enterprise registras.
+   Verifikuota 2026-08-19 nuskaitant kpmg.com, ey.com, deloitte.com:
+   radius 0 · balta + off-white dominuoja · vienas gilus anchor tonas panelėms ·
+   tekstas neutraliai tamsus · akcentas taupiai · antraštės w300 didelio lh ·
+   hairline 1px tinklelis · be dekoratyvinių gradientų · utility juosta · split hero.
+   STRUKTŪRA — pagal „Strategic Architectures of Global AI Transformation Leaders
+   and the Blueprint for DIPA's Digital Positioning" (Google Doc, gauta 2026-08-19).
+   ========================================================================== */
+body[data-theme="ent"]{
+  --bg:#FFFFFF; --surface:#F5F6FA; --surface-2:#EAEAF2;
+  --anchor:#0A1140; --anchor-2:#141C55;
+  --brand:#1C0BFF; --accent:#EDE939;
+  --ink:#22222B; --ink-strong:#0A1140; --muted:#6E6E7A; --muted-2:#9A9AA6;
+  --line:#D9D9E2; --line-strong:#B8B8C4;
+  --on-anchor-dim:rgba(255,255,255,.72);
+  --r:0px; --rs:0px; --fh:'Open Sans',sans-serif; --fb:'Open Sans',sans-serif;
+  --fw-h:300; --ls-h:-0.01em;
+}
+body[data-theme="dipa"]{
+  --bg:#000000; --surface:#0A0A0A; --surface-2:#141419;
+  --anchor:#0A0A0A; --anchor-2:#1E1E26;
+  --brand:#1C0BFF; --accent:#EDE939;
+  --ink:#FFFFFF; --ink-strong:#FFFFFF; --muted:#A8A8B8; --muted-2:#6E6E80;
+  --line:#26262F; --line-strong:#3A3A46;
+  --on-anchor-dim:rgba(255,255,255,.72);
+  --r:10px; --rs:6px; --fh:'Poppins',sans-serif; --fb:'Inter',sans-serif;
+  --fw-h:700; --ls-h:-0.02em;
+}
+*{box-sizing:border-box;margin:0;padding:0}
+html{scroll-behavior:smooth}
+body{font-family:var(--fb);background:var(--bg);color:var(--ink);font-size:16px;line-height:1.6;-webkit-font-smoothing:antialiased}
+.wrap{max-width:1240px;margin:0 auto;padding:0 32px}
+section{padding:84px 0}
+h1,h2,h3,h4{font-family:var(--fh);font-weight:var(--fw-h);letter-spacing:var(--ls-h);color:var(--ink-strong)}
+h1{font-size:clamp(2.2rem,4.2vw,3.3rem);line-height:1.18}
+h2{font-size:clamp(1.7rem,2.8vw,2.35rem);line-height:1.24}
+h3{font-size:1.1rem;font-weight:600;line-height:1.35;letter-spacing:0}
+h4{font-size:1.35rem;font-weight:var(--fw-h);line-height:1.3}
+p{color:var(--muted)}
+.lead{font-size:1.08rem;line-height:1.62;color:var(--muted);max-width:68ch}
+.small{font-size:.82rem;color:var(--muted-2);line-height:1.5}
+.mono{font-variant-numeric:tabular-nums}
+.eyebrow{font-family:var(--fb);font-size:.69rem;font-weight:600;letter-spacing:.16em;
+  text-transform:uppercase;color:var(--brand);margin-bottom:15px}
+.abar{position:relative;padding-left:16px}
+.abar:before{content:"";position:absolute;left:0;top:.18em;bottom:.18em;width:3px;background:var(--brand)}
+
+/* ---- ctrl / utility / nav ---- */
+.ctrl{position:sticky;top:0;z-index:90;background:var(--anchor);color:#fff;font-size:.71rem;
+  padding:8px 0;border-bottom:1px solid rgba(255,255,255,.14)}
+.ctrl .wrap{display:flex;gap:14px;align-items:center;justify-content:space-between;flex-wrap:wrap}
+.ctrl b{color:var(--accent)}
+.tgl{display:flex;gap:7px;flex-wrap:wrap}
+.tgl button{font-family:var(--fb);font-size:.69rem;border:1px solid rgba(255,255,255,.3);
+  background:transparent;color:#fff;padding:5px 11px;border-radius:var(--rs);cursor:pointer;transition:.16s}
+.tgl button:hover{border-color:var(--accent)}
+.tgl button.on{background:var(--accent);border-color:var(--accent);color:#0A1140;font-weight:600}
+.util{border-bottom:1px solid var(--line);font-size:.75rem}
+.util .wrap{display:flex;justify-content:flex-end;gap:24px;height:38px;align-items:center}
+.util a{color:var(--muted);text-decoration:none;cursor:pointer}
+.util a:hover{color:var(--brand)}
+body[data-theme="dipa"] .util{display:none}
+nav{position:sticky;top:37px;z-index:80;background:var(--bg);border-bottom:1px solid var(--line)}
+nav .wrap{display:flex;align-items:center;justify-content:space-between;height:74px;gap:20px}
+.logo svg{height:27px;width:auto;display:block;color:var(--ink-strong)}
+.navlinks{display:flex;gap:28px;font-size:.9rem;align-items:stretch}
+.navitem{position:relative;display:flex;align-items:center}
+.navitem>a{color:var(--ink);text-decoration:none;cursor:pointer;padding:26px 0;
+  border-bottom:2px solid transparent;transition:.15s;white-space:nowrap}
+.navitem>a:hover,.navitem.act>a{color:var(--brand);border-bottom-color:var(--brand)}
+.drop{position:absolute;top:100%;left:-22px;background:var(--bg);border:1px solid var(--line);
+  min-width:330px;padding:10px 0;display:none;box-shadow:0 14px 40px rgba(10,17,64,.1);z-index:99}
+.navitem:hover .drop{display:block}
+.drop a{display:block;padding:13px 24px;text-decoration:none;color:var(--ink);cursor:pointer;transition:.14s}
+.drop a:hover{background:var(--surface);color:var(--brand)}
+.drop a b{display:block;font-weight:600;font-size:.92rem}
+.drop a span{display:block;font-size:.78rem;color:var(--muted);margin-top:3px;line-height:1.4}
+@media(max-width:1150px){.navlinks{display:none}}
+.btn{display:inline-flex;align-items:center;gap:9px;background:var(--brand);color:#fff;text-decoration:none;
+  font-family:var(--fb);font-weight:600;font-size:.87rem;padding:13px 23px;border:none;
+  border-radius:var(--rs);cursor:pointer;transition:.16s;white-space:nowrap}
+.btn:hover{background:var(--anchor-2)}
+.btn.lg{padding:16px 30px;font-size:.94rem}
+.btn.out{background:transparent;border:1px solid var(--line-strong);color:var(--ink)}
+.btn.out:hover{background:var(--ink-strong);border-color:var(--ink-strong);color:#fff}
+.btn.onanchor{background:#fff;color:var(--anchor)}
+.btn.onanchor:hover{background:var(--accent);color:#0A1140}
+.btn.outanchor{background:transparent;border:1px solid rgba(255,255,255,.42);color:#fff}
+.btn.outanchor:hover{background:rgba(255,255,255,.1);border-color:#fff}
+
+/* ---- views / breadcrumb ---- */
+.view{display:none}
+.view.on{display:block}
+.crumb{border-bottom:1px solid var(--line);font-size:.78rem;color:var(--muted)}
+.crumb .wrap{height:46px;display:flex;align-items:center;gap:9px}
+.crumb a{color:var(--muted);text-decoration:none;cursor:pointer}
+.crumb a:hover{color:var(--brand)}
+.crumb i{font-style:normal;color:var(--muted-2)}
+.crumb b{color:var(--ink-strong);font-weight:600}
+
+/* ---- hero ---- */
+.hero{display:grid;grid-template-columns:1.06fr .94fr;min-height:500px}
+.hero .txt{background:var(--anchor);color:#fff;padding:78px 60px 72px;display:flex;flex-direction:column;justify-content:center}
+.hero .txt h1{color:#fff;max-width:22ch}
+.hero .txt .sub{color:var(--on-anchor-dim);font-size:1.08rem;line-height:1.6;max-width:50ch;margin-top:20px}
+.hero .txt .cta{display:flex;gap:12px;margin-top:34px;flex-wrap:wrap}
+.hero .kicker{font-size:.69rem;font-weight:600;letter-spacing:.18em;text-transform:uppercase;color:var(--accent);margin-bottom:20px}
+.hero .vis{background:var(--surface);position:relative;overflow:hidden}
+.hero .vis svg{position:absolute;inset:0;width:100%;height:100%}
+.hero .chain{position:absolute;left:0;right:0;bottom:0;background:rgba(10,17,64,.94);color:#fff;
+  padding:16px 36px;display:flex;gap:9px;align-items:center;flex-wrap:wrap;font-size:.71rem;letter-spacing:.13em;font-weight:600}
+.hero .chain i{color:var(--accent);font-style:normal}
+.hero .chain span{color:var(--on-anchor-dim);letter-spacing:0;font-weight:400;text-transform:none}
+@media(max-width:960px){.hero{grid-template-columns:1fr}.hero .vis{min-height:210px}.hero .txt{padding:52px 30px}}
+.phero{background:var(--anchor);color:#fff;padding:76px 0 70px}
+.phero h1{color:#fff;max-width:26ch}
+.phero .sub{color:var(--on-anchor-dim);font-size:1.08rem;max-width:60ch;margin-top:18px}
+.phero .kicker{font-size:.69rem;font-weight:600;letter-spacing:.18em;text-transform:uppercase;color:var(--accent);margin-bottom:18px}
+
+/* ---- stats ---- */
+.stats{border-bottom:1px solid var(--line)}
+.stats .grid{display:grid;grid-template-columns:repeat(4,1fr)}
+.stats .s{padding:32px 28px;border-left:1px solid var(--line)}
+.stats .s:first-child{border-left:0;padding-left:0}
+.stats .n{font-family:var(--fh);font-size:2rem;font-weight:var(--fw-h);color:var(--ink-strong);line-height:1}
+.stats .n small{font-size:.78rem;font-weight:400;color:var(--muted)}
+.stats .l{font-size:.78rem;color:var(--muted);margin-top:9px;line-height:1.4}
+@media(max-width:860px){.stats .grid{grid-template-columns:repeat(2,1fr)}
+  .stats .s{padding:22px 18px;border-top:1px solid var(--line)}
+  .stats .s:nth-child(odd){border-left:0;padding-left:0}}
+
+.surf{background:var(--surface)}
+.anchorsec{background:var(--anchor);color:#fff}
+.anchorsec h2,.anchorsec h3,.anchorsec h4{color:#fff}
+.anchorsec p,.anchorsec .lead{color:var(--on-anchor-dim)}
+.anchorsec .eyebrow{color:var(--accent)}
+.anchorsec .small{color:rgba(255,255,255,.5)}
+
+/* ---- hairline grids ---- */
+.hg{display:grid;border-top:1px solid var(--line);margin-top:40px}
+.hg.c4{grid-template-columns:repeat(4,1fr)}
+.hg.c3{grid-template-columns:repeat(3,1fr)}
+.hg.c2{grid-template-columns:repeat(2,1fr)}
+.hg>.cell{border-bottom:1px solid var(--line);border-left:1px solid var(--line);padding:30px 26px}
+.hg.c4>.cell:nth-child(4n+1),.hg.c3>.cell:nth-child(3n+1),.hg.c2>.cell:nth-child(odd){border-left:0;padding-left:0}
+.anchorsec .hg,.anchorsec .hg>.cell{border-color:rgba(255,255,255,.16)}
+.hg .k{font-size:.65rem;letter-spacing:.14em;font-weight:600;color:var(--brand);margin-bottom:13px}
+.anchorsec .hg .k{color:var(--accent)}
+.hg h3{margin-bottom:10px}
+.hg .cell p{font-size:.89rem}
+.hg .out{margin-top:15px;padding-top:12px;border-top:1px solid var(--line);font-size:.82rem;font-weight:600;color:var(--ink-strong)}
+.anchorsec .hg .out{border-color:rgba(255,255,255,.16);color:#fff}
+@media(max-width:980px){.hg.c4{grid-template-columns:repeat(2,1fr)}
+  .hg.c4>.cell:nth-child(odd){border-left:0;padding-left:0}}
+@media(max-width:700px){.hg.c4,.hg.c3,.hg.c2{grid-template-columns:1fr}.hg>.cell{border-left:0;padding-left:0}}
+
+.axiom{margin-top:46px;border-left:3px solid var(--brand);padding:6px 0 6px 24px;
+  font-family:var(--fh);font-size:1.28rem;font-weight:var(--fw-h);line-height:1.4;max-width:50ch;color:var(--ink-strong)}
+.anchorsec .axiom{border-left-color:var(--accent);color:#fff}
+.axiom em{font-style:normal;color:var(--brand);font-weight:600}
+.anchorsec .axiom em{color:var(--accent)}
+
+.contrast{display:grid;grid-template-columns:1fr 1fr;border-top:1px solid var(--line);margin-top:36px}
+.contrast>div{padding:30px 28px;border-bottom:1px solid var(--line)}
+.contrast .no{border-left:0;padding-left:0;opacity:.6}
+.contrast .yes{border-left:1px solid var(--line);position:relative}
+.contrast .yes:after{content:"";position:absolute;left:-1px;top:0;bottom:0;width:3px;background:var(--brand)}
+.contrast .t{font-size:.65rem;letter-spacing:.15em;font-weight:600;margin-bottom:11px;color:var(--muted)}
+.contrast .yes .t{color:var(--brand)}
+.contrast p{font-size:1rem;line-height:1.55;color:var(--ink)}
+.contrast .yes p{font-weight:600}
+.anchorsec .contrast,.anchorsec .contrast>div{border-color:rgba(255,255,255,.16)}
+.anchorsec .contrast p{color:#fff}
+@media(max-width:820px){.contrast{grid-template-columns:1fr}.contrast .yes{border-left:0;padding-left:16px}}
+
+/* ---- 10-20-70 bar ---- */
+.rule{display:grid;grid-template-columns:10fr 20fr 70fr;border:1px solid var(--line);margin-top:38px;min-height:126px}
+.rule>div{padding:22px 20px;border-left:1px solid var(--line);display:flex;flex-direction:column;justify-content:space-between}
+.rule>div:first-child{border-left:0}
+.rule .p{font-family:var(--fh);font-size:1.9rem;font-weight:var(--fw-h);color:var(--ink-strong);line-height:1}
+.rule .t{font-size:.83rem;color:var(--muted);margin-top:10px;line-height:1.4}
+.rule>div:last-child{background:var(--anchor)}
+.rule>div:last-child .p{color:var(--accent)}
+.rule>div:last-child .t{color:var(--on-anchor-dim)}
+@media(max-width:760px){.rule{grid-template-columns:1fr}.rule>div{border-left:0;border-top:1px solid var(--line)}}
+
+/* ---- phase rail ---- */
+.rail{display:grid;grid-template-columns:repeat(8,1fr);border-top:1px solid var(--line);
+  border-bottom:1px solid var(--line);margin-top:38px}
+.rail>div{padding:22px 14px;border-left:1px solid var(--line)}
+.rail>div:first-child{border-left:0;padding-left:0}
+.rail .n{font-size:.64rem;letter-spacing:.12em;font-weight:600;color:var(--brand)}
+.rail .t{font-family:var(--fh);font-size:.95rem;font-weight:600;margin-top:8px;color:var(--ink-strong)}
+.rail .d{font-size:.76rem;color:var(--muted);margin-top:6px;line-height:1.4}
+@media(max-width:1000px){.rail{grid-template-columns:repeat(4,1fr)}
+  .rail>div:nth-child(4n+1){border-left:0;padding-left:0}}
+@media(max-width:600px){.rail{grid-template-columns:repeat(2,1fr)}
+  .rail>div:nth-child(odd){border-left:0;padding-left:0}}
+
+/* ---- table ---- */
+table.dt{width:100%;border-collapse:collapse;margin-top:36px;font-size:.89rem}
+table.dt th{text-align:left;font-family:var(--fb);font-size:.65rem;letter-spacing:.13em;font-weight:600;
+  color:var(--muted);padding:0 20px 13px 0;border-bottom:1px solid var(--line-strong);text-transform:uppercase}
+table.dt td{padding:17px 20px 17px 0;border-bottom:1px solid var(--line);vertical-align:top;color:var(--muted);line-height:1.55}
+table.dt td:first-child{font-weight:600;color:var(--ink-strong);width:24%}
+table.dt tr:hover td{background:var(--surface)}
+table.dt.hl td:last-child{color:var(--brand);font-weight:500;padding-right:0}
+.anchorsec table.dt th{color:rgba(255,255,255,.6);border-color:rgba(255,255,255,.3)}
+.anchorsec table.dt td{color:var(--on-anchor-dim);border-color:rgba(255,255,255,.16)}
+.anchorsec table.dt td:first-child{color:#fff}
+.anchorsec table.dt tr:hover td{background:rgba(255,255,255,.04)}
+@media(max-width:800px){table.dt th{display:none}table.dt td{display:block;border:0;padding:4px 0}
+  table.dt td:first-child{padding-top:16px;width:auto}
+  table.dt tr{display:block;border-bottom:1px solid var(--line);padding-bottom:13px}}
+
+.nolist{display:grid;grid-template-columns:repeat(2,1fr);border-top:1px solid var(--line);margin-top:32px}
+.nolist div{border-bottom:1px solid var(--line);border-left:1px solid var(--line);padding:15px 20px;font-size:.89rem;font-weight:500;color:var(--ink)}
+.nolist div:nth-child(odd){border-left:0;padding-left:0}
+@media(max-width:700px){.nolist{grid-template-columns:1fr}.nolist div{border-left:0;padding-left:0}}
+
+.formula{margin-top:36px;border:1px solid var(--line);padding:30px;background:var(--surface)}
+.formula>b{font-family:var(--fh);font-size:1rem;color:var(--ink-strong);display:block;margin-bottom:12px}
+.formula code{font-family:ui-monospace,Menlo,monospace;font-size:.85rem;display:block;margin:10px 0;
+  color:var(--ink-strong);font-weight:600;line-height:1.7;white-space:pre-wrap}
+.anchorsec .formula{background:rgba(255,255,255,.06);border-color:rgba(255,255,255,.2)}
+.anchorsec .formula>b,.anchorsec .formula code{color:#fff}
+.anchorsec .formula code{color:var(--accent)}
+
+/* ---- product / card list ---- */
+.prod{border:1px solid var(--line);padding:24px;margin-bottom:13px;transition:.16s}
+.prod:hover{border-color:var(--brand)}
+.prod .top{display:flex;justify-content:space-between;gap:14px;align-items:flex-start}
+.prod .nm{font-family:var(--fh);font-size:1.02rem;font-weight:600;color:var(--ink-strong)}
+.prod .tag{font-size:.61rem;letter-spacing:.11em;font-weight:600;color:var(--brand);
+  border:1px solid var(--line-strong);padding:4px 9px;white-space:nowrap}
+.prod .meta{font-size:.77rem;color:var(--muted-2);margin-top:9px;padding-bottom:11px;border-bottom:1px solid var(--line)}
+.prod .deliv{font-size:.87rem;color:var(--muted);margin-top:11px;line-height:1.58}
+.prod .deliv b{color:var(--ink-strong)}
+.prod .price{font-size:.86rem;font-weight:600;margin-top:13px;padding-top:11px;
+  border-top:1px solid var(--line);color:var(--ink-strong);display:none}
+body.showprice .prod .price{display:block}
+.prod .price em{font-style:normal;font-weight:400;color:var(--muted-2);font-size:.74rem}
+
+/* ---- case card ---- */
+.cases{display:grid;grid-template-columns:repeat(3,1fr);border-top:1px solid var(--line);margin-top:40px}
+.cc{border-bottom:1px solid var(--line);border-left:1px solid var(--line);padding:30px 26px;cursor:pointer;transition:.16s}
+.cases .cc:nth-child(3n+1){border-left:0;padding-left:0}
+.cc:hover{background:var(--surface)}
+.cc .k{font-size:.64rem;letter-spacing:.13em;font-weight:600;color:var(--brand);margin-bottom:12px}
+.cc h3{margin-bottom:11px}
+.cc p{font-size:.88rem}
+.cc .m{margin-top:16px;padding-top:12px;border-top:1px solid var(--line);
+  font-family:var(--fh);font-size:1.5rem;font-weight:var(--fw-h);color:var(--ink-strong)}
+.cc .ms{font-size:.76rem;color:var(--muted);margin-top:3px}
+@media(max-width:960px){.cases{grid-template-columns:1fr}.cc,.cases .cc:nth-child(3n+1){border-left:0;padding-left:0}}
+
+/* ---- team ---- */
+.team{display:grid;grid-template-columns:repeat(3,1fr);border-top:1px solid var(--line);margin-top:38px}
+.tm{border-bottom:1px solid var(--line);border-left:1px solid var(--line);padding:30px 26px}
+.team .tm:nth-child(3n+1){border-left:0;padding-left:0}
+.tm .hd{display:flex;gap:14px;align-items:flex-start;margin-bottom:16px}
+.tm .av{width:46px;height:46px;flex:0 0 46px;border-radius:var(--r);display:flex;align-items:center;
+  justify-content:center;font-family:var(--fh);font-weight:600;font-size:.92rem;background:var(--anchor);color:#fff}
+.tm .nm{font-family:var(--fh);font-size:1.02rem;font-weight:600;line-height:1.25;color:var(--ink-strong)}
+.tm .rl{font-size:.76rem;color:var(--brand);font-weight:600;margin-top:4px;line-height:1.35}
+.tm .sec{margin-top:14px}
+.tm .sec .t{font-size:.61rem;letter-spacing:.14em;font-weight:600;color:var(--muted-2);margin-bottom:6px}
+.tm .sec p{font-size:.86rem;color:var(--muted);line-height:1.55}
+.tm .comp{display:flex;gap:6px;flex-wrap:wrap;margin-top:8px}
+.tm .comp span{font-size:.72rem;background:var(--surface);border:1px solid var(--line);padding:5px 10px;color:var(--ink)}
+.tm .auth{margin-top:15px;padding-top:12px;border-top:1px solid var(--line);font-size:.78rem;color:var(--ink-strong);font-weight:600}
+@media(max-width:980px){.team{grid-template-columns:repeat(2,1fr)}
+  .team .tm:nth-child(3n+1){border-left:1px solid var(--line);padding-left:26px}
+  .team .tm:nth-child(odd){border-left:0;padding-left:0}}
+@media(max-width:640px){.team{grid-template-columns:1fr}.tm,.team .tm:nth-child(3n+1){border-left:0;padding-left:0}}
+
+/* ---- diagnostic ---- */
+.scale{display:grid;grid-template-columns:repeat(5,1fr);border-top:1px solid rgba(255,255,255,.16);
+  border-bottom:1px solid rgba(255,255,255,.16);margin:34px 0 10px}
+.scale div{padding:19px 15px;font-size:.71rem;font-weight:600;letter-spacing:.05em;
+  color:rgba(255,255,255,.45);border-left:1px solid rgba(255,255,255,.16);transition:.2s}
+.scale div:first-child{border-left:0;padding-left:0}
+.scale div b{display:block;font-family:var(--fh);font-size:1.55rem;font-weight:var(--fw-h);color:rgba(255,255,255,.2);margin-bottom:6px}
+.scale div.hit{color:#fff}.scale div.hit b{color:var(--accent)}
+@media(max-width:760px){.scale{grid-template-columns:repeat(3,1fr)}}
+.q{border-top:1px solid rgba(255,255,255,.16);padding:22px 0}
+.q .qt{font-size:.99rem;color:#fff;margin-bottom:13px}
+.q .opts{display:flex;gap:9px;flex-wrap:wrap}
+.q .opts button{font-family:var(--fb);font-size:.83rem;font-weight:500;background:transparent;
+  border:1px solid rgba(255,255,255,.3);border-radius:var(--rs);color:rgba(255,255,255,.75);
+  padding:10px 16px;cursor:pointer;transition:.15s}
+.q .opts button:hover{border-color:#fff;color:#fff}
+.q .opts button.on{background:var(--accent);border-color:var(--accent);color:#0A1140;font-weight:600}
+.verdict{margin-top:32px;border-left:3px solid var(--accent);padding:22px 0 22px 24px;display:none}
+.verdict.on{display:block}
+.verdict .vt{font-size:.65rem;letter-spacing:.15em;font-weight:600;color:var(--accent);margin-bottom:10px}
+.verdict .vv{font-family:var(--fh);font-size:1.45rem;font-weight:var(--fw-h);color:#fff;margin-bottom:11px}
+.verdict p{color:rgba(255,255,255,.82)}
+
+/* ---- final ---- */
+.final{background:var(--anchor);color:#fff;padding:88px 0}
+.final .grid{display:grid;grid-template-columns:1.15fr .85fr;gap:56px;align-items:center}
+.final h2{color:#fff;max-width:24ch}
+.final p{color:var(--on-anchor-dim);margin-top:15px;max-width:48ch}
+.final .box{border-left:3px solid var(--accent);padding-left:24px}
+.final .box .t{font-size:.65rem;letter-spacing:.15em;font-weight:600;color:var(--accent);margin-bottom:11px}
+.final .box p{font-size:1.04rem;color:#fff;font-weight:500;margin:0}
+@media(max-width:900px){.final .grid{grid-template-columns:1fr;gap:32px}}
+footer{border-top:1px solid var(--line);padding:44px 0;font-size:.8rem;color:var(--muted-2)}
+footer .fgrid{display:grid;grid-template-columns:repeat(5,1fr);gap:28px;padding-bottom:32px}
+footer .fgrid b{display:block;color:var(--ink-strong);font-size:.72rem;letter-spacing:.12em;margin-bottom:12px}
+footer .fgrid a{display:block;color:var(--muted);text-decoration:none;padding:4px 0;cursor:pointer;font-size:.83rem}
+footer .fgrid a:hover{color:var(--brand)}
+footer .fbot{border-top:1px solid var(--line);padding-top:24px;display:flex;justify-content:space-between;gap:20px;flex-wrap:wrap}
+@media(max-width:820px){footer .fgrid{grid-template-columns:repeat(2,1fr)}}
+
+/* ---- editorial ---- */
+.note{display:none;border-left:3px solid var(--brand);background:var(--surface);padding:14px 18px;
+  font-size:.81rem;color:var(--ink);margin:18px 0;line-height:1.6}
+.note b{color:var(--brand)}
+.note.warn{border-left-color:#D9481A}
+.note.warn b{color:#D9481A}
+.anchorsec .note,.final .note{background:rgba(255,255,255,.07);border-left-color:var(--accent);color:rgba(255,255,255,.88)}
+.anchorsec .note b,.final .note b{color:var(--accent)}
+body.edit .note{display:block}
+.gap{background:rgba(28,11,255,.09);border-bottom:1px dashed var(--brand);padding:0 3px;font-weight:600;color:var(--brand)}
+.anchorsec .gap,.final .gap{background:rgba(237,233,57,.16);border-bottom-color:var(--accent);color:var(--accent)}
+.badge{display:inline-block;font-size:.57rem;letter-spacing:.09em;font-weight:600;padding:2px 7px;
+  border:1px solid var(--line-strong);color:var(--muted);margin-left:6px;vertical-align:middle}
+.badge.warn{border-color:#D9481A;color:#D9481A}
+body:not(.edit) .badge{display:none}
+.swatches{display:flex;flex-wrap:wrap;margin-top:20px;border-top:1px solid var(--line)}
+.sw{border-bottom:1px solid var(--line);border-left:1px solid var(--line);width:148px;font-size:.69rem}
+.sw:first-child{border-left:0}
+.sw i{display:block;height:48px}
+.sw span{display:block;padding:8px 10px;color:var(--muted);font-family:ui-monospace,monospace}
+.sitemap{border-top:1px solid var(--line);margin-top:34px;font-size:.88rem}
+.smrow{display:grid;grid-template-columns:190px 1fr;border-bottom:1px solid var(--line)}
+.smrow>div:first-child{padding:20px 22px 20px 0;font-family:var(--fh);font-weight:600;color:var(--ink-strong)}
+.smrow>div:last-child{padding:20px 0 20px 22px;border-left:1px solid var(--line)}
+.smrow .l2{display:block;padding:5px 0;color:var(--muted)}
+.smrow .l2 b{color:var(--ink);font-weight:600}
+@media(max-width:700px){.smrow{grid-template-columns:1fr}
+  .smrow>div:last-child{border-left:0;padding-left:0;padding-top:0}}
+</style>
+</head>
+<body class="edit" data-theme="ent">
+
+<div class="ctrl">
+  <div class="wrap">
+    <span><b>PROTOTIPAS v4</b> · IA pagal Digital Positioning Blueprint · Big4 stilistika · 2026-08-19</span>
+    <span class="tgl">
+      <button id="tTheme" class="on" onclick="toggleTheme()">Tema: ENTERPRISE</button>
+      <button id="tEdit" class="on" onclick="toggleEdit()">Redakcinis: ĮJ</button>
+      <button id="tPrice" onclick="togglePrice()">Kainos: IŠJ</button>
+      <button onclick="go('arch')">Sitemap ir spragos</button>
+    </span>
+  </div>
+</div>
+
+<div class="util">
+  <div class="wrap">
+    <a onclick="go('contact')">Pateikti užklausą (RFP)</a>
+    <a onclick="go('assess')">DI brandos vertinimas</a>
+    <a onclick="go('client0')">Client Zero</a>
+    <a>LT / EN</a>
+  </div>
+</div>
+
+<nav>
+  <div class="wrap">
+    <span class="logo" onclick="go('home')" style="cursor:pointer" aria-label="DIPA">
+      <svg viewBox="0 0 152 40" xmlns="http://www.w3.org/2000/svg" role="img">
+        <path d="M31 6 H13 L5 20 L13 34 H31 A14 14 0 0 0 31 6 Z" fill="none" stroke="currentColor" stroke-width="4.2"/>
+        <text x="52" y="30" font-family="Open Sans,sans-serif" font-size="25" font-weight="700"
+              fill="currentColor" letter-spacing="1.5">IPA</text>
+      </svg>
+    </span>
+    <span class="navlinks">
+      <span class="navitem" id="nv-philo"><a onclick="go('philosophy')">Filosofija</a>
+        <span class="drop">
+          <a onclick="go('philosophy')"><b>Ko-intelekto era</b><span>Perėjimas iš procesų standartizavimo į organizacijos intelektą</span></a>
+          <a onclick="go('rule')"><b>10–20–70 transformacijos taisyklė</b><span>Procesas ir žmogus prieš technologiją</span></a>
+        </span></span>
+      <span class="navitem" id="nv-sol"><a onclick="go('solutions')">Sprendimai</a>
+        <span class="drop">
+          <a onclick="go('align')"><b>Executive Alignment · ALIGN</b><span>Diagnostika ir vadovybės sponsorystė (I–II etapai)</span></a>
+          <a onclick="go('sprint')"><b>Transformation Sprint · TRANSFORM</b><span>90 dienų vieno end-to-end proceso perprojektavimas (III–V)</span></a>
+          <a onclick="go('scale')"><b>AI Portfolio Partnership · SCALE</b><span>VI etapas, portfelio valdymas, Fractional CAIO</span></a>
+        </span></span>
+      <span class="navitem" id="nv-uc"><a onclick="go('usecases')">Panaudojimo atvejai</a>
+        <span class="drop">
+          <a onclick="go('uc-sales')"><b>AI Sales OS</b><span>Pardavimų ciklo pagreitinimas</span></a>
+          <a onclick="go('uc-delivery')"><b>Delivery Operations</b><span>Paslaugų teikimo optimizavimas</span></a>
+          <a onclick="go('uc-knowledge')"><b>Knowledge Management</b><span>Nuo silosų į organizacijos intelektą</span></a>
+        </span></span>
+      <span class="navitem" id="nv-ins"><a onclick="go('insights')">Įžvalgos</a>
+        <span class="drop">
+          <a onclick="go('ins-roi')"><b>Kaip vertinti tikrą DI ROI</b><span>Kodėl „sutaupytos valandos" nėra rezultatas</span></a>
+          <a onclick="go('ins-champ')"><b>Vėliavnešio įgalinimas</b><span>Iš koordinatoriaus į portfelio vadovą</span></a>
+        </span></span>
+      <span class="navitem" id="nv-co"><a onclick="go('company')">Apie DIPA</a>
+        <span class="drop">
+          <a onclick="go('company')"><b>Apie DIPA ir komanda</b><span>Rolės, kompetencijos, sprendimo teisės</span></a>
+          <a onclick="go('client0')"><b>Client Zero</b><span>Savo metodiką pirma taikome sau</span></a>
+          <a onclick="go('contact')"><b>Kontaktai ir RFP</b><span>Kaip pradedame</span></a>
+        </span></span>
+    </span>
+    <a onclick="go('contact')" class="btn">Susisiekti</a>
+  </div>
+</nav>
+
+<div class="note warn" style="max-width:1240px;margin:0 auto;padding:16px 32px">
+  <b>Keturi Blueprint reikalavimai kertasi su patvirtinta strategija. Neįvykdžiau jų aklai.</b>
+  <br><b>1. ICP.</b> Blueprint nurodo <span class="gap">20–200 darbuotojų, 2–50 mln. € apyvarta</span>.
+  Core Strategy v4 §11 (patvirtinta 2026-07-28, Igoris + Mantas) nurodo <b>50–500 darbuotojų</b>, o apyvartos rėžio
+  patvirtintoje strategijoje <b>nėra</b>. Naudoju patvirtintą versiją. Blueprint šioje vietoje remiasi senesniu
+  neklasifikuotu dokumentu „DIPA AI transformacijos sistema 07.15".
+  <br><b>2. „Hero Metrics" su įrodytu ROI.</b> Blueprint reikalauja jų homepage'e. <span class="gap">Jų nėra</span> —
+  Core Strategy v4 §4 fiksuoja transformation evidence <b>n = 2</b>. Vietoje jų — įrodymo metodika ir aiškiai
+  pažymėti tušti laukai. Skaičių neišgalvojau.
+  <br><b>3. 10–20–70 taisyklė.</b> Blueprint siūlo ją kaip DIPA filosofijos pilioną. Tai <b>BCG X viešai
+  paskelbtas framework</b>. Konkurento signature framework kaip savo filosofijos ašis yra pozicionavimo rizika —
+  prototipe pateikiu su atribucija BCG ir kaip <i>rinkos įrodymą</i>, ne kaip DIPA metodiką. Sprendžia Igoris + Mantas.
+  <br><b>4. Trečias etapų rėmas.</b> Blueprint: ALIGN (I–II) / TRANSFORM (III–V) / SCALE (VI). Žinių bazėje jau yra
+  AI START (I–III) / AI IMPLEMENTATION (IV–V) / AI SCALE (VI), o pptx turi 4 etapus ŽMOGUS→KOMANDA→PROCESAS→VERSLAS.
+  <span class="gap">Trys skirtingi grupavimai to paties I–VI kelio.</span> Prototipe naudoju Blueprint versiją
+  (naujausia ir komerciškai stipriausia), bet tai <b>reikia užfiksuoti vienu dokumentu</b> — kitaip pardavimai,
+  delivery ir svetainė kalbės skirtingai.
+  <br>Taip pat: visos Blueprint cituojamos statistikos (67 % pilotų stringa, 5 % GenAI kuria vertę, 40 % bus
+  atšaukta iki 2027) turi [cite:] žymes, kurių šaltinių nemačiau. Prototipe jos pažymėtos kaip tikrinamos.
+</div>
+
+<!-- ══════════════════════════════ HOME ══════════════════════════════ -->
+<div class="view on" id="v-home">
+<header class="hero">
+  <div class="txt">
+    <div class="kicker">DI transformacija · vidutinio dydžio organizacijoms</div>
+    <h1>Pakeiskite tai, kaip veikia jūsų verslas. Paverskite intelektą išmatuojamu rezultatu.</h1>
+    <p class="sub">Neparduodame nei atskirų DI įrankių, nei bendrų promptų mokymų. DIPA suderina vadovybę,
+      perprojektuoja kritinius procesus ir sukuria organizacijos gebėjimą saugiai ir pelningai mastelinti
+      ko-intelektą.</p>
+    <div class="cta">
+      <a onclick="go('sprint')" class="btn onanchor lg">Transformation Sprint</a>
+      <a onclick="go('assess')" class="btn outanchor lg">Kur esate šiandien</a>
+    </div>
+  </div>
+  <div class="vis">
+    <svg viewBox="0 0 600 500" preserveAspectRatio="xMidYMid slice" xmlns="http://www.w3.org/2000/svg">
+      <defs><pattern id="g" width="40" height="40" patternUnits="userSpaceOnUse">
+        <path d="M40 0H0v40" fill="none" stroke="#D9D9E2" stroke-width="1"/></pattern></defs>
+      <rect width="600" height="500" fill="#F5F6FA"/><rect width="600" height="500" fill="url(#g)"/>
+      <text x="56" y="76" font-family="Open Sans" font-size="13" font-weight="700" fill="#0A1140" letter-spacing="1.5">TRANSFORMACIJOS KELIAS</text>
+      <text x="56" y="98" font-family="Open Sans" font-size="11.5" fill="#6E6E7A">kiekvienas etapas turi sukurti vertę pats savaime</text>
+      <rect x="56"  y="150" width="150" height="4" fill="#0A1140" opacity=".35"/>
+      <rect x="222" y="150" width="150" height="4" fill="#0A1140" opacity=".65"/>
+      <rect x="388" y="150" width="150" height="4" fill="#1C0BFF"/>
+      <text x="56"  y="186" font-family="Open Sans" font-size="15" font-weight="700" fill="#0A1140">ALIGN</text>
+      <text x="222" y="186" font-family="Open Sans" font-size="15" font-weight="700" fill="#0A1140">TRANSFORM</text>
+      <text x="388" y="186" font-family="Open Sans" font-size="15" font-weight="700" fill="#1C0BFF">SCALE</text>
+      <text x="56"  y="208" font-family="Open Sans" font-size="11" fill="#6E6E7A">I–II etapai</text>
+      <text x="222" y="208" font-family="Open Sans" font-size="11" fill="#6E6E7A">III–V etapai · 90 d.</text>
+      <text x="388" y="208" font-family="Open Sans" font-size="11" fill="#6E6E7A">VI etapas · portfelis</text>
+      <text x="56"  y="240" font-family="Open Sans" font-size="11.5" fill="#22222B">Sponsorystė ir</text>
+      <text x="56"  y="256" font-family="Open Sans" font-size="11.5" fill="#22222B">siauriausia vieta</text>
+      <text x="222" y="240" font-family="Open Sans" font-size="11.5" fill="#22222B">Vienas procesas,</text>
+      <text x="222" y="256" font-family="Open Sans" font-size="11.5" fill="#22222B">įrodytas efektas</text>
+      <text x="388" y="240" font-family="Open Sans" font-size="11.5" fill="#22222B">Plėtra be chaoso,</text>
+      <text x="388" y="256" font-family="Open Sans" font-size="11.5" fill="#22222B">Fractional CAIO</text>
+      <line x1="56" y1="310" x2="538" y2="310" stroke="#D9D9E2" stroke-width="1"/>
+      <text x="56" y="344" font-family="Open Sans" font-size="12" font-weight="700" fill="#0A1140">BASELINE → CHANGE → MEASURE → GATE</text>
+      <text x="56" y="366" font-family="Open Sans" font-size="11" fill="#6E6E7A">Scale · Stop · Change — „Stop“ yra normalus rezultatas</text>
+      <rect x="56" y="392" width="52" height="26" fill="#0A1140"/>
+      <rect x="116" y="392" width="52" height="26" fill="#0A1140" opacity=".7"/>
+      <rect x="176" y="392" width="52" height="26" fill="#0A1140" opacity=".45"/>
+      <rect x="236" y="392" width="52" height="26" fill="#EDE939"/>
+    </svg>
+    <div class="chain">ALIGN <i>→</i> TRANSFORM <i>→</i> SCALE
+      <span>· į kitą etapą einame tik esant ekonominiam pagrindui</span></div>
+  </div>
+</header>
+
+<section class="stats" style="padding:0">
+  <div class="wrap">
+    <div class="grid">
+      <div class="s"><div class="n mono">15 <small>metų</small></div><div class="l">vadybinės patirties <span class="badge warn">iš dipa.lt · nepatikrinta</span></div></div>
+      <div class="s"><div class="n mono">3 000+</div><div class="l">apmokytų specialistų <span class="badge warn">iš dipa.lt · nepatikrinta</span></div></div>
+      <div class="s"><div class="n mono">~300</div><div class="l">klientų <span class="badge">FAKTAS · Core Strategy §4</span></div></div>
+      <div class="s"><div class="n mono">90 <small>dienų</small></div><div class="l">iki įrodyto efekto viename procese — Transformation Sprint apimtis</div></div>
+    </div>
+    <div class="note warn"><b>Blueprint reikalauja čia „bold Hero Metrics" su įrodytu ROI. Jų neturime.</b>
+      Core Strategy v4 §4: transformation evidence <b>n = 2</b>, „today DIPA is a training business with a
+      transformation ambition". Gyvoji dipa.lt skelbia <span class="gap">„150+ įgyvendintų sprendimų" ir
+      „97 % patenkintų klientų"</span> — abu be pagrindo žinių bazėje, todėl išimti.
+      <br>Blueprint pats nurodo sprendimą: <b>Financial Result Owner (Aušrinė) validuoja kiekvieną ROI metriką
+      prieš publikavimą.</b> Iki pirmo praėjusio Value Attribution Standard (§27) skaičiaus ši eilė lieka
+      metodikos, ne rezultato, eile. Enterprise pirkėjas neįrodytą 97 % tikrina — tai didesnė rizika nei tuščias laukas.</div>
+  </div>
+</section>
+
+<!-- problemos agitacija -->
+<section>
+  <div class="wrap">
+    <div class="eyebrow">Problema</div>
+    <h2>67 % DI pilotų sustoja, nes automatizuojamas esamas chaosas,<br>o ne perprojektuojamas pats darbas</h2>
+    <p class="lead" style="margin-top:18px">DI naudojimas ≠ DI gebėjimas ≠ ekonominė vertė. Nepavyksta ne dėl
+      technologijos ir ne dėl modelių kokybės. Nepavyksta dėl to, kad nepakeičiamas veiklos modelis.</p>
+    <div class="hg c4">
+      <div class="cell"><div class="k">01 · TOOL FIRST</div><h3 class="abar">Pradedama nuo įrankio, ne nuo problemos</h3>
+        <p>Neužduotas klausimas: kur prarandame daugiausia laiko, pinigų ar kokybės?</p>
+        <div class="out">Daug DI veiklos, mažai vertės.</div></div>
+      <div class="cell"><div class="k">02 · INDIVIDUAL ONLY</div><h3 class="abar">DI lieka pavienių žmonių gebėjimu</h3>
+        <p>Geriausia praktika neužfiksuojama ir neperduodama komandai.</p>
+        <div class="out">Turime DI naudotojų, bet ne kompetenciją.</div></div>
+      <div class="cell"><div class="k">03 · AUTOMATE BEFORE REDESIGN</div><h3 class="abar">Automatizuojamas senas procesas</h3>
+        <p>DI pagreitina tai, ko galbūt apskritai nereikėjo daryti.</p>
+        <div class="out">Greitesnis chaosas.</div></div>
+      <div class="cell"><div class="k">04 · NO MEASUREMENT</div><h3 class="abar">Nėra baseline, KPI ir ekonominio rezultato</h3>
+        <p>Niekas negali pasakyti, kas pagerėjo ir kiek.</p>
+        <div class="out">Nežinome, ar DI atsipirko.</div></div>
+    </div>
+    <div class="axiom">Technologija viena verslo nepakeičia. Pakeičia <em>nauji sprendimai, nauji procesai
+      ir nauja valdymo sistema</em>.</div>
+    <div class="note"><b>Šaltiniai.</b> Keturios priežastys — AI_diagnostika_v3, skaidrė 3 (faktas iš žinių bazės).
+      Skaičius <b>67 %</b> — iš Blueprint [cite: 2], <span class="gap">pirminio šaltinio nemačiau</span>.
+      pptx'e naudojami kiti skaičiai: McKinsey 80 %+ nefiksuoja EBIT poveikio, BCG 25 % mato reikšmingą vertę.
+      <b>Reikia pasirinkti vieną skaičių su patikrinama nuoroda</b> — trys konkuruojančios statistikos svetainėje
+      atrodo kaip nerūpestingumas. Owner: Greta.</div>
+  </div>
+</section>
+
+<!-- ne tai / o tai -->
+<section class="anchorsec">
+  <div class="wrap">
+    <div class="eyebrow">Kas yra DIPA</div>
+    <h2>Mes nesame DI mokymų įmonė.<br>Mes esame DI transformacijos partneris.</h2>
+    <div class="contrast">
+      <div class="no"><div class="t">NE TAI</div>
+        <p>Diegiame DI įrankius, apmokome komandą jais naudotis ir paliekame organizaciją bandyti pačią.</p></div>
+      <div class="yes"><div class="t">O TAI</div>
+        <p>Suderiname vadovybę, perprojektuojame kritinį procesą ir sukuriame organizacijos gebėjimą
+          mastelinti ko-intelektą — saugiai, valdomai ir pelningai.</p></div>
+    </div>
+    <div class="axiom">Jūsų organizacija neturi problemos „per mažai DI“.<br>
+      Ji turi problemą <em>„per mažai sistemos“</em>.</div>
+    <h4 style="margin-top:64px">Ką klientas realiai perka</h4>
+    <p class="lead" style="margin-top:12px">Keturi dalykai. Kiekvienas su savo matavimu — ne nuomone, o įrodymu.</p>
+    <div class="hg c4">
+      <div class="cell"><div class="k">01</div><h3>Aiškumas</h3>
+        <p>Kur organizacijoje didžiausias ekonominės vertės potencialas — ir kur jo nėra.</p>
+        <div class="out">Diagnostikos ataskaita su prioritetais ir ekonomine prognoze</div></div>
+      <div class="cell"><div class="k">02</div><h3>Naujas veiklos modelis</h3>
+        <p>Perprojektuotas darbas: ką daro žmogus, ką daro DI, kur atsakomybė lieka žmogui.</p>
+        <div class="out">Patvirtinta Human–AI atsakomybių matrica</div></div>
+      <div class="cell"><div class="k">03</div><h3>Ekonominis rezultatas</h3>
+        <p>Ne atlaisvintos valandos, o realus finansinis poveikis su baseline ir po-matavimu.</p>
+        <div class="out">Realizuotas EBIT / sąnaudų sumažinimas per 12 mėn.</div></div>
+      <div class="cell"><div class="k">04</div><h3>Gebėjimas transformuotis pačiam</h3>
+        <p>Tikslas — kad organizacija ilgainiui pati valdytų DI transformaciją.</p>
+        <div class="out">Savarankiškų pokyčių skaičius per metus</div></div>
+    </div>
+    <div class="note"><b>Šaltinis:</b> Core Strategy v4 §7 ir kliento vertės lentelė — patvirtinta 2026-07-28.
+      Blueprint prašė hero sub-headline'o, kuris aiškiai pasako, ko DIPA <i>nedaro</i> — tai perkelta į hero ir
+      sustiprinta šia sekcija.</div>
+  </div>
+</section>
+
+<!-- trys sprendimai -->
+<section>
+  <div class="wrap">
+    <div class="eyebrow">Sprendimai</div>
+    <h2>Trys įėjimo taškai. Vienas kelias.</h2>
+    <p class="lead" style="margin-top:18px">Jums nereikia šiandien pirkti visos DI transformacijos.
+      Reikia pasirinkti artimiausią racionalų etapą — su baseline, KPI ir sprendimu, ar plėsti.</p>
+    <div class="hg c3">
+      <div class="cell"><div class="k">ALIGN · I–II ETAPAI</div><h3 class="abar">Executive Alignment</h3>
+        <p>Vadovybės sponsorystė, DI raštingumas sprendimų lygiu ir siauriausios vietos identifikavimas.
+          Baigiasi 90 dienų planu ir pasirinktu procesu.</p>
+        <div class="out"><a onclick="go('align')" style="color:var(--brand);cursor:pointer;text-decoration:none">Žiūrėti →</a></div></div>
+      <div class="cell"><div class="k">TRANSFORM · III–V ETAPAI</div><h3 class="abar">Transformation Sprint</h3>
+        <p>90 dienų. Vieno kritinio end-to-end proceso perprojektavimas iki veikiančio, matuojamo ir
+          valdomo darbo standarto su įrodytu finansiniu efektu.</p>
+        <div class="out"><a onclick="go('sprint')" style="color:var(--brand);cursor:pointer;text-decoration:none">Žiūrėti →</a></div></div>
+      <div class="cell"><div class="k">SCALE · VI ETAPAS</div><h3 class="abar">AI Portfolio Partnership</h3>
+        <p>Perėjimas iš projekto į portfelio valdymą: plėtra per padalinius, governance prieš mastelį,
+          vėliavnešio įgalinimas, Fractional CAIO.</p>
+        <div class="out"><a onclick="go('scale')" style="color:var(--brand);cursor:pointer;text-decoration:none">Žiūrėti →</a></div></div>
+    </div>
+    <div class="note"><b>Struktūrinis sprendimas.</b> Blueprint grupavimas ALIGN (I–II) / TRANSFORM (III–V) /
+      SCALE (VI) prototipe priimtas kaip pagrindinis. Jis komerciškai stipresnis už 4 etapų brandos ašį, nes
+      kiekvienas blokas yra <b>parduodamas vienetas</b>, o ne brandos lygis. <span class="gap">Bet žinių bazėje
+      egzistuoja dar du grupavimai</span> — reikia vieno patvirtinto dokumento. Owner: Igoris + Mantas.</div>
+  </div>
+</section>
+
+<!-- ROI -->
+<section class="surf">
+  <div class="wrap">
+    <div class="eyebrow">Matavimas</div>
+    <h2>Sutaupytos valandos nėra ROI</h2>
+    <p class="lead" style="margin-top:18px">Valandos tampa rezultatu tik tada, kai jos konvertuojasi į didesnį
+      pralaidumą, realų kaštų sumažinimą arba naujas pajamas. Kalbame finansų, ne technologijų kalba.</p>
+    <div class="formula">
+      <b>DIPA realizuoto efekto formulė</b>
+      <code>Realizuotas DI efektas = papildomas bendrasis pelnas + realus kaštų sumažinimas + išvengti nuostoliai
+                       − diegimo kaštai − eksploatacijos kaštai − klaidų kaštai</code>
+      <p class="small" style="margin-top:6px">Kiekvieną rezultatą prieš publikavimą validuoja nepriklausoma
+        vertės realizavimo rolė. Neįrodytas rezultatas nekomunikuojamas.</p>
+    </div>
+    <div class="rail" style="grid-template-columns:repeat(4,1fr)">
+      <div><div class="n">01</div><div class="t">BASELINE</div><div class="d">Kaip yra šiandien — skaičiais, prieš pokytį</div></div>
+      <div><div class="n">02</div><div class="t">CHANGE</div><div class="d">Perprojektuotas darbas, ne pagreitintas senas</div></div>
+      <div><div class="n">03</div><div class="t">MEASURE</div><div class="d">Kas pagerėjo ir kiek — su įrodymu</div></div>
+      <div><div class="n">04</div><div class="t">GATE</div><div class="d">Scale · Stop · Change. „Stop“ yra normalus rezultatas</div></div>
+    </div>
+    <div style="margin-top:32px"><a onclick="go('ins-roi')" class="btn out">Skaityti: kaip vertinti tikrą DI ROI</a></div>
+  </div>
+</section>
+
+<!-- IP / duomenys -->
+<section>
+  <div class="wrap">
+    <div class="eyebrow">Duomenys ir intelektinė nuosavybė</div>
+    <h2>Mes kuriame sistemą. Jūs ją turite.</h2>
+    <div class="hg c3">
+      <div class="cell"><div class="k">01</div><h3 class="abar">Technologiškai agnostiški</h3>
+        <p>Neparduodame licencijų ir nesame įrankio atstovai. Intelektas integruojamas į jūsų esamus,
+          apsaugotus darbo procesus.</p></div>
+      <div class="cell"><div class="k">02</div><h3 class="abar">IP lieka jums</h3>
+        <p>Visi engagement metu sukurti darbo procesai, promptai, playbooks ir architektūra teisiškai ir
+          operaciniai lieka jūsų organizacijoje.</p></div>
+      <div class="cell"><div class="k">03</div><h3 class="abar">Be vendor lock-in</h3>
+        <p>Tikslas — kad po VI etapo galėtumėte valdyti DI plėtrą be nuolatinio išorinio konsultanto.</p></div>
+    </div>
+    <div class="axiom">DI gali turėti operacinį savarankiškumą.<br>
+      DI negali turėti <em>galutinės organizacinės atsakomybės</em>.</div>
+    <div class="note"><b>Blueprint reikalavimas įvykdytas.</b> Nurodė atskirą sekciją apie data grounding ir IP
+      nuosavybę (pavyzdys: Deeper Insights „We train the model, you own the IP“). Human–AI atsakomybės principas —
+      Core Strategy §15, faktas. <span class="gap">Bet: ar IP nuosavybės pažadas yra sutartyse?</span>
+      Jei ne — tai teisinis įsipareigojimas be pagrindo. Prieš publikavimą tikrina Mantas.</div>
+  </div>
+</section>
+
+<section class="final">
+  <div class="wrap"><div class="grid">
+    <div><h2>Koks racionalus kitas žingsnis jums?</h2>
+      <p>Nepradedame nuo įrankio. Pradedame nuo klausimo, kur šiandien prarandate daugiausia vertės.</p>
+      <div style="display:flex;gap:12px;margin-top:30px;flex-wrap:wrap">
+        <a onclick="go('contact')" class="btn onanchor lg">Pateikti užklausą</a>
+        <a onclick="go('assess')" class="btn outanchor lg">DI brandos vertinimas</a></div></div>
+    <div class="box"><div class="t">KLAUSIMAS, KURIS UŽDARO SUSITIKIMĄ</div>
+      <p>„Kokį konkretų rezultatą turėtumėte pamatyti, kad galėtumėte pasakyti: ši investicija atsipirko?“</p></div>
+  </div></div>
+</section>
+</div>
+
+<!-- ══════════════════════════════ PHILOSOPHY ══════════════════════════════ -->
+<div class="view" id="v-philosophy">
+<div class="crumb"><div class="wrap"><a onclick="go('home')">Pradžia</a><i>/</i><b>Filosofija · Ko-intelekto era</b></div></div>
+<div class="phero"><div class="wrap">
+  <div class="kicker">Filosofija</div>
+  <h1>Trečioji vadybos epocha: ko-intelekto veiklos sistema</h1>
+  <p class="sub">Po žmogaus valdymo eros ir procesų standartizavimo eros seka era, kurioje vertę kuria
+    žmogaus ir mašinos intelektas viename valdymo rėme.</p>
+</div></div>
+<section>
+  <div class="wrap">
+    <p class="lead">Verslas eina per didžiausią vadybos perėjimą nuo interneto ir ERP sistemų atsiradimo.
+      Klausimas nebėra, ar diegti DI. Klausimas — kaip jį įveiklinti saugiai, pelningai ir sistemiškai
+      esamuose darbo procesuose.</p>
+    <div class="hg c3">
+      <div class="cell"><div class="k">1 EPOCHA</div><h3 class="abar">Žmogaus valdymas</h3>
+        <p>Rezultatas priklauso nuo individualaus vadovo sprendimo kokybės ir asmeninės patirties.
+          Žinios gyvena galvose.</p></div>
+      <div class="cell"><div class="k">2 EPOCHA</div><h3 class="abar">Procesų standartizavimas</h3>
+        <p>Rezultatas priklauso nuo proceso kokybės. Žinios perkeliamos į procedūras, sistemas ir KPI.</p></div>
+      <div class="cell"><div class="k">3 EPOCHA</div><h3 class="abar">Ko-intelekto veiklos sistema</h3>
+        <p>Rezultatas priklauso nuo to, kaip suprojektuotas žmogaus ir DI bendras darbas — atsakomybės,
+          sprendimo teisės, matavimas.</p></div>
+    </div>
+    <div class="axiom">DI nėra produktyvumo įrankis. DI yra <em>nauja verslo infrastruktūra</em>,
+      keičianti tai, kaip kuriama vertė ir kaip atliekamas darbas.</div>
+  </div>
+</section>
+<section class="surf">
+  <div class="wrap">
+    <div class="eyebrow">Brand Iceberg</div>
+    <h2>Trys pažado lygiai</h2>
+    <table class="dt">
+      <thead><tr><th>Lygis</th><th>Pažadas</th></tr></thead>
+      <tbody>
+        <tr><td>Funkcinis</td><td>DIPA paverčia eksperimentinę technologiją išmatuojamu verslo rezultatu ir nauja
+          veiklos sistema — per verslo kliūties, ekonomikos ir žmonių elgesio analizę.</td></tr>
+        <tr><td>Emocinis</td><td>DIPA suteikia vadovams aiškumą, kontrolę ir pasitikėjimą radikalių pokyčių eroje.</td></tr>
+        <tr><td>Filosofinis</td><td>Technologija viena organizacijos nepakeičia. Reikia naujų sprendimų, naujų
+          atsakomybių ir didesnio organizacijos mokymosi greičio.</td></tr>
+      </tbody>
+    </table>
+    <div class="note"><b>Šaltinis:</b> „DIPA AI transformacijos sistema 07.15“, Brand Iceberg —
+      <span class="gap">dokumentas neklasifikuotas</span>. Formuluotės tinkamos svetainei, bet dokumentas nėra
+      patvirtintos strategijos dalis. Brand Essence „Intelligence into Impact“ ir Brand Promise
+      „From AI uncertainty to organizational clarity, capability and measurable impact“ yra iš to paties šaltinio.</div>
+  </div>
+</section>
+<section class="anchorsec">
+  <div class="wrap">
+    <div class="eyebrow">Ko sąmoningai nedarome</div>
+    <h2>Septyni atsisakymai</h2>
+    <p class="lead" style="margin-top:16px">Pozicionavimas yra ne tik tai, ką darome. Daugiau pasako tai,
+      ko atsisakome net kai už tai moka.</p>
+    <div class="nolist" style="border-color:rgba(255,255,255,.16)">
+      <div style="border-color:rgba(255,255,255,.16);color:#fff">Tradicinės konsultacinės įmonės modelio, kur valanda = pajamos</div>
+      <div style="border-color:rgba(255,255,255,.16);color:#fff">Bendrų DI mokymų kaip galutinio produkto</div>
+      <div style="border-color:rgba(255,255,255,.16);color:#fff">Vienkartinių automatizacijų be verslo problemos</div>
+      <div style="border-color:rgba(255,255,255,.16);color:#fff">Atskirų agentų diegimo be konteksto</div>
+      <div style="border-color:rgba(255,255,255,.16);color:#fff">Gryno SaaS be transformacijos kompetencijos</div>
+      <div style="border-color:rgba(255,255,255,.16);color:#fff">Konkuravimo žema kaina</div>
+      <div style="border-color:rgba(255,255,255,.16);color:#fff">Teiginių apie realizuotą vertę be įrodymo standarto</div>
+      <div style="border-color:rgba(255,255,255,.16);color:#fff">Projektų be ekonominės vertės hipotezės</div>
+    </div>
+    <div class="note"><b>Šaltinis:</b> Core Strategy v4 §7 ir §29 — patvirtinta. Tai stipriausia svetainei
+      paruošta žinių bazės dalis. Blueprint reikalavo „aggressively counter the noise“ — šie atsisakymai tai ir daro,
+      be reikalo neįvardinant konkurentų.</div>
+  </div>
+</section>
+<section>
+  <div class="wrap">
+    <div class="eyebrow">Promptų inžinerija</div>
+    <h2>Bazinis DI raštingumas yra modulis, ne produktas</h2>
+    <p class="lead" style="margin-top:18px">Rinka pilna nebrangių promptų kursų. Statyti verslą ant šios
+      paslaugos reiškia lenktyniauti į dugną. Todėl bazinis raštingumas DIPA kelyje yra <b>įgalinantis modulis</b>
+      platesnėje transformacijoje, o ne pardavimo objektas.</p>
+    <div class="contrast">
+      <div class="no"><div class="t">SENA FORMULUOTĖ</div>
+        <p>„Mokome jūsų darbuotojus rašyti geras užklausas.“</p></div>
+      <div class="yes"><div class="t">NAUJA FORMULUOTĖ</div>
+        <p>„Sukuriame organizacijos gebėjimą: formuluoti verslo užduotį, perduoti strateginį kontekstą,
+          saugiai išskaidyti darbo procesą ir įtvirtinti human-in-the-loop kontrolę.“</p></div>
+    </div>
+    <div class="note warn"><b>Tai turi komercinę pasekmę, kurią reikia pripažinti.</b> Blueprint teisus, kad
+      promptų mokymai yra commodity. Bet Core Strategy §4 sako: <span class="gap">„today DIPA is a training
+      business with a transformation ambition"</span>, o mokymai šiandien yra Cash Engine.
+      <br>Jei svetainė mokymus nuleidžia iki „modulio“, reikia atsakyti: <b>iš kur ateina pajamos pereinamuoju
+      periodu?</b> B klientų segmentas (tik I etapas) Core Strategy §11 aiškiai įvardintas kaip pajamų segmentas.
+      Jo negalima paslėpti nuo svetainės — jam reikia atskiro, mažiau matomo įėjimo taško, ne pozicionavimo centro.
+      <b>Sprendžia Igoris + Mantas kartu su kainodara.</b></div>
+  </div>
+</section>
+</div>
+
+<!-- ══════════════════════════════ 10-20-70 ══════════════════════════════ -->
+<div class="view" id="v-rule">
+<div class="crumb"><div class="wrap"><a onclick="go('home')">Pradžia</a><i>/</i><a onclick="go('philosophy')">Filosofija</a><i>/</i><b>10–20–70</b></div></div>
+<div class="phero"><div class="wrap">
+  <div class="kicker">Rinkos įrodymas</div>
+  <h1>10–20–70: kodėl DI investicija lūžta ne prie technologijos</h1>
+  <p class="sub">Vienas iš tvirčiausių rinkos įrodymų, kad transformacija yra procesų ir žmonių, ne modelių
+    klausimas.</p>
+</div></div>
+<section>
+  <div class="wrap">
+    <p class="lead">BCG X viešai skelbiamas DI masteliavimo santykis: 10 % investicijos į algoritmus,
+      20 % į technologinę infrastruktūrą ir 70 % į procesų perprojektavimą bei darbo būdo pokytį.</p>
+    <div class="rule">
+      <div><div class="p">10 %</div><div class="t">Algoritmai ir modeliai</div></div>
+      <div><div class="p">20 %</div><div class="t">Technologinė infrastruktūra ir duomenys</div></div>
+      <div><div class="p">70 %</div><div class="t">Procesų perprojektavimas, atsakomybės, darbo būdas, adopcija</div></div>
+    </div>
+    <p class="lead" style="margin-top:34px">Praktinė išvada vadovui: jei DI biudžetas beveik visas skirtas
+      įrankiams ir integracijoms, o proceso pokyčiui — likučiai, projektas statistiškai stringa dar iki rezultato.
+      Būtent tuos 70 % DIPA ir dirba.</p>
+    <div class="note warn"><b>Atribucija būtina, ir tai ne formalumas.</b> 10–20–70 yra <b>BCG X signature
+      framework</b>, ne DIPA metodika. Blueprint siūlė jį kaip DIPA filosofijos pilioną (Tier 2 topic cluster) —
+      <span class="gap">to nerekomenduoju</span>.
+      <br><b>Kodėl:</b> (1) enterprise pirkėjas, kuris žino BCG, atpažins pasisavinimą, ir tai kainuos daugiau
+      pasitikėjimo, nei duos autoriteto; (2) DIPA jau turi savo ekvivalentą — penkis filtrus
+      Eliminate → Simplify → AI → Human+AI → Human, kurie yra <i>konkretesni</i> už 10–20–70, nes yra veiksmas,
+      o ne proporcija.
+      <br><b>Rekomendacija:</b> 10–20–70 laikyti <i>rinkos įrodymu su atribucija</i> (kaip šiame puslapyje), o
+      filosofijos pilionu daryti penkis filtrus. Sprendžia Igoris + Mantas.</div>
+    <div style="margin-top:34px"><a onclick="go('sprint')" class="btn">Kaip dirbame tuos 70 %</a></div>
+  </div>
+</section>
+</div>
+
+<!-- ══════════════════════════════ ALIGN ══════════════════════════════ -->
+<div class="view" id="v-align">
+<div class="crumb"><div class="wrap"><a onclick="go('home')">Pradžia</a><i>/</i><a onclick="go('solutions')">Sprendimai</a><i>/</i><b>Executive Alignment</b></div></div>
+<div class="phero"><div class="wrap">
+  <div class="kicker">ALIGN · I–II etapai</div>
+  <h1>Executive Alignment: sponsorystė, kryptis ir 90 dienų planas</h1>
+  <p class="sub">Prieš perprojektuojant procesą, vadovybė turi kalbėti viena kalba ir žinoti, kuri kliūtis
+    kainuoja daugiausia.</p>
+</div></div>
+<section>
+  <div class="wrap">
+    <div class="pcols" style="display:grid;grid-template-columns:1.05fr .95fr;gap:60px">
+      <div>
+        <div class="eyebrow">Kam tai skirta</div>
+        <h4>Organizacijoms, kur DI jau naudojamas, bet niekas negali pasakyti, ką jis pakeitė</h4>
+        <p class="lead" style="margin-top:16px">ALIGN etapas nesprendžia visų procesų. Jo darbas — sukurti bendrą
+          sprendimų lygio DI raštingumą, identifikuoti 1–2 prioritetines kryptis pagal realų verslo skausmą ir
+          užfiksuoti, kas organizacijoje bus atsakingas.</p>
+        <div class="hg c2" style="margin-top:36px">
+          <div class="cell"><div class="k">REZULTATAS 01</div><h3>DI atsakomybės branduolys</h3>
+            <p>Apibrėžta vadovo ir vėliavnešio rolė. Ne komitetas — dvi konkrečios atsakomybės.</p></div>
+          <div class="cell"><div class="k">REZULTATAS 02</div><h3>Galimybių ir skausmų žemėlapis</h3>
+            <p>Procesų trinties vietos, įvertintos pagal vertę, o ne pagal įrankių madą.</p></div>
+          <div class="cell"><div class="k">REZULTATAS 03</div><h3>1–2 prioritetinės kryptys</h3>
+            <p>Įvertinta, ar prioritetas susijęs su pajamomis ir klientais, ar su vidine operacija.</p></div>
+          <div class="cell"><div class="k">REZULTATAS 04</div><h3>90 dienų planas</h3>
+            <p>Konkretus procesas, pasirinktas Transformation Sprint'ui, su KPI ir savininku.</p></div>
+        </div>
+        <div class="note"><b>Apimties riba, kurią rodome sąmoningai.</b> II etapo dokumentas: „II etapas dar
+          neturi tapti giliu konkretaus proceso perprojektavimu.“ Aiški riba enterprise segmente kelia
+          pasitikėjimą ir apsaugo delivery nuo scope creep.</div>
+      </div>
+      <div>
+        <div class="eyebrow">Produktai</div>
+        <div class="prod"><div class="top"><span class="nm">Vadovų DI bazė</span><span class="tag">I ETAPAS</span></div>
+          <div class="meta">2 savaitės · ~3 gyvos sesijos/sav. · ~1,5 val. · vadovui ir funkcijų vadovams</div>
+          <div class="deliv">6 sesijos: DI logika ir užklausų formavimas · darbas su dokumentais · asistentai ·
+            Excel ir duomenų analizė · agentai · Q&amp;A. Po kurso — 1 mėn. palaikymo laikotarpis.
+            <b>Paskirtis:</b> bendras sprendimų lygio raštingumas, ne įrankių mokymas.</div>
+          <div class="price">999 € / vieta <em>+ PVM · siūlymas, nepatvirtinta</em></div></div>
+        <div class="prod"><div class="top"><span class="nm">DI kryptis ir 90 dienų planas</span><span class="tag">II ETAPAS</span></div>
+          <div class="meta">iki 1 savaitės · 4–5 gyvos sesijos po ~1,5 val. · vadovas ir vėliavnešys</div>
+          <div class="deliv">5 sesijos: rolės ir procesų diagnostika · JTBD ir prioritetinė problema ·
+            marketingo, pardavimų ir kliento kelio procesai · HR, vidiniai procesai ir projektų valdymas ·
+            <b>90 dienų DI diegimo planas</b>. Prasideda po ~30 d. įsisavinimo laikotarpio po I etapo.</div>
+          <div class="price">3 000 € / organizacijai <em>+ PVM · siūlymas, nepatvirtinta</em></div></div>
+        <div class="prod"><div class="top"><span class="nm">Darbuotojų DI bazė</span><span class="tag">ĮGALINANTIS MODULIS</span></div>
+          <div class="meta">2 savaitės · 6 sesijos po ~1,5 val. · atvira arba uždara grupė</div>
+          <div class="deliv">Platesnės komandos DI žinių sulyginimas, kad diegimas netaptų vieno skyriaus
+            iniciatyva. <b>Nėra savarankiškas produktas</b> — priedas prie transformacijos kelio.</div>
+          <div class="price">349 € / dalyvis · uždara grupė nuo 7 000 € <em>+ PVM · siūlymas</em></div></div>
+        <div style="margin-top:24px"><a onclick="go('sprint')" class="btn out">Toliau: Transformation Sprint →</a></div>
+      </div>
+    </div>
+  </div>
+</section>
+</div>
+
+<!-- ══════════════════════════════ SPRINT ══════════════════════════════ -->
+<div class="view" id="v-sprint">
+<div class="crumb"><div class="wrap"><a onclick="go('home')">Pradžia</a><i>/</i><a onclick="go('solutions')">Sprendimai</a><i>/</i><b>Transformation Sprint</b></div></div>
+<div class="phero"><div class="wrap">
+  <div class="kicker">TRANSFORM · III–V etapai · pagrindinis produktas</div>
+  <h1>90 dienų. Vienas procesas. Įrodytas finansinis efektas.</h1>
+  <p class="sub">Sprint nėra mokymai, nėra techninis eksperimentas ir nėra atskiro chatbot'o sukūrimas.
+    Tai sisteminis vieno kritinio end-to-end proceso perprojektavimas iki veikiančio ir matuojamo darbo standarto.</p>
+</div></div>
+<section>
+  <div class="wrap">
+    <div class="contrast">
+      <div class="no"><div class="t">SPRINT NĖRA</div>
+        <p>Mokymai · pilotas dėl piloto · atskiras chatbot'as · įrankio integracija · prezentacija su rekomendacijomis.</p></div>
+      <div class="yes"><div class="t">SPRINT YRA</div>
+        <p>Vienas kritinis procesas, perprojektuotas nuo galo iki galo, su nauju darbo standartu, veikiančiu
+          pilotu, KPI lentele ir GATE sprendimu: mastelinti, stabdyti ar koreguoti.</p></div>
+    </div>
+
+    <h4 style="margin-top:70px">Aštuoni Sprint etapai</h4>
+    <div class="rail">
+      <div><div class="n">01</div><div class="t">FRAME</div><div class="d">Scope, sponsorius, savininkas, sėkmės kriterijus</div></div>
+      <div><div class="n">02</div><div class="t">DIAGNOSE</div><div class="d">Esamo proceso žemėlapis, trinties vietos, baseline</div></div>
+      <div><div class="n">03</div><div class="t">REDESIGN</div><div class="d">Eliminate → Simplify → AI → Human+AI → Human</div></div>
+      <div><div class="n">04</div><div class="t">BUILD</div><div class="d">Sprendimas, duomenys, integracijos, playbook</div></div>
+      <div><div class="n">05</div><div class="t">ADOPT</div><div class="d">Rolės, mokymas darbo vietoje, human-in-the-loop</div></div>
+      <div><div class="n">06</div><div class="t">VALIDATE</div><div class="d">Matavimas prieš ir po, nepriklausoma patikra</div></div>
+      <div><div class="n">07</div><div class="t">STANDARDIZE</div><div class="d">Darbo standartas, governance, atsakomybės</div></div>
+      <div><div class="n">08</div><div class="t">SCALE</div><div class="d">GATE: mastelinti, stabdyti ar koreguoti</div></div>
+    </div>
+
+    <h4 style="margin-top:70px">Penki perprojektavimo filtrai</h4>
+    <p class="lead" style="margin-top:12px">Didžiausias Sprint klausimas: <b>jeigu šį procesą kurtume šiandien
+      nuo nulio — ką iš tikrųjų turi daryti žmogus?</b> DI yra tik trečias filtras.</p>
+    <div class="hg c4" style="grid-template-columns:repeat(5,1fr)">
+      <div class="cell" style="border-left:0;padding-left:0"><div class="k">01</div><h3>ELIMINATE</h3><p>Ko apskritai nereikia daryti?</p></div>
+      <div class="cell"><div class="k">02</div><h3>SIMPLIFY</h3><p>Ką galima supaprastinti?</p></div>
+      <div class="cell"><div class="k">03</div><h3>AI</h3><p>Ką stabiliai gali atlikti sistema?</p></div>
+      <div class="cell"><div class="k">04</div><h3>HUMAN + AI</h3><p>Kur stipriausias rezultatas gaunamas kartu?</p></div>
+      <div class="cell"><div class="k">05</div><h3>HUMAN</h3><p>Kur būtinas sprendimas, atsakomybė, rizikos kontrolė?</p></div>
+    </div>
+    <div class="axiom">Pirmiausia perprojektuok. <em>Tik tada automatizuok.</em></div>
+  </div>
+</section>
+
+<section class="anchorsec">
+  <div class="wrap">
+    <div class="eyebrow">Finansinis pagrindas</div>
+    <h2>Formulė, kurią rodome finansų vadovui</h2>
+    <div class="formula">
+      <b>Realizuotas DI efektas</b>
+      <code>= papildomas bendrasis pelnas + realus kaštų sumažinimas + išvengti nuostoliai
+  − diegimo kaštai − eksploatacijos kaštai − klaidų kaštai</code>
+      <p class="small" style="margin-top:8px">Atlaisvintos valandos savaime nėra finansinis rezultatas.
+        Jos tampa rezultatu tik konvertavusios į pralaidumą, kaštų sumažinimą arba naujas pajamas.</p>
+    </div>
+    <table class="dt">
+      <thead><tr><th>Ką gaunate</th><th>Kada</th></tr></thead>
+      <tbody>
+        <tr><td>Proceso scope ir baseline</td><td>Iki 3 savaitės</td></tr>
+        <tr><td>Naujas darbo modelis: ką daro žmogus, ką daro DI</td><td>Iki 6 savaitės</td></tr>
+        <tr><td>Veikiantis pilotas realiame procese</td><td>Iki 10 savaitės</td></tr>
+        <tr><td>KPI ir ROI matavimo lentelė su nepriklausoma patikra</td><td>Iki 12 savaitės</td></tr>
+        <tr><td>DI valdymo ir atsakomybių modelis (governance)</td><td>Iki 12 savaitės</td></tr>
+        <tr><td>GATE sprendimas: standartizuoti, plėsti, stabdyti ar koreguoti</td><td>90 diena</td></tr>
+      </tbody>
+    </table>
+    <div class="note warn"><b>Terminai lentelėje yra mano rekonstrukcija, ne dokumento faktas.</b>
+      Žinių bazėje III etapas turi 8 blokus ir 1–2 dienų formatą, V etapas — 6 žingsnius, bet
+      <span class="gap">V etapo dokumente nėra nei trukmės, nei sesijų kiekio, nei formato lentelės</span> —
+      vienintelis etapas be jos. „90 dienų Sprint“ kaip vienas produktas iš III+V yra Blueprint konstrukcija.
+      <br><b>Reikia:</b> V etapo dokumentą papildyti formato lentele ir nuspręsti, ar III ir V parduodami
+      atskirai, ar kaip vienas 90 dienų produktas. Tai keičia ir kainodarą (dabar 4–7 k € + 7–15 k € atskirai).
+      <b>Owner: Mantas. Kainodara: Igoris + Mantas.</b></div>
+    <div style="margin-top:30px;display:flex;gap:12px;flex-wrap:wrap">
+      <a onclick="go('scale')" class="btn onanchor">Toliau: AI Portfolio Partnership →</a>
+      <a onclick="go('usecases')" class="btn outanchor">Panaudojimo atvejai</a></div>
+  </div>
+</section>
+
+<section>
+  <div class="wrap">
+    <div class="eyebrow">Metodinis pagrindas</div>
+    <h2>Governance nėra priedas</h2>
+    <div class="hg c3">
+      <div class="cell"><div class="k">NIST AI RMF</div><h3 class="abar">Govern · Map · Measure · Manage</h3>
+        <p>Rizikos valdymo rėmas, taikomas kiekvienam įveiklinamam procesui.</p></div>
+      <div class="cell"><div class="k">ISO/IEC 42001</div><h3 class="abar">DI valdymo sistemos standartas</h3>
+        <p>Atsakomybių, dokumentacijos ir kontrolės logika, kurią klientas gali audituoti.</p></div>
+      <div class="cell"><div class="k">PDCA</div><h3 class="abar">Plan · Do · Check · Act</h3>
+        <p>Nuolatinio tobulinimo ciklas, kad procesas nesustotų po piloto.</p></div>
+    </div>
+    <div class="note"><b>Faktas iš V etapo dokumento.</b> Šie trys rėmai ten įvardinti tiesiogiai — tai vienas
+      stipriausių enterprise segmento argumentų visoje žinių bazėje ir anksčiau svetainėje nebuvo naudojamas.</div>
+  </div>
+</section>
+</div>
+
+<!-- ══════════════════════════════ SCALE ══════════════════════════════ -->
+<div class="view" id="v-scale">
+<div class="crumb"><div class="wrap"><a onclick="go('home')">Pradžia</a><i>/</i><a onclick="go('solutions')">Sprendimai</a><i>/</i><b>AI Portfolio Partnership</b></div></div>
+<div class="phero"><div class="wrap">
+  <div class="kicker">SCALE · VI etapas</div>
+  <h1>Turite veikiantį DI pilotą. Kaip jį išplėsti nepradedant kiekvieną kartą nuo nulio?</h1>
+  <p class="sub">VI etapas nėra idėjų generavimo sesija apie technologines galimybes. Tai perėjimas į
+    portfelio valdymą.</p>
+</div></div>
+<section>
+  <div class="wrap">
+    <p class="lead">Po pirmo įveiklinto proceso organizacija susiduria su nauja problema: kaip perkelti tai,
+      kas suveikė, į kitus padalinius, negrįžtant į chaosą. Sprendimas nėra daugiau pilotų. Sprendimas yra
+      valdomas portfelis su aiškiais prioritetų, rizikos ir sprendimo teisių principais.</p>
+
+    <table class="dt hl">
+      <thead><tr><th>Dimensija</th><th>V etapas · Pilotas</th><th>VI etapas · Partnerystė</th></tr></thead>
+      <tbody>
+        <tr><td>Pagrindinis tikslas</td><td>Vieną pasirinktą procesą paversti veikiančia, valdoma ir matuojama DI sistema</td>
+          <td>Perkelti tai, kas suveikė, į kitus prioritetinius padalinius ir procesus</td></tr>
+        <tr><td>Organizacinis fokusas</td><td>Sutelktas į pirmo proceso sėkmę</td>
+          <td>Valdoma plėtra visos organizacijos mastu</td></tr>
+        <tr><td>Rezultatai</td><td>Darbo standartas, pirminiai KPI, atsakomybės, bazinis governance</td>
+          <td>Plėtros modelis, įgalintas vėliavnešys, use case portfelis</td></tr>
+        <tr><td>Galutinis rezultatas</td><td>Vienas veikiantis ir matuojamas DI sustiprintas procesas</td>
+          <td>Nauji strateginiai prioritetai ir 90 dienų plėtros roadmap'as</td></tr>
+        <tr><td>DIPA rolė</td><td>Padeda klientui įveiklinti konkretų procesą</td>
+          <td>Veda portfelio plėtrą, valdo riziką, kuria vidinį savarankišką gebėjimą</td></tr>
+      </tbody>
+    </table>
+
+    <h4 style="margin-top:70px">Penki plėtros principai</h4>
+    <div class="hg c3">
+      <div class="cell"><div class="k">01</div><h3 class="abar">Scale what works</h3>
+        <p>Plečiame tik tai, kas jau turi išmatuotą rezultatą. Nauji procesai atrenkami pagal įrodytą vertės
+          potencialą, ne pagal entuziazmą.</p></div>
+      <div class="cell"><div class="k">02</div><h3 class="abar">Portfolio management</h3>
+        <p>DI iniciatyvos valdomos kaip portfelis: vertė, sudėtingumas, rizikos, duomenų pasiruošimas,
+          vadovų palaikymas.</p></div>
+      <div class="cell"><div class="k">03</div><h3 class="abar">Governance before scale</h3>
+        <p>Sprendimo teisės ir rizikos kontrolė nustatomos <b>prieš</b> plėtrą, ne po pirmo incidento.</p></div>
+      <div class="cell"><div class="k">04</div><h3 class="abar">Internal capability building</h3>
+        <p>Vėliavnešys pereina iš iniciatyvų koordinatoriaus į portfelio vadovą, gebantį valdyti ROI ir
+          sprendimų ritmą.</p></div>
+      <div class="cell"><div class="k">05</div><h3 class="abar">Iterative transformation</h3>
+        <p>Pirma įrodyti viename procese. Tada standartizuoti. Tada plėsti. Ne atvirkščiai.</p></div>
+      <div class="cell" style="background:var(--surface)"><div class="k">REZULTATAS</div><h3>Po 2–3 mėnesių</h3>
+        <p>2–3 nauji prioritetiniai use case'ai · plėtros roadmap'as · įgalintas vėliavnešys ·
+          sprendimas dėl tęstinio modelio.</p></div>
+    </div>
+  </div>
+</section>
+
+<section class="anchorsec">
+  <div class="wrap">
+    <div class="eyebrow">Tęstinis modelis</div>
+    <h2>Fractional CAIO</h2>
+    <p class="lead" style="margin-top:16px">Tvari DI transformacija reikalauja ne vienkartinio sprinto, o
+      ilgalaikės architektūrinės priežiūros ir nuolatinio gebėjimo kūrimo. Fractional Chief AI Officer modelis
+      duoda vidutinio dydžio organizacijai senior lygio DI valdymą be pilnos etatinės kainos.</p>
+    <div class="hg c2">
+      <div class="cell"><div class="k">KĄ APIMA</div><h3>Architektūrinė priežiūra</h3>
+        <p>DI portfelio prioritetai, governance ritmas, rizikų registras, KPI peržiūra, sprendimo teisių palaikymas,
+          vėliavnešio mentoringas.</p></div>
+      <div class="cell"><div class="k">KĄ NEAPIMA</div><h3>Ne outsourcing</h3>
+        <p>DIPA valdo metodiką. Klientas valdo savo žmones, duomenis, sprendimus ir realų taikymą.
+          DIPA rolė nėra „padaryti viską už klientą“.</p></div>
+    </div>
+    <div class="prod" style="margin-top:34px;border-color:rgba(255,255,255,.28);background:rgba(255,255,255,.04)">
+      <div class="top"><span class="nm" style="color:#fff">AI Portfolio Partnership</span>
+        <span class="tag" style="color:var(--accent);border-color:rgba(237,233,57,.5)">VI ETAPAS</span></div>
+      <div class="meta" style="color:rgba(255,255,255,.55);border-color:rgba(255,255,255,.2)">
+        2–3 mėn. · sesijos kas 1–2 sav. po ~1,5–2 val. · vadovas, vėliavnešys, proceso savininkai, naujų padalinių vadovai</div>
+      <div class="deliv" style="color:var(--on-anchor-dim)">7 blokai: pirmo proceso rezultatai ir pamokos ·
+        naujas plėtros žemėlapis · 2–3 prioritetiniai use case'ai · sustiprinta vėliavnešio rolė ·
+        plėtros valdymo principai · <b style="color:#fff">90 dienų plėtros planas</b> · sprendimas dėl CAIO modelio.</div>
+      <div class="price" style="color:#fff;border-color:rgba(255,255,255,.2)">2 000–6 000 € / mėn. ·
+        arba 6–12 k € už 2 mėn. sprintą <em style="color:rgba(255,255,255,.5)">+ PVM · siūlymas, nepatvirtinta</em></div>
+    </div>
+    <div class="note"><b>Faktas:</b> VI etapo dokumentas nurodo 2–3 mėn., sesijas kas 1–2 sav. ir kainos rėžį
+      2 000–6 000 € / mėn. — visa su prierašu „Siūlymas“. Blueprint tą patį rėžį naudoja kaip Fractional CAIO
+      retainer signalą. <span class="gap">Perėjimas į CAIO retainer dokumente aprašytas kaip „aukštesnės vertės
+      retainer modelis“ be skaičių</span> — jei CAIO parduodamas atskirai, jam reikia savo kainos.</div>
+  </div>
+</section>
+</div>
+
+<!-- ══════════════════════════════ USE CASES ══════════════════════════════ -->
+<div class="view" id="v-usecases">
+<div class="crumb"><div class="wrap"><a onclick="go('home')">Pradžia</a><i>/</i><b>Panaudojimo atvejai</b></div></div>
+<div class="phero"><div class="wrap">
+  <div class="kicker">Panaudojimo atvejai</div>
+  <h1>Trys sritys, kuriose transformacija atsipirko pirmiausia</h1>
+  <p class="sub">Kiekvienas atvejis pateikiamas viena struktūra: verslo kliūtis → proceso perprojektavimas →
+    DI integracija → Human–AI sinergija → ROI metrika.</p>
+</div></div>
+<section>
+  <div class="wrap">
+    <div class="note warn"><b>Ši sekcija yra struktūra be turinio. Sąmoningai.</b> Blueprint reikalauja pakeisti
+      bendrus atsiliepimus detaliomis, metrikomis paremtomis transformacijos istorijomis.
+      <span class="gap">Nė vieno publikuoti tinkamo kliento rezultato žinių bazėje nėra</span> — Core Strategy v4 §4:
+      transformation evidence n = 2.
+      <br>Todėl kiekvienoje kortelėje yra <b>pilna Blueprint reikalaujama struktūra su tuščiais metrikos laukais</b>.
+      Užpildyti gali tik tas, kas turi duomenis, ir tik perėjus Value Attribution Standard (§27) bei Quality Gate.
+      <br><b>Blueprint tam pateikia mechanizmą — Case Study Engine:</b> kiekvienas baigtas Sprint duoda vieną naują
+      dokumentuotą atvejį; Financial Result Owner (Aušrinė) validuoja kiekvieną metriką prieš publikavimą.
+      <b>Tai rekomenduoju priimti kaip procesą, ne kaip vienkartinį darbą.</b></div>
+
+    <div class="cases">
+      <div class="cc" onclick="go('uc-sales')"><div class="k">AI SALES OS</div>
+        <h3 class="abar">Pardavimų ciklo pagreitinimas</h3>
+        <p><b>Kliūtis:</b> pasiūlymo parengimas reikalauja daug rankinio darbo, follow-up praleidžiamas,
+          CRM pildomas nereguliariai. <b>Pokytis:</b> kvalifikavimo ir pasiūlymo procesas perprojektuojamas,
+          DI perima struktūrinį darbą, pardavėjas — sprendimą ir santykį.</p>
+        <div class="m">[ ___ % ]</div><div class="ms">ciklo laiko sutrumpinimas · laukas neužpildytas</div></div>
+      <div class="cc" onclick="go('uc-delivery')"><div class="k">DELIVERY OPERATIONS</div>
+        <h3 class="abar">Paslaugų teikimo optimizavimas</h3>
+        <p><b>Kliūtis:</b> projekto rezultatas priklauso nuo konkretaus žmogaus atminties; kokybė nevienoda;
+          rework kartojasi. <b>Pokytis:</b> delivery standartas ir žinių fiksavimas, kad projekto kokybė
+          nepriklausytų nuo to, kas jį veda.</p>
+        <div class="m">[ ___ % ]</div><div class="ms">maržos pokytis · laukas neužpildytas</div></div>
+      <div class="cc" onclick="go('uc-knowledge')"><div class="k">KNOWLEDGE MANAGEMENT</div>
+        <h3 class="abar">Nuo silosų į organizacijos intelektą</h3>
+        <p><b>Kliūtis:</b> žinios išsibarsčiusios po failus, laiškus ir žmonių galvas; naujas žmogus ilgai
+          įsidirba. <b>Pokytis:</b> žinių architektūra, kurioje geriausia praktika yra prieinama darbo momentu,
+          o ne saugoma archyve.</p>
+        <div class="m">[ ___ d. ]</div><div class="ms">onboarding trumpinimas · laukas neužpildytas</div></div>
+    </div>
+
+    <h4 style="margin-top:72px">Atvejo aprašymo struktūra, kurios laikysimės</h4>
+    <div class="rail" style="grid-template-columns:repeat(5,1fr)">
+      <div><div class="n">01</div><div class="t">VERSLO KLIŪTIS</div><div class="d">Konkretus skausmas su skaičiumi ir baseline</div></div>
+      <div><div class="n">02</div><div class="t">PROCESO PERPROJEKTAVIMAS</div><div class="d">Kaip pasikeitė pats darbas, ne įrankis</div></div>
+      <div><div class="n">03</div><div class="t">DI INTEGRACIJA</div><div class="d">Kas konkrečiai buvo įveiklinta ir kur</div></div>
+      <div><div class="n">04</div><div class="t">HUMAN–AI SINERGIJA</div><div class="d">Kaip pasikeitė žmogaus rolė ir atsakomybė</div></div>
+      <div><div class="n">05</div><div class="t">ROI METRIKA</div><div class="d">Laikas, kokybė, pajamos — su nepriklausoma patikra</div></div>
+    </div>
+    <div style="margin-top:34px"><a onclick="go('client0')" class="btn">Kol nėra klientų atvejų — žiūrėkite Client Zero</a></div>
+  </div>
+</section>
+</div>
+
+<!-- use case detail views -->
+<div class="view" id="v-uc-sales">
+<div class="crumb"><div class="wrap"><a onclick="go('home')">Pradžia</a><i>/</i><a onclick="go('usecases')">Panaudojimo atvejai</a><i>/</i><b>AI Sales OS</b></div></div>
+<div class="phero"><div class="wrap"><div class="kicker">AI Sales OS Transformation</div>
+  <h1>Pardavimų veiklos sistema, kurioje DI perima struktūrinį darbą</h1>
+  <p class="sub">Ne „DI pardavimuose“. Perprojektuotas kvalifikavimo ir pasiūlymo procesas su aiškiu
+    atsakomybių padalinimu.</p></div></div>
+<section><div class="wrap">
+  <table class="dt">
+    <thead><tr><th>Struktūros elementas</th><th>Turinys</th></tr></thead>
+    <tbody>
+      <tr><td>Verslo kliūtis</td><td>Pasiūlymo parengimas reikalauja daug senior laiko. Follow-up praleidžiamas.
+        CRM pildomas nereguliariai, todėl forecast nepatikimas. <span class="gap">Baseline skaičiai — neužfiksuoti</span></td></tr>
+      <tr><td>Proceso perprojektavimas</td><td>Kvalifikavimas atskiriamas nuo pasiūlymo rengimo. Įvedamas vienas
+        kvalifikavimo standartas. Pasiūlymo struktūra standartizuojama, kad DI galėtų parengti juodraštį iš
+        patvirtintų blokų.</td></tr>
+      <tr><td>DI integracija</td><td>Kvalifikavimo pagalba, pasiūlymo juodraščio generavimas iš patvirtintų blokų,
+        follow-up sekos priminimai, CRM įrašų struktūrizavimas iš pokalbio užrašų.</td></tr>
+      <tr><td>Human–AI sinergija</td><td>Pardavėjas nebeskiria laiko formos rengimui. Jo darbas — kvalifikavimo
+        sprendimas, kliento kontekstas ir santykis. DI negali priimti sprendimo dėl kainos ar pažado klientui.</td></tr>
+      <tr><td>ROI metrika</td><td><span class="gap">Neužpildyta. Laukia baseline ir Value Attribution Standard patikros.</span></td></tr>
+    </tbody>
+  </table>
+  <div class="note warn"><b>Ką čia realiai turime.</b> Šis use case DIPA vidiniame kontekste egzistuoja kaip
+    <b>Revenue AI OS</b> — Core Strategy §17 nurodo jį kaip 2026 H2 vidinį prioritetą, o pptx skaidrė 7 sako
+    „Vykdome: Revenue AI OS MVP“. Tai reiškia: <b>tai pirmiausia Client Zero atvejis, ne kliento atvejis.</b>
+    <br>Kartu tai geriausia turima galimybė — jei Revenue AI OS turi baseline, jis gali tapti pirmuoju
+    publikuojamu atveju. <span class="gap">Ar baseline buvo užfiksuotas prieš pokytį?</span> Jei ne, ROI įrodyti
+    nebus galima retrospektyviai. Owner: Mantas + Aušrinė.</div>
+</div></section>
+</div>
+
+<div class="view" id="v-uc-delivery">
+<div class="crumb"><div class="wrap"><a onclick="go('home')">Pradžia</a><i>/</i><a onclick="go('usecases')">Panaudojimo atvejai</a><i>/</i><b>Delivery Operations</b></div></div>
+<div class="phero"><div class="wrap"><div class="kicker">Delivery Operations Optimization</div>
+  <h1>Kai projekto kokybė nepriklauso nuo to, kas jį veda</h1>
+  <p class="sub">Paslaugų organizacijos didžiausia rizika yra ne kaina, o kokybės dispersija tarp žmonių.</p></div></div>
+<section><div class="wrap">
+  <table class="dt">
+    <thead><tr><th>Struktūros elementas</th><th>Turinys</th></tr></thead>
+    <tbody>
+      <tr><td>Verslo kliūtis</td><td>Delivery rezultatas priklauso nuo konkretaus žmogaus patirties ir atminties.
+        Kokybė nevienoda. Rework kartojasi. Naujas žmogus ilgai įsidirba.
+        <span class="gap">Baseline skaičiai — neužfiksuoti</span></td></tr>
+      <tr><td>Proceso perprojektavimas</td><td>Geriausia praktika perkeliama iš galvos į sistemą:
+        metodas → playbook → darbo standartas → KPI. Kiekvienas projektas gauna savininką ir Quality Gate.</td></tr>
+      <tr><td>DI integracija</td><td>Playbook prieinamas darbo momentu, medžiagos paruošimas iš patvirtintų
+        šablonų, projekto dokumentacijos struktūrizavimas, kokybės patikros sąrašai.</td></tr>
+      <tr><td>Human–AI sinergija</td><td>Konsultanto darbas pereina iš medžiagos rengimo į kliento situacijos
+        sprendimą. Quality Gate lieka žmogaus atsakomybė ir negali būti automatizuota.</td></tr>
+      <tr><td>ROI metrika</td><td><span class="gap">Neužpildyta.</span> Kandidatai: maržos pokytis,
+        rework dalis, senior valandos projektui, kokybės dispersija.</td></tr>
+    </tbody>
+  </table>
+  <div class="note"><b>Vidinis kontekstas:</b> tai Delivery OS — vienas iš trijų 2026 H2 vidinių prioritetų.
+    Core Strategy §17 turi susijusį tikslą: <span class="gap">senior valandos vidinei analitikai −30 % iki gruodžio</span>
+    — tai <b>tikslas, ne rezultatas</b>. Jei jis bus pasiektas ir išmatuotas, tai gali būti pirmas skaičius svetainėje.</div>
+</div></section>
+</div>
+
+<div class="view" id="v-uc-knowledge">
+<div class="crumb"><div class="wrap"><a onclick="go('home')">Pradžia</a><i>/</i><a onclick="go('usecases')">Panaudojimo atvejai</a><i>/</i><b>Knowledge Management</b></div></div>
+<div class="phero"><div class="wrap"><div class="kicker">Knowledge Management Systems</div>
+  <h1>Nuo išbarstytų failų į organizacijos intelektą</h1>
+  <p class="sub">Žinios, kurios nėra prieinamos darbo momentu, ekonomiškai neegzistuoja.</p></div></div>
+<section><div class="wrap">
+  <table class="dt">
+    <thead><tr><th>Struktūros elementas</th><th>Turinys</th></tr></thead>
+    <tbody>
+      <tr><td>Verslo kliūtis</td><td>Žinios išsibarsčiusios po failus, laiškus, pokalbius ir žmonių galvas.
+        Tas pats darbas atliekamas kelis kartus. Išeinantis žmogus išsineša metodiką.
+        <span class="gap">Baseline skaičiai — neužfiksuoti</span></td></tr>
+      <tr><td>Proceso perprojektavimas</td><td>Žinių fiksavimas tampa darbo proceso dalimi, ne atskira užduotimi
+        „kada nors surašyti“. Įvedamas Knowledge Capture standartas su savininku.</td></tr>
+      <tr><td>DI integracija</td><td>Struktūrizuota žinių bazė, prieinama užklausa darbo momentu, playbooks ir
+        promptų biblioteka, metodologijos versijų valdymas.</td></tr>
+      <tr><td>Human–AI sinergija</td><td>Žmogus sprendžia, kas yra geriausia praktika. DI ją padaro prieinama.
+        Neatnaujinta žinių bazė yra pagrindinė sistemos degradavimo priežastis — tai lieka žmogaus atsakomybė.</td></tr>
+      <tr><td>ROI metrika</td><td><span class="gap">Neužpildyta.</span> Kandidatai: onboarding trukmė,
+        informacijos paieškos laikas, kokybės dispersija, priklausomybė nuo vieno žmogaus.</td></tr>
+    </tbody>
+  </table>
+  <div class="note"><b>Vidinis kontekstas:</b> Knowledge OS — trečias 2026 H2 vidinis prioritetas.
+    Savininkas — Eimis (AI OS &amp; Knowledge Product Owner). Šis use case DIPA yra pats brandžiausias,
+    nes žinių bazė realiai naudojama kasdien.</div>
+</div></section>
+</div>
+
+<!-- ══════════════════════════════ INSIGHTS ══════════════════════════════ -->
+<div class="view" id="v-insights">
+<div class="crumb"><div class="wrap"><a onclick="go('home')">Pradžia</a><i>/</i><b>Įžvalgos</b></div></div>
+<div class="phero"><div class="wrap"><div class="kicker">Įžvalgos</div>
+  <h1>Turinys, kuris kvestionuoja rinkos prielaidas</h1>
+  <p class="sub">Ne technologijų naujienos. DI ir organizacijos dizaino sankirta.</p></div></div>
+<section><div class="wrap">
+  <div class="hg c2">
+    <div class="cell"><div class="k">PILLAR 01</div><h3 class="abar">Kaip vertinti tikrą DI ROI</h3>
+      <p>Kodėl „sutaupytos valandos“ nėra rezultatas ir kaip atrodo skaičiavimas, kurį priima finansų vadovas.</p>
+      <div class="out"><a onclick="go('ins-roi')" style="color:var(--brand);cursor:pointer;text-decoration:none">Skaityti →</a></div></div>
+    <div class="cell"><div class="k">PILLAR 02</div><h3 class="abar">Vėliavnešio įgalinimas</h3>
+      <p>Kaip vidinis DI lyderis pereina iš iniciatyvų koordinatoriaus į portfelio vadovą.</p>
+      <div class="out"><a onclick="go('ins-champ')" style="color:var(--brand);cursor:pointer;text-decoration:none">Skaityti →</a></div></div>
+    <div class="cell"><div class="k">PLANUOJAMA</div><h3>Kodėl jūsų pirmas DI pilotas nepavyko</h3>
+      <p>Ir kaip perstatyti veiklos modelį, o ne pakartoti pilotą su kitu įrankiu.</p>
+      <div class="out" style="color:var(--muted)">Blueprint rekomenduojama tema</div></div>
+    <div class="cell"><div class="k">PLANUOJAMA</div><h3>Fractional CAIO vidutinio dydžio organizacijoje</h3>
+      <p>Kada senior DI valdymas atsipirks be pilno etato.</p>
+      <div class="out" style="color:var(--muted)">Blueprint rekomenduojama tema</div></div>
+  </div>
+  <div class="note"><b>Blueprint reikalauja „aggressive thought leadership“ ir nuolatinio turinio ritmo.</b>
+    Prototipe rodau dvi realias temas, kurioms turinys jau egzistuoja žinių bazėje (ROI formulė, vėliavnešio rolė),
+    ir dvi Blueprint rekomenduotas.
+    <br><span class="gap">Neapibrėžta: kas rašo, kokiu ritmu ir kas tvirtina.</span> Insights sekcija be savininko
+    ir ritmo per tris mėnesius tampa mirusia svetainės dalimi — tai dažniausia B2B svetainių klaida.
+    <b>Reikia: savininkas (Greta), ritmas, ir kas tvirtina faktinį turinį (Aušrinė metrikoms, Igoris pozicionavimui).</b></div>
+</div></section>
+</div>
+
+<div class="view" id="v-ins-roi">
+<div class="crumb"><div class="wrap"><a onclick="go('home')">Pradžia</a><i>/</i><a onclick="go('insights')">Įžvalgos</a><i>/</i><b>Tikras DI ROI</b></div></div>
+<div class="phero"><div class="wrap"><div class="kicker">Įžvalga · ROI</div>
+  <h1>Sutaupytos valandos nėra ROI</h1>
+  <p class="sub">Kodėl dauguma DI biznis case'ų neišlaiko finansų vadovo klausimų — ir kaip atrodo tas, kuris išlaiko.</p></div></div>
+<section><div class="wrap">
+  <p class="lead">Tipinis DI biznis case sako: „procesas užimdavo 4 valandas, dabar 1, todėl sutaupome 3 valandas
+    per atvejį“. Finansų vadovo klausimas paprastas: <b>kur šios trys valandos atsirado P&amp;L?</b>
+    Jei žmogus tomis valandomis nepadarė nieko, kas didina pralaidumą, pajamas ar mažina kaštus — sutaupymo nėra.
+    Yra tik laisvesnis kalendorius.</p>
+  <div class="formula" style="margin-top:36px">
+    <b>Formulė, kuri išlaiko patikrą</b>
+    <code>Realizuotas DI efektas = papildomas bendrasis pelnas + realus kaštų sumažinimas + išvengti nuostoliai
+                       − diegimo kaštai − eksploatacijos kaštai − klaidų kaštai</code>
+  </div>
+  <div class="formula" style="margin-top:16px">
+    <b>Metinė vertė vienam pasikartojančiam scenarijui</b>
+    <code>Metinė vertė (€) = ((M0 − M1) / 60) × K × W × C × A</code>
+    <p class="small">M0/M1 — minutės iki naudotino rezultato be metodikos ir su ja · K — kartai per savaitę ·
+      W = 48 darbo savaitės · C — pilnas valandinis kaštas · A — realaus taikymo koeficientas (0–1).
+      Konservatyviai: A = 0,5 taikysiu retkarčiais, 0,7 dažnai, 0,85 taps darbo standartu.</p>
+  </div>
+  <h4 style="margin-top:60px">Keturi klausimai, kurie nužudo daugumą DI biznis case'ų</h4>
+  <div class="hg c2">
+    <div class="cell"><div class="k">01</div><h3>Ar buvo baseline?</h3>
+      <p>Jei „prieš“ nebuvo išmatuota, „po“ neįrodo nieko. Baseline negalima rekonstruoti atgaline data.</p></div>
+    <div class="cell"><div class="k">02</div><h3>Ar valandos konvertavosi?</h3>
+      <p>Į pralaidumą, pajamas ar kaštų mažinimą. Jei ne — tai ne finansinis rezultatas.</p></div>
+    <div class="cell"><div class="k">03</div><h3>Kokia DIPA atributuota dalis?</h3>
+      <p>Jei procese vienu metu vyko keli pokyčiai, priskirti visą efektą DI yra klaida.</p></div>
+    <div class="cell"><div class="k">04</div><h3>Kiek laiko rezultatas išsilaikė?</h3>
+      <p>Vieno mėnesio pagerėjimas nėra transformacija. Reikia išsilaikymo lango.</p></div>
+  </div>
+  <div class="note"><b>Šaltinis:</b> Realized AI Impact formulė — Core Strategy, patvirtinta. Metinės vertės
+    formulė ir A koeficiento gairės — „DIPA dizainas.pdf“ mokymų medžiaga. Keturi klausimai — Value Attribution
+    Standard §27 (iš septynių ten esančių atrinkti keturi, aiškiausiai komunikuojami klientui).
+    <b>Tai stipriausias turinys svetainėje, kuris jau egzistuoja ir nieko nekainuoja publikuoti.</b></div>
+</div></section>
+</div>
+
+<div class="view" id="v-ins-champ">
+<div class="crumb"><div class="wrap"><a onclick="go('home')">Pradžia</a><i>/</i><a onclick="go('insights')">Įžvalgos</a><i>/</i><b>Vėliavnešio įgalinimas</b></div></div>
+<div class="phero"><div class="wrap"><div class="kicker">Įžvalga · Organizacija</div>
+  <h1>Vėliavnešys: iš koordinatoriaus į portfelio vadovą</h1>
+  <p class="sub">DI transformacija sustoja tada, kai vidinis lyderis lieka iniciatyvų koordinatorius,
+    o ne sprendimų savininkas.</p></div></div>
+<section><div class="wrap">
+  <p class="lead">Kiekvienoje organizacijoje, kuri realiai pajudėjo su DI, yra žmogus, kuris tai veda.
+    Problema ta, kad jo rolė dažniausiai neapibrėžta: jis „rūpinasi DI“ be sprendimo teisių, be biudžeto,
+    be KPI ir be laiko. Tokia rolė išsibaigia per pusę metų.</p>
+  <table class="dt hl">
+    <thead><tr><th>Dimensija</th><th>Koordinatorius</th><th>Portfelio vadovas</th></tr></thead>
+    <tbody>
+      <tr><td>Ką valdo</td><td>Atskiras iniciatyvas ir jų sąrašą</td><td>Use case portfelį su prioritetais ir rizikomis</td></tr>
+      <tr><td>Sprendimo teisė</td><td>Rekomenduoja</td><td>Sprendžia dėl prioriteto ir stabdymo</td></tr>
+      <tr><td>Matavimas</td><td>Veiklos ataskaita: kiek padaryta</td><td>ROI ir adoption rodikliai</td></tr>
+      <tr><td>Ritmas</td><td>Ad-hoc, kai atsiranda laiko</td><td>Fiksuotas peržiūros ritmas su sponsoriumi</td></tr>
+      <tr><td>Priklausomybė</td><td>Reikia išorinio konsultanto kiekvienam žingsniui</td><td>Geba vesti pats, konsultantas — architektūrai</td></tr>
+    </tbody>
+  </table>
+  <div class="axiom">Jei vėliavnešys negali stabdyti iniciatyvos, <em>jis nėra savininkas</em> — jis yra
+    projekto administratorius.</div>
+  <div class="note"><b>Šaltinis:</b> VI etapo dokumentas — vėliavnešio stiprinimas ir perėjimas į portfelio
+    valdymą. Lentelės dimensijos yra mano struktūrizavimas iš dokumento turinio, ne citata.
+    <b>Ši tema yra stipri, nes kalba tiesiai į žmogų, kuris realiai skaito svetainę</b> — dažnai ne CEO,
+    o būtent vėliavnešys, kuris turi įtikinti CEO.</div>
+</div></section>
+</div>
+
+<!-- ══════════════════════════════ COMPANY ══════════════════════════════ -->
+<div class="view" id="v-company">
+<div class="crumb"><div class="wrap"><a onclick="go('home')">Pradžia</a><i>/</i><b>Apie DIPA</b></div></div>
+<div class="phero"><div class="wrap"><div class="kicker">Apie DIPA</div>
+  <h1>Kiekviena funkcija turi savininką ir sprendimo teisę</h1>
+  <p class="sub">Rezultato įrodymą tikrina nepriklausoma rolė, kurios negali apeiti nei pardavimai, nei delivery.</p></div></div>
+<section><div class="wrap">
+  <div class="eyebrow">Komanda ir kompetencijos</div>
+  <div class="team">
+    <div class="tm"><div class="hd"><div class="av">MK</div>
+      <div><div class="nm">Mantas Kapočius</div><div class="rl">Founder · Managing Partner · Head of Transformation</div></div></div>
+      <div class="sec"><div class="t">ATSAKO UŽ</div><p>Visą klientų transformacijos portfelį: delivery,
+        projektų P&amp;L, resursus, terminus, GO/PIVOT/STOP discipliną.</p></div>
+      <div class="sec"><div class="t">KOMPETENCIJOS SRITYS</div><div class="comp">
+        <span>Transformacijos delivery</span><span>Projektų P&amp;L</span><span>Proceso perprojektavimas</span><span>DI mokymai vadovams</span></div></div>
+      <div class="auth">Galutinis sprendimas: projekto scope, Delivery Owner, resursai, projekto stabdymas</div>
+      <div class="note"><span class="gap">Patirtis, metai, ankstesni darbai — trūksta duomenų</span></div></div>
+
+    <div class="tm"><div class="hd"><div class="av">IČ</div>
+      <div><div class="nm">Igoris Čalovas</div><div class="rl">Founder · Strategic Architect</div></div></div>
+      <div class="sec"><div class="t">ATSAKO UŽ</div><p>Strategiją, pozicionavimą, kategorijos formavimą,
+        produktų portfelio kryptį, metodologijos filosofiją, AI OS architektūros principus, partnerystes.</p></div>
+      <div class="sec"><div class="t">KOMPETENCIJOS SRITYS</div><div class="comp">
+        <span>Strategija ir pozicionavimas</span><span>AI OS architektūra</span><span>Metodologija</span><span>Aukšto lygio diagnostika</span></div></div>
+      <div class="auth">Galutinis sprendimas: strateginė kryptis, nauji produktai ir segmentai</div>
+      <div class="note"><span class="gap">Patirtis, metai, ankstesni darbai — trūksta duomenų</span></div></div>
+
+    <div class="tm"><div class="hd"><div class="av">AV</div>
+      <div><div class="nm">Aušrinė Valaitytė</div><div class="rl">Transformation Quality &amp; Value Realization Lead</div></div></div>
+      <div class="sec"><div class="t">ATSAKO UŽ</div><p>Nepriklausomą patikrą, ar transformacija sukūrė vertę:
+        baseline, matavimo logiką, ROI, adoption, Quality Gates, case study faktinę bazę.</p></div>
+      <div class="sec"><div class="t">KOMPETENCIJOS SRITYS</div><div class="comp">
+        <span>Vertės matavimas ir ROI</span><span>Baseline metodika</span><span>Quality Gate</span><span>Operacijos ir klientų patirtis</span></div></div>
+      <div class="auth">Galutinis sprendimas: ROI ir rezultato įrodymas. Neapeinama.</div>
+      <div class="note"><b>Blueprint tai vadina Financial Result Owner.</b> Rolė kritinė visai Case Study Engine
+        logikai. <span class="gap">Bet gyvoje dipa.lt Aušrinė yra „Operacijų ir klientų patirties vadovė“</span> —
+        pavadinimas neatspindi to, kas enterprise segmente yra diferenciacija. Reikia vieno pavadinimo. Owner: Mantas.</div></div>
+
+    <div class="tm"><div class="hd"><div class="av">GJ</div>
+      <div><div class="nm">Greta Jasiunavičiūtė</div><div class="rl">Growth &amp; Product Marketing Lead</div></div></div>
+      <div class="sec"><div class="t">ATSAKO UŽ</div><p>ICP ir segmentavimą, klientų poreikių tyrimą, pozicionavimo
+        perkėlimą į žinutes, lead generation, konkurentų analizę, case studies naudojimą.</p></div>
+      <div class="sec"><div class="t">KOMPETENCIJOS SRITYS</div><div class="comp">
+        <span>ICP ir segmentavimas</span><span>Produkto marketingas</span><span>Lead generation</span><span>Konkurentų analizė</span></div></div>
+      <div class="auth">Nesprendžia viena: galutinės kainos, delivery pažado, scope</div>
+      <div class="note"><span class="gap">Patirtis — trūksta duomenų.</span> Šioje IA jai priskiriama Insights
+        sekcija ir Case Study Engine turinys — didžiausias naujas darbo krūvis.</div></div>
+
+    <div class="tm"><div class="hd"><div class="av">ME</div>
+      <div><div class="nm">Marija Eigminienė</div><div class="rl">Head of Sales</div></div></div>
+      <div class="sec"><div class="t">ATSAKO UŽ</div><p>Pipeline, CRM discipliną, kvalifikavimo standartą,
+        forecast, pasiūlymų kontrolę.</p></div>
+      <div class="sec"><div class="t">KOMPETENCIJOS SRITYS</div><div class="comp">
+        <span>B2B pardavimai</span><span>Kvalifikavimas</span><span>Pasiūlymų valdymas</span></div></div>
+      <div class="auth">Komercinis GO</div>
+      <div class="note"><span class="gap">Neuždaryta: kuris — Marija ar Lauris — yra Commercial Lead.</span>
+        Iki sprendimo nė vieno negalima taip įvardinti. Owner: Igoris + Mantas.</div></div>
+
+    <div class="tm"><div class="hd"><div class="av">LN</div>
+      <div><div class="nm">Lauris Norbutas</div><div class="rl">B2B Executive</div></div></div>
+      <div class="sec"><div class="t">ATSAKO UŽ</div><p>Account valdymą, renewal, upsell,
+        Sprint → Partnership konversiją.</p></div>
+      <div class="sec"><div class="t">KOMPETENCIJOS SRITYS</div><div class="comp">
+        <span>Account valdymas</span><span>Renewal ir upsell</span><span>Partnerystės</span></div></div>
+      <div class="auth">Sprint → Partnership konversija</div>
+      <div class="note"><span class="gap">Patirtis — trūksta duomenų. Rolė nesuderinta su Marijos role.</span></div></div>
+
+    <div class="tm"><div class="hd"><div class="av">E</div>
+      <div><div class="nm">Eimis</div><div class="rl">AI OS &amp; Knowledge Product Owner</div></div></div>
+      <div class="sec"><div class="t">ATSAKO UŽ</div><p>DIPA AI OS, žinių architektūrą, Knowledge OS, playbooks,
+        promptų ir agentų biblioteką, metodologijos versijas, duomenų modelį, Client Zero.</p></div>
+      <div class="sec"><div class="t">KOMPETENCIJOS SRITYS</div><div class="comp">
+        <span>AI OS architektūra</span><span>Žinių valdymas</span><span>Promptai ir agentai</span><span>Duomenų modelis</span></div></div>
+      <div class="auth">Knowledge / AI OS GO</div>
+      <div class="note"><span class="gap">Pavardė ir patirtis — trūksta duomenų. Gyvoje dipa.lt nerodomas.</span></div></div>
+
+    <div class="tm"><div class="hd"><div class="av">A</div>
+      <div><div class="nm">Ada</div><div class="rl">International Product &amp; Transformation Coordinator</div></div></div>
+      <div class="sec"><div class="t">ATSAKO UŽ</div><p>Anglakalbių klientų delivery koordinavimą, angliškos
+        medžiagos ir žinių bazės struktūrizavimą, playbooks lokalizavimą.</p></div>
+      <div class="sec"><div class="t">KOMPETENCIJOS SRITYS</div><div class="comp">
+        <span>Tarptautinis delivery</span><span>Dokumentacija</span><span>Lokalizavimas</span></div></div>
+      <div class="auth">Delivery koordinavimas, Knowledge Capture</div>
+      <div class="note"><span class="gap">Pavardė ir patirtis — trūksta duomenų.</span> Jei svetainė turės EN
+        versiją, ji yra savininkė.</div></div>
+
+    <div class="tm"><div class="hd"><div class="av">A</div>
+      <div><div class="nm">Andrei</div><div class="rl">Strategic Partnerships Lead</div></div></div>
+      <div class="sec"><div class="t">ATSAKO UŽ</div><p>Technologinius, sektorinius, komercinius ir tarptautinius
+        partnerius, partnerių pipeline, bendrus pasiūlymus, capability gaps.</p></div>
+      <div class="sec"><div class="t">KOMPETENCIJOS SRITYS</div><div class="comp">
+        <span>Partnerystės</span><span>Tarptautinė plėtra</span><span>Bendri pasiūlymai</span></div></div>
+      <div class="auth">Partnerių pipeline</div>
+      <div class="note"><span class="gap">Pavardė ir patirtis — trūksta duomenų.</span></div></div>
+  </div>
+  <div class="note warn"><b>Enterprise registre tai didžiausia turinio spraga.</b> Kompetencijos ir sprendimo
+    teisės yra faktas iš organizacinės struktūros dokumento. Pavardės ir pareigos — faktas iš gyvos dipa.lt.
+    <span class="gap">Metų patirties, ankstesnių darbų, sertifikatų, sektorių ir projektų skaičiaus nėra niekur.</span>
+    <br>Big4 ir boutique konkurentai komandos sekcijoje rodo būtent patirties gylį. Rolių lentelė be patirties
+    enterprise pirkėjui atrodo kaip startup'as, apsimetantis konsultacine įmone.
+    <b>Owner: Greta. Reikia 3 laukų iš kiekvieno: metai srityje, 2–3 sakiniai patirties, vienas skaičius.</b></div>
+</div></section>
+</div>
+
+<!-- ══════════════════════════════ CLIENT ZERO ══════════════════════════════ -->
+<div class="view" id="v-client0">
+<div class="crumb"><div class="wrap"><a onclick="go('home')">Pradžia</a><i>/</i><a onclick="go('company')">Apie DIPA</a><i>/</i><b>Client Zero</b></div></div>
+<div class="phero"><div class="wrap"><div class="kicker">Client Zero</div>
+  <h1>Savo metodiką pirma taikome sau</h1>
+  <p class="sub">Klientui perduodame kelią, kurį pirmiausia testuojame savo organizacijoje. Su tomis pačiomis
+    kliūtimis, tuo pačiu pasipriešinimu ir tuo pačiu matavimu.</p></div></div>
+<section><div class="wrap">
+  <p class="lead">DIPA pati eina per tą patį 90 dienų Sprint procesą trijose vidinėse sistemose.
+    Tai ne rinkodaros pasakojimas — tai metodikos validumo patikra. Jei metodika neveikia mums, nėra pagrindo
+    ją pardavinėti.</p>
+  <div class="hg c3">
+    <div class="cell"><div class="k">01</div><h3 class="abar">Revenue AI OS</h3>
+      <p>Pardavimų veiklos sistema: kvalifikavimas, pasiūlymai, follow-up, CRM disciplina.</p>
+      <div class="out">Statusas: MVP vykdomas</div></div>
+    <div class="cell"><div class="k">02</div><h3 class="abar">Delivery AI OS</h3>
+      <p>Delivery standartas ir kokybės dispersijos mažinimas, kad rezultatas nepriklausytų nuo vieno žmogaus.</p>
+      <div class="out">Statusas: statoma</div></div>
+    <div class="cell"><div class="k">03</div><h3 class="abar">Knowledge AI OS</h3>
+      <p>Žinių architektūra, playbooks, promptų ir agentų biblioteka, metodologijos versijos.</p>
+      <div class="out">Statusas: naudojama kasdien</div></div>
+  </div>
+  <h4 style="margin-top:64px">Ką matuojame savyje</h4>
+  <table class="dt">
+    <thead><tr><th>Rodiklis</th><th>Statusas</th></tr></thead>
+    <tbody>
+      <tr><td>Founder Dependency Index<br><span class="small">steigėjų val./mėn. ÷ (pajamos / 100 000 €)</span></td>
+        <td><span class="gap">Bazinė reikšmė fiksuojama po rugsėjo apskaitos</span></td></tr>
+      <tr><td>Senior valandos vidinei analitikai</td><td>Tikslas −30 % iki gruodžio. <b>Tikslas, ne rezultatas.</b></td></tr>
+      <tr><td>Pasiūlymo parengimo laikas</td><td><span class="gap">Baseline neužfiksuotas</span></td></tr>
+      <tr><td>Delivery dalis be steigėjų</td><td><span class="gap">Matuojama nuo mėnesio Business Value Review</span></td></tr>
+      <tr><td>Bendroji marža</td><td>Valdoma kas savaitę. Reikšmės — vidinės.</td></tr>
+    </tbody>
+  </table>
+  <div class="note warn"><b>Client Zero yra stipriausias turimas įrodymo šaltinis — ir jis dar neparuoštas rodyti.</b>
+    Blueprint tiesiai nurodo: publikuoti verifikuotas vidines metrikas (pasiūlymo parengimo laiko sumažinimas,
+    delivery maržos augimas, priklausomybės nuo vieno eksperto mažėjimas).
+    <br><span class="gap">Nė vienos iš jų šiandien negalime publikuoti</span>: dalis yra tikslai, dalis be baseline,
+    dalis fiksuojama tik po rugsėjo apskaitos.
+    <br><b>Praktinė išvada:</b> Client Zero sekcija yra vienintelė svetainės dalis, kurią galime užpildyti
+    <b>be kliento</b> ir <b>be NDA</b>. Tai greičiausias kelias iš „metodologiškai stipru, komerciškai neįrodyta“.
+    Bet reikia sprendimo: <b>kurias tris vidines metrikas fiksuojame ir publikuojame, ir kas jas validuoja.</b>
+    Owner: Mantas (duomenys) + Aušrinė (patikra). Terminas: iki spalio apskaitos.</div>
+</div></section>
+</div>
+
+<!-- ══════════════════════════════ ASSESSMENT ══════════════════════════════ -->
+<div class="view" id="v-assess">
+<div class="crumb"><div class="wrap"><a onclick="go('home')">Pradžia</a><i>/</i><b>DI brandos vertinimas</b></div></div>
+<section class="anchorsec" style="padding-top:74px">
+  <div class="wrap">
+    <div class="eyebrow">DI brandos vertinimas</div>
+    <h2>Kur šiandien yra jūsų organizacija?</h2>
+    <p class="lead" style="margin-top:16px">Trys klausimai, kurie parodo etapą — ir kuris DIPA sprendimas
+      jums šiandien racionalus.</p>
+    <div class="scale" id="scale">
+      <div data-lvl="0"><b>0</b>SHADOW AI</div><div data-lvl="1"><b>1</b>INDIVIDUAL</div>
+      <div data-lvl="2"><b>2</b>TEAM</div><div data-lvl="3"><b>3</b>HYBRID PROCESS</div>
+      <div data-lvl="4"><b>4</b>AI-ENABLED BUSINESS</div>
+    </div>
+    <p class="small">Dauguma organizacijų yra tarp 1 ir 2 lygio.</p>
+    <div class="q"><div class="qt">01 · Ar žinote, kokių DI kompetencijų reikia skirtingoms rolėms jūsų organizacijoje?</div>
+      <div class="opts"><button onclick="ans(0,1,this)">Ne</button><button onclick="ans(0,0,this)">Iš dalies</button><button onclick="ans(0,0,this)">Taip, apibrėžta</button></div></div>
+    <div class="q"><div class="qt">02 · Jei geriausias DI naudotojas rytoj išeitų — ar jo metodika liktų organizacijoje?</div>
+      <div class="opts"><button onclick="ans(1,1,this)">Ne, išeitų su juo</button><button onclick="ans(1,0,this)">Dalis liktų</button><button onclick="ans(1,0,this)">Taip, užfiksuota</button></div></div>
+    <div class="q"><div class="qt">03 · Kur šiandien galite parodyti konkretų DI rezultatą — laiką, kokybę, output arba €?</div>
+      <div class="opts"><button onclick="ans(2,1,this)">Niekur</button><button onclick="ans(2,0,this)">Vienoje vietoje</button><button onclick="ans(2,0,this)">Keliuose procesuose, su baseline</button></div></div>
+    <div class="verdict" id="verdict">
+      <div class="vt">PRELIMINARUS VERTINIMAS</div><div class="vv" id="vlvl"></div><p id="vtxt"></p>
+      <p style="margin-top:14px"><b style="color:#fff">Patikros klausimas:</b> <span id="vchk"></span></p>
+      <div style="display:flex;gap:12px;margin-top:22px;flex-wrap:wrap">
+        <a onclick="go('contact')" class="btn onanchor">Pasitikrinti su DIPA</a>
+        <a id="vlink" class="btn outanchor">Rekomenduojamas sprendimas</a></div>
+    </div>
+    <div class="note"><b>Blueprint tai vadina „ruthlessly qualify the ideal customer profile“.</b>
+      Šis įrankis yra vienintelis žemos trinties kvalifikavimo mechanizmas svetainėje.
+      <span class="gap">Neapibrėžta: ar rezultatas siunčiamas el. paštu (lead capture), kas savininkas,
+      kur krenta duomenys.</span> Be to jis lieka žaislu, ne pipeline šaltiniu. Owner: Greta + Commercial Lead.</div>
+  </div>
+</section>
+</div>
+
+<!-- ══════════════════════════════ CONTACT ══════════════════════════════ -->
+<div class="view" id="v-contact">
+<div class="crumb"><div class="wrap"><a onclick="go('home')">Pradžia</a><i>/</i><b>Kontaktai ir RFP</b></div></div>
+<div class="phero"><div class="wrap"><div class="kicker">Kontaktai</div>
+  <h1>Kaip pradedame</h1>
+  <p class="sub">Nepradedame nuo įrankio ir nepradedame nuo pasiūlymo. Pradedame nuo klausimo, kur šiandien
+    prarandate daugiausia vertės.</p></div></div>
+<section><div class="wrap">
+  <div class="hg c3">
+    <div class="cell"><div class="k">01 · PIRMAS POKALBIS</div><h3 class="abar">Kvalifikavimas, ne pardavimas</h3>
+      <p>Įvertiname, ar problema yra išmatuojama, procesas pakartojamas, o vadovybė pasirengusi keisti darbo būdą.
+        Jei ne — pasakome tiesiai.</p></div>
+    <div class="cell"><div class="k">02 · DIAGNOSTIKA</div><h3 class="abar">Kur didžiausia kliūtis</h3>
+      <p>Struktūruotas vertinimas su prioritetais ir ekonomine prognoze.
+        <span class="gap">Apimtis, trukmė ir kaina — neapibrėžta</span></p></div>
+    <div class="cell"><div class="k">03 · SPRENDIMAS</div><h3 class="abar">Vienas racionalus etapas</h3>
+      <p>ALIGN, TRANSFORM arba SCALE — pagal tai, kur organizacija realiai yra, ne pagal tai, kas parduodama
+        lengviausiai.</p></div>
+  </div>
+  <h4 style="margin-top:64px">Kam netinkame</h4>
+  <div class="nolist">
+    <div>Jei problema neišmatuojama arba jos kaina nežinoma</div>
+    <div>Jei procesas nepakartojamas (rečiau nei kartą per savaitę)</div>
+    <div>Jei nėra paskirto savininko kliento pusėje</div>
+    <div>Jei nėra pasirengimo keisti darbo būdą, o tik įsigyti įrankį</div>
+    <div>Jei duomenys neprieinami arba beveik nedigitalizuoti</div>
+    <div>Jei ieškote pigiausio pasiūlymo</div>
+  </div>
+  <p class="lead" style="margin-top:40px"><b style="color:var(--ink-strong)">Kam tinkame:</b>
+    50–500 darbuotojų organizacijoms, kuriose yra reikšminga administracinio darbo dalis ir pasikartojantys
+    sprendimų procesai.</p>
+  <div class="note warn"><b>Du dalykai, kuriuos reikia uždaryti prieš paleidžiant šį puslapį.</b>
+    <br><b>1. Kas yra „diagnostika“.</b> Visame prototipe tai pagrindinis CTA, bet turinys, trukmė, kaina ir
+    atlikėjas neapibrėžti. Core Strategy §29 aiškiai sako:
+    <span class="gap">nemokamos diagnostikos, reikalaujančios reikšmingo senior laiko, nedarome.</span>
+    Vadinasi diagnostika arba yra mokamas produktas su apimtimi, arba lengva savitikra (kaip DI brandos
+    vertinimas), arba CTA reikia perfrazuoti. <b>Owner: Mantas (scope) + Commercial Lead (komercija).</b>
+    <br><b>2. ICP prieštaravimas.</b> Blueprint nurodo 20–200 darbuotojų ir 2–50 mln. €. Naudoju
+    <b>50–500 darbuotojų</b> iš Core Strategy v4 §11 (patvirtinta). Apyvartos rėžio patvirtintoje strategijoje
+    nėra, todėl jo nerodau. <b>Jei 20–200 ir 2–50 mln. € yra teisinga, reikia atnaujinti Core Strategy, o ne
+    svetainę.</b> Owner: Igoris + Mantas.
+    <br>„Kam netinkame“ sąrašas sudarytas iš idealaus kliento 7 kriterijų (Core Strategy §12) — apversti į
+    diskvalifikavimo signalus. Blueprint to prašė („ruthlessly qualify“).</div>
+</div></section>
+<section class="final" style="padding:76px 0">
+  <div class="wrap"><div class="grid">
+    <div><h2>Pateikti užklausą</h2>
+      <p>Aprašykite procesą, kuris jums kainuoja daugiausia. Atsakome per dvi darbo dienas.</p>
+      <div class="note" style="margin-top:24px"><span class="gap">Formos laukai ir „per dvi darbo dienas“
+        pažadas — dar nepatvirtinti. SLA be savininko yra pažadas, kurio niekas neišlaiko.</span></div></div>
+    <div class="box"><div class="t">KLAUSIMAS, KURIS UŽDARO SUSITIKIMĄ</div>
+      <p>„Kokį konkretų rezultatą turėtumėte pamatyti, kad galėtumėte pasakyti: ši investicija atsipirko?“</p></div>
+  </div></div>
+</section>
+</div>
+
+<!-- ══════════════════════════════ SOLUTIONS INDEX ══════════════════════════════ -->
+<div class="view" id="v-solutions">
+<div class="crumb"><div class="wrap"><a onclick="go('home')">Pradžia</a><i>/</i><b>Sprendimai</b></div></div>
+<div class="phero"><div class="wrap"><div class="kicker">Sprendimai</div>
+  <h1>ALIGN · TRANSFORM · SCALE</h1>
+  <p class="sub">Trys parduodami vienetai, viena metodika. Į kitą einame tik esant ekonominiam pagrindui.</p></div></div>
+<section><div class="wrap">
+  <table class="dt hl">
+    <thead><tr><th>Sprendimas</th><th>Ką išsprendžia</th><th>Rezultatas</th></tr></thead>
+    <tbody>
+      <tr><td>ALIGN<br><span class="small">Executive Alignment · I–II etapai</span></td>
+        <td>Vadovybė nekalba viena kalba, prioritetas nepasirinktas, nėra savininko</td>
+        <td>DI atsakomybės branduolys ir 90 dienų planas su pasirinktu procesu</td></tr>
+      <tr><td>TRANSFORM<br><span class="small">Transformation Sprint · III–V etapai</span></td>
+        <td>Pilotai nesibaigia rezultatu, nes keičiamas įrankis, o ne darbas</td>
+        <td>Veikiantis, matuojamas darbo standartas viename procese su GATE sprendimu</td></tr>
+      <tr><td>SCALE<br><span class="small">AI Portfolio Partnership · VI etapas</span></td>
+        <td>Vienas procesas veikia, bet plėtra vyksta ad-hoc ir be valdymo</td>
+        <td>Plėtros roadmap'as, use case portfelis, įgalintas vėliavnešys, Fractional CAIO</td></tr>
+    </tbody>
+  </table>
+  <div style="display:flex;gap:12px;margin-top:36px;flex-wrap:wrap">
+    <a onclick="go('align')" class="btn out">ALIGN →</a>
+    <a onclick="go('sprint')" class="btn">TRANSFORM →</a>
+    <a onclick="go('scale')" class="btn out">SCALE →</a></div>
+</div></section>
+</div>
+
+<!-- ══════════════════════════════ ARCH / EDITORIAL ══════════════════════════════ -->
+<div class="view" id="v-arch">
+<div class="crumb"><div class="wrap"><a onclick="go('home')">Pradžia</a><i>/</i><b>Sitemap, dizainas ir spragos (vidinis)</b></div></div>
+<section class="surf">
+  <div class="wrap">
+    <div class="eyebrow">Tik vidiniam pristatymui · nebus produkcijoje</div>
+    <h2>Informacijos architektūra pagal Blueprint</h2>
+    <p class="lead" style="margin-top:16px">Trijų lygių, intent-driven hierarchija su topic clusters — kaip
+      nurodyta Blueprint'e. Atsisakyta bendrų „Paslaugos“ ir „Apie mus“ struktūrų.</p>
+    <div class="sitemap">
+      <div class="smrow"><div>Pradžia</div><div>
+        <span class="l2"><b>Executive Hook</b> — impact statement, ko nedarome, problemos agitacija, trys sprendimai, ROI formulė, IP</span></div></div>
+      <div class="smrow"><div>Filosofija</div><div>
+        <span class="l2"><b>Ko-intelekto era</b> — trys vadybos epochos, Brand Iceberg, septyni atsisakymai, promptų inžinerija kaip modulis</span>
+        <span class="l2"><b>10–20–70 taisyklė</b> — rinkos įrodymas su BCG atribucija</span></div></div>
+      <div class="smrow"><div>Sprendimai</div><div>
+        <span class="l2"><b>ALIGN · Executive Alignment</b> — I–II etapai, 4 rezultatai, 3 produktai</span>
+        <span class="l2"><b>TRANSFORM · Transformation Sprint</b> — 8 etapai, 5 filtrai, ROI formulė, governance rėmai</span>
+        <span class="l2"><b>SCALE · AI Portfolio Partnership</b> — V prieš VI lentelė, 5 principai, Fractional CAIO</span></div></div>
+      <div class="smrow"><div>Panaudojimo atvejai</div><div>
+        <span class="l2"><b>AI Sales OS</b> · <b>Delivery Operations</b> · <b>Knowledge Management</b></span>
+        <span class="l2">Kiekvienas — 5 dalių struktūra: kliūtis → perprojektavimas → integracija → sinergija → ROI</span></div></div>
+      <div class="smrow"><div>Įžvalgos</div><div>
+        <span class="l2"><b>Kaip vertinti tikrą DI ROI</b> — turinys jau egzistuoja žinių bazėje</span>
+        <span class="l2"><b>Vėliavnešio įgalinimas</b> — turinys jau egzistuoja žinių bazėje</span>
+        <span class="l2">Planuojama: kodėl pirmas pilotas nepavyko · Fractional CAIO vidutiniame verslo segmente</span></div></div>
+      <div class="smrow"><div>Apie DIPA</div><div>
+        <span class="l2"><b>Komanda ir kompetencijos</b> — 9 rolės su atsakomybėmis ir sprendimo teisėmis</span>
+        <span class="l2"><b>Client Zero</b> — Revenue / Delivery / Knowledge AI OS</span>
+        <span class="l2"><b>Kontaktai ir RFP</b> — kaip pradedame, kam netinkame</span></div></div>
+      <div class="smrow"><div>Utility</div><div>
+        <span class="l2"><b>Pateikti užklausą (RFP)</b> · <b>DI brandos vertinimas</b> · <b>Client Zero</b> · <b>LT / EN</b></span></div></div>
+    </div>
+    <div class="note"><b>Ko iš Blueprint sitemap nepadariau ir kodėl.</b>
+      „Careers“ — nėra ką rodyti be atviros pozicijos, o tuščias Careers puslapis kenkia. Blueprint minėjo
+      schema markup ir GEO auditą — techninis darbas, ne prototipo dalis, bet reikia savininko.
+      <span class="gap">EN versija</span> — Blueprint parašytas angliškai ir prescribuoja anglišką hero copy;
+      prototipas lietuviškas. Reikia sprendimo, ar EN yra atskira svetainė, ar vertimas. Owner: Ada + Greta.</div>
+  </div>
+</section>
+
+<section>
+  <div class="wrap">
+    <h2>Big4 stilistikos parametrai — verifikuota nuskaitant gyvas svetaines</h2>
+    <table class="dt">
+      <thead><tr><th>Parametras</th><th>KPMG · EY · Deloitte</th><th>Pritaikyta DIPA</th></tr></thead>
+      <tbody>
+        <tr><td>Border radius</td><td>0 · 0 · 0 (Deloitte vietomis 13 px)</td><td>0 px visur</td></tr>
+        <tr><td>Dominuojantis fonas</td><td>#FFFFFF + #F5F6FA · #F6F6FA · #F5F5F5</td><td>#FFFFFF + #F5F6FA</td></tr>
+        <tr><td>Anchor tonas panelėms</td><td>#00338D · #2E2E38 · #000000</td><td>#0A1140 — išvestas iš DIPA #1C0BFF</td></tr>
+        <tr><td>Pagrindinis tekstas</td><td>#333333 · #2E2E38 · #000000</td><td>#22222B</td></tr>
+        <tr><td>Antrinis tekstas</td><td>#666666 · #747480 · #D0D0CE</td><td>#6E6E7A / #9A9AA6</td></tr>
+        <tr><td>Akcentas (taupiai)</td><td>#7213EA · #FFE600 · #86BC25</td><td>#1C0BFF nuorodoms · #EDE939 žymekliams</td></tr>
+        <tr><td>Antraščių svoris</td><td>w700 condensed · w300 · w300</td><td>w300 (EY / Deloitte mokykla)</td></tr>
+        <tr><td>Antraščių mastelis</td><td>48/56 · 52/62 · 40/54 px</td><td>~53/62 H1, ~38/47 H2</td></tr>
+        <tr><td>Teksto mastelis</td><td>16/24 (ls 0,44) · 16/26 · 14/21</td><td>16/26</td></tr>
+        <tr><td>Šriftas</td><td>Open Sans · EYInterstate · Open Sans</td><td>Open Sans</td></tr>
+        <tr><td>Kortelės</td><td>hairline 1 px tinklelis, be šešėlių</td><td>hairline 1 px tinklelis</td></tr>
+        <tr><td>Gradientai</td><td>nenaudojami kaip dekoracija</td><td>pašalinti</td></tr>
+        <tr><td>Utility juosta</td><td>Submit RFP · Login · Global</td><td>RFP · DI brandos vertinimas · Client Zero · LT/EN</td></tr>
+      </tbody>
+    </table>
+    <p class="small" style="margin-top:12px">Nuskaityta 2026-08-19: kpmg.com/xx/en/what-we-do/services.html ·
+      ey.com/en_gl/services/ai · deloitte.com/global/en/services. <b>PwC neskaityta.</b>
+      DIPA spalvos nepakeistos į Big4 spalvas — perimta gramatika, ne paletė.</p>
+    <div class="swatches">
+      <div class="sw"><i style="background:#FFFFFF;border-bottom:1px solid #D9D9E2"></i><span>#FFFFFF</span></div>
+      <div class="sw"><i style="background:#F5F6FA"></i><span>#F5F6FA</span></div>
+      <div class="sw"><i style="background:#0A1140"></i><span>#0A1140 ⚠</span></div>
+      <div class="sw"><i style="background:#1C0BFF"></i><span>#1C0BFF</span></div>
+      <div class="sw"><i style="background:#EDE939"></i><span>#EDE939</span></div>
+      <div class="sw"><i style="background:#22222B"></i><span>#22222B</span></div>
+      <div class="sw"><i style="background:#6E6E7A"></i><span>#6E6E7A</span></div>
+      <div class="sw"><i style="background:#D9D9E2"></i><span>#D9D9E2</span></div>
+    </div>
+    <p class="small" style="margin-top:10px">⚠ #0A1140 — naujas, nepatvirtintas tonas, išvestas patamsinant
+      DIPA #1C0BFF. Alternatyva: #000000 kaip anchor (Deloitte modelis). Perjunk temą viršuje palyginimui.</p>
+  </div>
+</section>
+
+<section class="surf">
+  <div class="wrap">
+    <h2>Devynios spragos prieš produkciją</h2>
+    <table class="dt">
+      <thead><tr><th>#</th><th>Spraga</th><th>Owner</th></tr></thead>
+      <tbody>
+        <tr><td>1</td><td>Nėra publikuoti tinkamo kliento rezultato (n = 2). Gyvoji dipa.lt skelbia nepagrįstus
+          „150+ sprendimų“ ir „97 % patenkintų klientų“ — pašalinti</td><td>Aušrinė</td></tr>
+        <tr><td>2</td><td>Client Zero metrikos: reikia pasirinkti 3, užfiksuoti baseline ir publikuoti.
+          Vienintelis kelias prie įrodymo be kliento ir be NDA</td><td>Mantas + Aušrinė</td></tr>
+        <tr><td>3</td><td>Komandos patirties duomenų nėra niekur — enterprise registre kritiška</td><td>Greta</td></tr>
+        <tr><td>4</td><td>Trys konkuruojantys etapų grupavimai (ALIGN/TRANSFORM/SCALE · AI START/IMPL/SCALE ·
+          4 brandos etapai) — reikia vieno dokumento</td><td>Igoris + Mantas</td></tr>
+        <tr><td>5</td><td>ICP prieštaravimas: Blueprint 20–200 ir 2–50 mln. € prieš patvirtintus 50–500 darbuotojų</td><td>Igoris + Mantas</td></tr>
+        <tr><td>6</td><td>Neapibrėžta, ką reiškia CTA „diagnostika“ (§29 uždaro nemokamą senior diagnostiką)</td><td>Mantas + Commercial Lead</td></tr>
+        <tr><td>7</td><td>Kainos nepatvirtintos („Siūlymas“); neapibrėžta, ar publikuojamos ir ar III+V parduodami
+          kaip vienas 90 d. Sprint</td><td>Igoris + Mantas</td></tr>
+        <tr><td>8</td><td>10–20–70 yra BCG framework — atribucija arba pakeitimas savais penkiais filtrais</td><td>Igoris + Mantas</td></tr>
+        <tr><td>9</td><td>Insights ir Case Study Engine be savininko ir ritmo. Anchor navy #0A1140 nepatvirtintas.
+          V etapo dokumente nėra formato lentelės. EN versijos sprendimas neuždarytas</td><td>Greta · dizaineris · Mantas · Ada</td></tr>
+      </tbody>
+    </table>
+    <div class="note"><b>Vienas dalykas, kurį verta pasakyti garsiai.</b> Šis prototipas dabar turi enterprise
+      lygio struktūrą, stilistiką ir metodinį turinį. Ko jam trūksta, nėra dizaino ar teksto darbas —
+      trūksta <b>vieno patvirtinto kliento arba vidinio skaičiaus</b>. Devynios spragos iš esmės yra viena:
+      svetainė gali įrodyti, kad DIPA moka matuoti, bet ne kad DIPA jau išmatavo.
+      <br>Greičiausias kelias tai uždaryti — <b>Client Zero</b>, ne naujas klientas. Trys vidinės metrikos su
+      baseline ir Aušrinės patikra yra pigiausias ir greičiausias įrodymas, kurį DIPA gali gauti iki gruodžio
+      Go/No-Go.</div>
+  </div>
+</section>
+</div>
+
+<footer>
+  <div class="wrap">
+    <div class="fgrid">
+      <div><b>SPRENDIMAI</b><a onclick="go('align')">Executive Alignment</a><a onclick="go('sprint')">Transformation Sprint</a><a onclick="go('scale')">AI Portfolio Partnership</a></div>
+      <div><b>FILOSOFIJA</b><a onclick="go('philosophy')">Ko-intelekto era</a><a onclick="go('rule')">10–20–70</a></div>
+      <div><b>PANAUDOJIMO ATVEJAI</b><a onclick="go('uc-sales')">AI Sales OS</a><a onclick="go('uc-delivery')">Delivery Operations</a><a onclick="go('uc-knowledge')">Knowledge Management</a></div>
+      <div><b>ĮŽVALGOS</b><a onclick="go('ins-roi')">Tikras DI ROI</a><a onclick="go('ins-champ')">Vėliavnešio įgalinimas</a></div>
+      <div><b>APIE DIPA</b><a onclick="go('company')">Komanda</a><a onclick="go('client0')">Client Zero</a><a onclick="go('contact')">Kontaktai ir RFP</a><a onclick="go('arch')">Sitemap (vidinis)</a></div>
+    </div>
+    <div class="fbot">
+      <span>DIPA — svetainės prototipas v4 · IA pagal Digital Positioning Blueprint · 2026-08-19</span>
+      <span>Nė vienas skaičius šiame prototipe nėra patvirtintas kliento rezultatas.</span>
+    </div>
+  </div>
+</footer>
+
+<script>
+var VIEWS=['home','philosophy','rule','solutions','align','sprint','scale','usecases','uc-sales',
+ 'uc-delivery','uc-knowledge','insights','ins-roi','ins-champ','company','client0','assess','contact','arch'];
+var NAVMAP={philosophy:'nv-philo',rule:'nv-philo',solutions:'nv-sol',align:'nv-sol',sprint:'nv-sol',
+ scale:'nv-sol',usecases:'nv-uc','uc-sales':'nv-uc','uc-delivery':'nv-uc','uc-knowledge':'nv-uc',
+ insights:'nv-ins','ins-roi':'nv-ins','ins-champ':'nv-ins',company:'nv-co',client0:'nv-co',contact:'nv-co'};
+function go(id){
+  if(VIEWS.indexOf(id)<0) return;
+  VIEWS.forEach(function(v){var e=document.getElementById('v-'+v);if(e)e.classList.remove('on')});
+  var t=document.getElementById('v-'+id); if(t) t.classList.add('on');
+  document.querySelectorAll('.navitem').forEach(function(n){n.classList.remove('act')});
+  var nv=NAVMAP[id]; if(nv){var e=document.getElementById(nv);if(e)e.classList.add('act')}
+  window.scrollTo({top:0,behavior:'instant'});
+}
+function toggleTheme(){
+  var b=document.body,ent=b.dataset.theme==='ent';
+  b.dataset.theme=ent?'dipa':'ent';
+  document.getElementById('tTheme').textContent='Tema: '+(ent?'DIPA brandas':'ENTERPRISE');
+}
+function toggleEdit(){var b=document.body;b.classList.toggle('edit');
+  var on=b.classList.contains('edit'),e=document.getElementById('tEdit');
+  e.textContent='Redakcinis: '+(on?'ĮJ':'IŠJ');e.classList.toggle('on',on);}
+function togglePrice(){var b=document.body;b.classList.toggle('showprice');
+  var on=b.classList.contains('showprice'),e=document.getElementById('tPrice');
+  e.textContent='Kainos: '+(on?'ĮJ (NEPATVIRTINTOS)':'IŠJ');e.classList.toggle('on',on);}
+var A=[null,null,null];
+var LV={
+ 1:{n:'1 lygis · INDIVIDUAL',t:'DI naudoja pavieniai žmonės. Kompetencijos reikalavimai rolėms neapibrėžti, metodika neužfiksuota, rezultato parodyti negalite. Racionalus kitas žingsnis — ALIGN: vadovybės suderinimas, DI raštingumas sprendimų lygiu ir 90 dienų planas.',c:'Ar galite šiandien pasakyti, ko konkrečiai turi mokėti DI kompetentingas darbuotojas jūsų organizacijoje?',v:'align',vn:'ALIGN · Executive Alignment →'},
+ 2:{n:'2 lygis · TEAM',t:'Kompetencijos suprastos, bet geriausia praktika dar nėra komandos standartas arba rezultatas neišmatuotas. Racionalus kitas žingsnis — TRANSFORM: 90 dienų vieno kritinio proceso perprojektavimas su baseline ir GATE sprendimu.',c:'Jei geriausias DI naudotojas rytoj išeitų — kiek jo darbo būdo liktų sistemoje, o ne jo galvoje?',v:'sprint',vn:'TRANSFORM · Transformation Sprint →'},
+ 3:{n:'3 lygis · HYBRID PROCESS',t:'Turite bent vieną išmatuotą, veikiantį DI sustiprintą procesą. Racionalus kitas žingsnis — SCALE: perėjimas iš projekto į portfelio valdymą, governance prieš mastelį, vėliavnešio įgalinimas.',c:'Įvardykite procesą, kuriame DI atlieka apibrėžtą darbo dalį, o žmogaus rolė yra perprojektuota — ne tik pagreitinta.',v:'scale',vn:'SCALE · AI Portfolio Partnership →'}
+};
+function ans(i,v,el){
+  el.parentNode.querySelectorAll('button').forEach(function(b){b.classList.remove('on')});
+  el.classList.add('on');A[i]=v;if(A.indexOf(null)>-1)return;
+  var g=A[0]+A[1]+A[2],lvl=g>=2?1:(g==1?2:3);
+  document.querySelectorAll('#scale div').forEach(function(d){d.classList.toggle('hit',+d.dataset.lvl===lvl)});
+  document.getElementById('vlvl').textContent=LV[lvl].n;
+  document.getElementById('vtxt').textContent=LV[lvl].t;
+  document.getElementById('vchk').textContent=LV[lvl].c;
+  var L=document.getElementById('vlink');L.textContent=LV[lvl].vn;L.onclick=function(){go(LV[lvl].v)};
+  document.getElementById('verdict').classList.add('on');}
+</script>
+</body>
+</html>
