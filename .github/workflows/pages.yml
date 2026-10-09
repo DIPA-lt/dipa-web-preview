@@ -22,6 +22,16 @@ jobs:
     runs-on: ubuntu-latest
     steps:
       - uses: actions/checkout@v4
+      # This repo only ever publishes staging/preview builds: force noindex into
+      # every page so non-JS crawlers see it too (robots.txt also disallows all).
+      - name: Mark staging build as noindex
+        run: |
+          find prototipas -name '*.html' -print0 | while IFS= read -r -d '' f; do
+            grep -q 'name="robots"' "$f" && continue
+            perl -0pi -e 's/<head>/<head>\n<meta name="robots" content="noindex, nofollow, noarchive, nosnippet">/' "$f"
+          done
+          missing=$(find prototipas -name '*.html' -exec grep -L 'name="robots"' {} +)
+          if [ -n "$missing" ]; then echo "::error::pages missing noindex: $missing"; exit 1; fi
       - uses: actions/configure-pages@v5
       - uses: actions/upload-pages-artifact@v3
         with:

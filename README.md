@@ -4,4 +4,4 @@ Internal prototype of the new [dipa.lt](https://dipa.lt/) site. Published on Git
 
 **Not for search engines.** Every page has `noindex, nofollow`. `robots.txt` disallows all crawlers. This is not production.
 
-Preview URL after Pages is live: `https://dipa-lt.github.io/dipa-web-preview/`
+Staging URL: `https://staging.dipa.lt` (GitHub Pages custom domain; before DNS is set up: `https://dipa-lt.github.io/dipa-web-preview/`). The Pages workflow injects the noindex meta into every page at deploy time.

@@ -17,7 +17,7 @@
   };
 
   /* Preview/staging hosts stay non-indexable; production (dipa.lt) is indexable. */
-  var PREVIEW_HOSTS = /(^localhost$|^127\.0\.0\.1$|^0\.0\.0\.0$|\.github\.io$|\.pages\.dev$)/i;
+  var PREVIEW_HOSTS = /(^localhost$|^127\.0\.0\.1$|^0\.0\.0\.0$|^staging\.dipa\.lt$|\.github\.io$|\.pages\.dev$)/i;
   function isPreview() {
     return PREVIEW_HOSTS.test(location.hostname);
   }
