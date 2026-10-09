@@ -92,13 +92,12 @@
         close: "Close",
         write: "Write to us",
         biz: "Business enquiries →",
-        jobs: "Careers →",
         city: "Vilnius, Lithuania",
         company: "Company",
         catalog: "Solutions",
-        legalName: "UAB \u201CImpact Solutions Partners\u201D",
-        legalCode: "Company code 305878229",
-        legalAddr: "P. Vileišio g. 24-16, Vilnius, Lithuania",
+        legalName: "UAB Dipa",
+        legalCode: "Company code 305878229 · VAT LT100016633913",
+        legalAddr: "Krivių g. 5, LT-01204 Vilnius, Lithuania",
         privacy: "Privacy policy",
         cookies: "Cookie policy"
       }
@@ -113,13 +112,12 @@
         close: "Uždaryti",
         write: "Rašykite mums",
         biz: "Verslo klausimais →",
-        jobs: "Karjera →",
         city: "Vilnius, Lietuva",
         company: "Organizacija",
         catalog: "Sprendimai",
-        legalName: "UAB „Impact Solutions Partners\u201C",
-        legalCode: "Įmonės kodas 305878229",
-        legalAddr: "P. Vileišio g. 24-16, Vilnius, Lietuva",
+        legalName: "UAB „Dipa\u201C",
+        legalCode: "Įmonės kodas 305878229 · PVM kodas LT100016633913",
+        legalAddr: "Krivių g. 5, LT-01204 Vilnius, Lietuva",
         privacy: "Privatumo politika",
         cookies: "Slapukų politika"
       };
@@ -544,11 +542,8 @@
       '">' +
       esc(COPY.biz) +
       "</a>" +
-      '<a href="' +
-      contact +
-      '">' +
-      esc(COPY.jobs) +
-      "</a>" +
+      '<a href="mailto:info@dipa.lt">info@dipa.lt</a>' +
+      '<a href="tel:+37066110921">+370 661 10921</a>' +
       '<p style="padding-top:14px;color:rgba(255,255,255,.42)">' +
       esc(COPY.city) +
       "</p>" +
@@ -1290,13 +1285,17 @@
         "@context": "https://schema.org",
         "@type": "Organization",
         name: "DIPA",
-        legalName: "UAB \u201CImpact Solutions Partners\u201D",
+        legalName: "UAB Dipa",
         url: PROD_ORIGIN,
         email: "info@dipa.lt",
+        telephone: "+370 661 10921",
+        taxID: "305878229",
+        vatID: "LT100016633913",
         sameAs: ["https://www.linkedin.com/company/dipa-lt"],
         address: {
           "@type": "PostalAddress",
-          streetAddress: "P. Vileišio g. 24-16",
+          streetAddress: "Krivių g. 5",
+          postalCode: "LT-01204",
           addressLocality: "Vilnius",
           addressCountry: "LT"
         }
