@@ -245,7 +245,21 @@ nav.main .wrap{height:var(--nav-h);display:flex;align-items:center;gap:36px}
 
 /* ---------- HTML grafikai (statistika) ---------- */
 .fig{margin:40px 0 0;border:1px solid var(--line);background:var(--surface);overflow:hidden}
-.fig img{width:100%;height:auto;display:block}
+.fig img,.fig video{width:100%;height:auto;display:block}
+.fig video{background:#000}
+.lesson{padding:28px 0;border-bottom:1px solid var(--line)}
+.lesson:first-child{border-top:1px solid var(--line)}
+.lesson .when{font-size:.625rem;letter-spacing:.16em;text-transform:uppercase;color:var(--muted-2);font-weight:600}
+.lesson h3{margin:10px 0 0;font-size:1.25rem;letter-spacing:-.02em;font-weight:500}
+.lesson p,.stage p{margin:12px 0 0;max-width:68ch}
+.stage{padding:32px;border:1px solid var(--line);border-bottom:0}
+.stage:last-child{border-bottom:1px solid var(--line)}
+.stage .when{font-size:.625rem;letter-spacing:.16em;text-transform:uppercase;color:var(--brand);font-weight:600}
+.stage h3{margin:8px 0 0;font-size:1.35rem;letter-spacing:-.02em;font-weight:500}
+.angle{margin-top:14px}
+.angle b{color:var(--ink);font-weight:600}
+.formula + .formula{margin-top:16px}
+.formula-col p{margin:0;color:var(--ink-2);font-size:1.0625rem;line-height:1.55}
 .fig figcaption{padding:12px 18px;font-size:.75rem;color:var(--muted-2);border-top:1px solid var(--line);line-height:1.45}
 .fig-tight{margin-top:28px}
 .sec-head + .fig{margin-top:0;margin-bottom:48px}
@@ -342,6 +356,7 @@ nav.main .wrap{height:var(--nav-h);display:flex;align-items:center;gap:36px}
 /* Faktų juosta (offering hero) */
 .facts{display:grid;border:1px solid var(--line);border-right:0;margin-top:48px}
 @media(min-width:700px){.facts{grid-template-columns:repeat(4,1fr)}}
+@media(min-width:700px){.hero .facts{grid-template-columns:1fr 1fr}}
 .facts > div{padding:22px 24px;border-right:1px solid var(--line);border-bottom:1px solid var(--line);transition:background .28s var(--out)}
 @media(min-width:700px){.facts > div{border-bottom:0}}
 .facts > div:hover{background:var(--brand-dim)}
