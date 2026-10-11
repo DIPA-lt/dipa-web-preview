@@ -82,11 +82,11 @@
 
   var COPY = IS_EN
     ? {
-        proto: "Prototype v7 · measurable Human + AI work change",
+        proto: "Prototype v7 · measurable change in how people work with AI",
         assess: "AI value diagnostic",
         client0: "Results",
         path: "How we work",
-        cta: "Find the biggest AI value opportunity",
+        cta: "Identify your biggest AI value opportunity",
         cookiesSettings: "Cookie settings",
         menu: "Menu",
         close: "Close",
@@ -102,18 +102,18 @@
         cookies: "Cookie policy"
       }
     : {
-        proto: "Prototipas v7 · Pamatuojamas žmogaus ir DI darbo pokytis",
+        proto: "Prototipas v7 · pamatuojamas darbo su DI pokytis",
         assess: "DI vertės diagnostika",
         client0: "Rezultatai",
         path: "Kaip dirbame",
-        cta: "Rasti didžiausią DI vertės galimybę",
+        cta: "Nustatyti didžiausią DI vertės galimybę",
         cookiesSettings: "Slapukų nustatymai",
         menu: "Meniu",
         close: "Uždaryti",
         write: "Rašykite mums",
         biz: "Verslo klausimais →",
         city: "Vilnius, Lietuva",
-        company: "Organizacija",
+        company: "Įmonė",
         catalog: "Sprendimai",
         legalName: "UAB „Dipa\u201C",
         legalCode: "Įmonės kodas 305878229 · PVM kodas LT100016633913",
@@ -131,16 +131,16 @@
           slug: "sprendimai",
           cols: [
             {
-              title: "By problem",
+              title: "By challenge",
               items: [
                 { label: "AI productivity programme", href: href("ai-produktyvumo-programa"), strong: true },
-                { label: "Team AI working standard", href: href("sprendimai") + "#team" }
+                { label: "Team AI work standard", href: href("sprendimai") + "#team" }
               ]
             },
             {
-              title: "Process and business",
+              title: "Processes and business",
               items: [
-                { label: "Human + AI processes", href: href("sprendimai") + "#process", strong: true },
+                { label: "Human–AI processes", href: href("sprendimai") + "#process", strong: true },
                 { label: "AI business opportunities", href: href("sprendimai") + "#business" }
               ],
               more: { label: "All solutions →", href: href("sprendimai") }
@@ -159,16 +159,16 @@
           slug: "sprendimai",
           cols: [
             {
-              title: "Pagal problemą",
+              title: "Pagal iššūkį",
               items: [
                 { label: "DI produktyvumo programa", href: href("ai-produktyvumo-programa"), strong: true },
-                { label: "Komandos DI darbo standartas", href: href("sprendimai") + "#komanda" }
+                { label: "Komandos darbo su DI standartas", href: href("sprendimai") + "#komanda" }
               ]
             },
             {
-              title: "Procesas ir verslas",
+              title: "Procesai ir verslas",
               items: [
-                { label: "Žmogaus ir DI procesai", href: href("sprendimai") + "#procesas", strong: true },
+                { label: "Žmogaus ir DI darbo procesai", href: href("sprendimai") + "#procesas", strong: true },
                 { label: "DI verslo galimybės", href: href("sprendimai") + "#verslas" }
               ],
               more: { label: "Visi sprendimai →", href: href("sprendimai") }
@@ -184,7 +184,7 @@
     ? [
         ["How we work", href("kaip-dirbame")],
         ["AI productivity programme", href("ai-produktyvumo-programa")],
-        ["Team AI standard", href("sprendimai") + "#team"],
+        ["Team AI work standard", href("sprendimai") + "#team"],
         ["Transformation Sprint", href("transformation-sprint")],
         ["AI business opportunities", href("sprendimai") + "#business"],
         ["All solutions →", href("sprendimai")]
@@ -192,7 +192,7 @@
     : [
         ["Kaip dirbame", href("kaip-dirbame")],
         ["DI produktyvumo programa", href("ai-produktyvumo-programa")],
-        ["Komandos DI standartas", href("sprendimai") + "#komanda"],
+        ["Komandos darbo su DI standartas", href("sprendimai") + "#komanda"],
         ["Transformation Sprint", href("transformation-sprint")],
         ["DI verslo galimybės", href("sprendimai") + "#verslas"],
         ["Visi sprendimai →", href("sprendimai")]
@@ -232,7 +232,7 @@
 
   /* ============================================================
      DI brandos vertinimas · deterministinis (be LLM)
-     12 klausimų · 4 dimensijos (Žmogus / Komanda / Procesas / Verslas)
+     12 klausimų · 4 sritys (Žmogus / Komanda / Procesas / Verslas)
      Atsakymai: 0–3 + „nežinau". Versija: ai-readiness-v1
      ============================================================ */
   var ASSESS = IS_EN
@@ -245,49 +245,49 @@
           { id: "business", label: "Business" }
         ],
         questions: [
-          { id: "h1", dim: "human", q: "How do your people use AI at work today?", opts: ["Barely, or only a few enthusiasts", "Some use it for personal tasks, without any agreement", "Most use it regularly for specific tasks", "Use is tied to defined results for a role"] },
-          { id: "h2", dim: "human", q: "Do you know what result you can require from a role when the work is done with AI?", opts: ["No, the expectation is undefined", "There is a general sense, but nothing written down", "It is defined for a few roles", "It is clear and measurable for most roles"] },
-          { id: "h3", dim: "human", q: "Do you measure how AI changed the time, quality or volume of specific work?", opts: ["We do not measure it", "We judge it subjectively", "We measure a few tasks", "We regularly measure before/after"] },
-          { id: "t1", dim: "team", q: "If your best AI user left tomorrow, would their way of working stay with the team?", opts: ["No, it would leave with them", "Some of it would remain informally", "The key steps are documented", "Yes — it is a team standard with an owner"] },
-          { id: "t2", dim: "team", q: "Does the team share a single, written way to do core tasks with AI?", opts: ["Everyone works their own way", "We share tips informally", "There are a few shared templates", "There is a maintained standard and training"] },
-          { id: "t3", dim: "team", q: "Is someone accountable for the quality and upkeep of your AI working practice?", opts: ["No one", "Someone looks after it informally", "Assigned, but without a clear mandate", "A clear owner with responsibility and a KPI"] },
-          { id: "p1", dim: "process", q: "Do you have a process where it is clear what the human does, what AI does, and who approves the result?", opts: ["No", "Only partly, for one case", "One process has been redesigned", "Several processes with clear human sign-off"] },
+          { id: "h1", dim: "human", q: "How do employees in your organisation use AI at work today?", opts: ["They barely use it, apart from a few enthusiasts", "Some use it for individual tasks, without a shared approach", "Most use it regularly for specific tasks", "AI use is tied to defined outcomes for each role"] },
+          { id: "h2", dim: "human", q: "Can you define the results expected from a role when AI is used?", opts: ["No; the expected results are not defined", "We have a general idea, but it is not documented", "They are defined for a few roles", "They are clear and measurable for most roles"] },
+          { id: "h3", dim: "human", q: "Do you measure how AI affects the time, quality or volume of specific work?", opts: ["We do not measure this", "We rely on subjective judgement", "We measure a small number of tasks", "We regularly compare performance before and after adopting AI"] },
+          { id: "t1", dim: "team", q: "If your most proficient AI user left tomorrow, would their way of working remain within the team?", opts: ["No, it would leave with them", "Some knowledge would remain informally", "The key steps are documented", "Yes — it is a team standard with a designated owner"] },
+          { id: "t2", dim: "team", q: "Does the team have a shared, documented approach to completing core tasks with AI?", opts: ["Everyone works in their own way", "We share tips informally", "We have a few shared templates", "We maintain a common standard and provide training"] },
+          { id: "t3", dim: "team", q: "Is someone accountable for the quality and maintenance of your AI work practices?", opts: ["No one", "Someone looks after them informally", "Someone is assigned, but without a clear mandate", "A designated owner has clear responsibility and a KPI"] },
+          { id: "p1", dim: "process", q: "Have you defined a process that makes clear what people do, what AI does and who approves the output?", opts: ["No", "Only partly, for a single use case", "We have redesigned one process", "Several processes have clearly defined human approval"] },
           { id: "p2", dim: "process", q: "Has AI changed the process itself, or only sped up the old work?", opts: ["Only sped up the old work", "We adjusted a few steps", "We fully redesigned one process", "We redesign processes routinely"] },
-          { id: "p3", dim: "process", q: "After a change, do you measure the result and decide to scale, stop or adjust?", opts: ["We do not measure the result", "We estimate it roughly", "We measure one pilot", "We have baseline → result → decision"] },
-          { id: "b1", dim: "business", q: "Can you show which AI initiatives create business value?", opts: ["No, the value is unclear", "We sense it but cannot prove it", "Value is clear for a few initiatives", "Value is linked to P&L or a KPI"] },
-          { id: "b2", dim: "business", q: "Does AI let you create new value for the client or a new offer — not only save time?", opts: ["Only internal time savings", "We are exploring options", "We are testing one new offer", "We have a working new source of value"] },
-          { id: "b3", dim: "business", q: "Is your AI direction tied to strategy and leadership accountability?", opts: ["No, these are isolated initiatives", "There is interest from leadership", "There is a plan, but no clear metrics", "There is a strategy, an owner and metrics"] }
+          { id: "p3", dim: "process", q: "After making a change, do you measure its impact and decide whether to scale, stop or adjust it?", opts: ["We do not measure the impact", "We estimate it roughly", "We measure the results of one pilot", "We use a baseline → measured result → decision approach"] },
+          { id: "b1", dim: "business", q: "Can you demonstrate which AI initiatives create business value?", opts: ["No, the value is unclear", "We see potential value but cannot substantiate it", "The value is clear for a few initiatives", "The value is linked to financial performance or a KPI"] },
+          { id: "b2", dim: "business", q: "Does AI enable you to create new client value or a new offering, rather than only save time?", opts: ["It delivers internal time savings only", "We are exploring opportunities", "We are testing one new offering", "We have a proven new source of value"] },
+          { id: "b3", dim: "business", q: "Is your AI direction linked to strategy and clear leadership accountability?", opts: ["No, the initiatives are isolated", "Leadership is interested", "We have a plan, but no clear metrics", "We have a strategy, a designated owner and clear metrics"] }
         ],
         bands: [
-          { max: 30, key: "individual", title: "Isolated experiments", desc: "AI is used irregularly and depends on individuals. The biggest value now is turning that use into measurable work for a role." },
-          { max: 55, key: "team", title: "Team practice forming", desc: "You have strong users, but the practice is not yet a shared standard. The most valuable step is capturing the best way of working as a team standard." },
-          { max: 78, key: "process", title: "Processes changing", desc: "The team has a practice, but processes are not redesigned everywhere. The most valuable step is redesigning one process to a measured result." },
-          { max: 100, key: "business", title: "Business-model level", desc: "AI already changes your processes; the next step is turning the new way of working into new business value and scale." }
+          { max: 30, key: "individual", title: "Isolated experiments", desc: "AI use is irregular and depends on individuals. The greatest opportunity now is to translate that use into measurable results for a specific role." },
+          { max: 55, key: "team", title: "Team practice is emerging", desc: "You have proficient users, but their practices are not yet shared standards. The most valuable next step is to document the best approach and make it the team standard." },
+          { max: 78, key: "process", title: "Processes are evolving", desc: "The team has established practices, but they are not yet embedded across redesigned processes. The most valuable next step is to redesign one process and measure the outcome." },
+          { max: 100, key: "business", title: "Business model transformation", desc: "AI is already changing your processes. The next step is to turn these new ways of working into scalable sources of business value." }
         ],
         routes: {
-          human: { label: "AI productivity programme", href: href("ai-produktyvumo-programa"), kpi: "Time / quality / volume for one core role", action: "Pick one role and, for a week, measure the same work done with and without AI." },
-          team: { label: "Team AI working standard", href: href("sprendimai") + "#team", kpi: "Share of tasks done to a shared standard", action: "Write down the method of your single best user and trial it across the whole team." },
-          process: { label: "Transformation Sprint", href: href("transformation-sprint"), kpi: "Cycle time or error rate of the redesigned process", action: "Pick one expensive process and define what the human should do and what AI should do." },
-          business: { label: "Transformation Sprint", href: href("transformation-sprint"), kpi: "Contribution of AI initiatives to margin or revenue", action: "Pick one initiative and tie it to a specific business metric." }
+          human: { label: "AI productivity programme", href: href("ai-produktyvumo-programa"), kpi: "Time, quality and output for one core role", action: "Choose one role and, for a week, compare similar work completed with and without AI." },
+          team: { label: "Team AI work standard", href: href("sprendimai") + "#team", kpi: "Share of tasks completed to a common standard", action: "Document the approach used by your most proficient user and test it across the team." },
+          process: { label: "Transformation Sprint", href: href("transformation-sprint"), kpi: "Cycle time or error rate for the redesigned process", action: "Choose one costly process and define which steps people should perform and which AI should perform." },
+          business: { label: "Transformation Sprint", href: href("transformation-sprint"), kpi: "Contribution of AI initiatives to margin or revenue", action: "Choose one initiative and link it to a specific business metric." }
         },
         ui: {
           progress: function (n, t) { return "Question " + n + " of " + t; },
           start: "Start the assessment",
-          resultTitle: "Your directional snapshot",
-          overall: "Overall direction",
-          byDim: "By dimension",
-          gapTitle: "Biggest value gap now",
+          resultTitle: "Your indicative results",
+          overall: "Overall score",
+          byDim: "Results by area",
+          gapTitle: "Your greatest value opportunity",
           kpi: "Suggested KPI",
-          action: "A 30-day first step",
-          route: "Rational next step",
-          unknownWarn: "You answered “don’t know” several times. That lack of visibility is itself a finding — the first win is often simply making the current situation measurable.",
-          disclaimer: "This is a directional snapshot, not a scientific benchmark or certification. It reflects your own answers.",
-          leadIntro: "Want this snapshot and a short, specific interpretation by email? Leave your details — the result above is already yours.",
-          retake: "Retake"
+          action: "First step for the next 30 days",
+          route: "Recommended next step",
+          unknownWarn: "You selected “don’t know” several times. This lack of visibility is itself a finding — the first step is often to make the current situation measurable.",
+          disclaimer: "This is an indicative assessment, not a scientific benchmark or certification. It is based on your responses.",
+          leadIntro: "Would you like to receive these results and a brief, tailored interpretation by email? Leave your details — the results above are already available to you.",
+          retake: "Start again"
         }
       }
     : {
-        unknown: "Nežinau / nesu tikras",
+        unknown: "Nežinau / negaliu įvertinti",
         dims: [
           { id: "human", label: "Žmogus" },
           { id: "team", label: "Komanda" },
@@ -295,45 +295,45 @@
           { id: "business", label: "Verslas" }
         ],
         questions: [
-          { id: "h1", dim: "human", q: "Kaip jūsų žmonės šiandien naudoja DI darbe?", opts: ["Beveik nenaudoja arba tik pavieniai entuziastai", "Dalis naudoja asmeninėms užduotims, be susitarimo", "Dauguma naudoja reguliariai konkrečiose užduotyse", "Naudojimas susietas su konkrečiais rolės rezultatais"] },
-          { id: "h2", dim: "human", q: "Ar žinote, kokio rezultato galite reikalauti iš rolės, kai darbas atliekamas su DI?", opts: ["Ne, lūkestis neapibrėžtas", "Yra bendras jausmas, bet neužrašyta", "Kelioms rolėms lūkestis apibrėžtas", "Daugumai rolių aiškus ir pamatuojamas lūkestis"] },
-          { id: "h3", dim: "human", q: "Ar matuojate, kaip DI pakeitė konkretaus darbo laiką, kokybę ar apimtį?", opts: ["Nematuojame", "Vertiname subjektyviai", "Matuojame kelias užduotis", "Reguliariai matuojame prieš ir po"] },
-          { id: "t1", dim: "team", q: "Jei geriausias DI naudotojas rytoj išeitų, ar jo darbo būdas liktų komandai?", opts: ["Ne, išeitų kartu su juo", "Dalis žinių liktų neformaliai", "Pagrindiniai žingsniai aprašyti", "Taip — tai komandos standartas su savininku"] },
-          { id: "t2", dim: "team", q: "Ar komanda turi bendrą, užrašytą būdą atlikti pagrindines užduotis su DI?", opts: ["Kiekvienas dirba savaip", "Dalijamės patarimais neformaliai", "Yra keli bendri šablonai", "Yra palaikomas standartas ir mokymas"] },
-          { id: "t3", dim: "team", q: "Ar yra žmogus, atsakingas už DI darbo praktikos kokybę ir atnaujinimą?", opts: ["Nėra", "Neformaliai kažkas rūpinasi", "Paskirta, bet be aiškaus mandato", "Aiškus savininkas su atsakomybe ir KPI"] },
-          { id: "p1", dim: "process", q: "Ar turite procesą, kuriame aišku, ką daro žmogus, ką — DI ir kas tvirtina rezultatą?", opts: ["Ne", "Tik iš dalies, vienam atvejui", "Vienas procesas perprojektuotas", "Keli procesai su aiškiu žmogaus patvirtinimu"] },
+          { id: "h1", dim: "human", q: "Kaip jūsų organizacijos darbuotojai šiandien naudoja DI darbe?", opts: ["Beveik nenaudoja, išskyrus pavienius entuziastus", "Dalis naudoja atskiroms užduotims, tačiau bendro darbo būdo nėra", "Dauguma reguliariai naudoja konkrečioms užduotims", "DI naudojimas susietas su aiškiais kiekvienos pareigybės rezultatais"] },
+          { id: "h2", dim: "human", q: "Ar galite apibrėžti, kokių rezultatų tikimasi iš konkrečias pareigas einančio darbuotojo, kai jis naudoja DI?", opts: ["Ne, tikėtini rezultatai neapibrėžti", "Bendrą supratimą turime, bet jis neaprašytas", "Rezultatai apibrėžti kelioms pareigybėms", "Daugumos pareigybių rezultatai aiškūs ir pamatuojami"] },
+          { id: "h3", dim: "human", q: "Ar matuojate, kaip DI veikia konkretaus darbo trukmę, kokybę ar apimtį?", opts: ["To nematuojame", "Remiamės subjektyviu vertinimu", "Matuojame nedidelę dalį užduočių", "Reguliariai lyginame rezultatus prieš pradedant naudoti DI ir jį pradėjus naudoti"] },
+          { id: "t1", dim: "team", q: "Jei labiausiai patyręs DI naudotojas rytoj išeitų, ar jo darbo būdas išliktų komandoje?", opts: ["Ne, šios žinios išeitų kartu su juo", "Dalis žinių neformaliai liktų komandoje", "Pagrindiniai darbo žingsniai aprašyti", "Taip — tai komandos standartas, už kurį paskirtas atsakingas asmuo"] },
+          { id: "t2", dim: "team", q: "Ar komanda turi bendrą, aprašytą būdą pagrindinėms užduotims atlikti su DI?", opts: ["Kiekvienas dirba savaip", "Neformaliai dalijamės patarimais", "Turime kelis bendrus šablonus", "Palaikome bendrą standartą ir rengiame mokymus"] },
+          { id: "t3", dim: "team", q: "Ar kas nors atsako už darbo su DI praktikos kokybę ir atnaujinimą?", opts: ["Niekas", "Kažkas tuo rūpinasi neformaliai", "Atsakingas asmuo paskirtas, bet neturi aiškaus mandato", "Paskirtas atsakingas asmuo, kurio atsakomybė ir KPI aiškiai apibrėžti"] },
+          { id: "p1", dim: "process", q: "Ar turite procesą, kuriame aiškiai apibrėžta, ką atlieka žmogus, ką — DI ir kas patvirtina rezultatą?", opts: ["Ne", "Tik iš dalies ir tik vienu atveju", "Esame perprojektavę vieną procesą", "Keliuose procesuose aiškiai numatytas žmogaus patvirtinimas"] },
           { id: "p2", dim: "process", q: "Ar DI pakeitė patį procesą, ar tik pagreitino seną darbą?", opts: ["Tik pagreitino seną darbą", "Vietomis pakoregavome žingsnius", "Vieną procesą perprojektavome iš esmės", "Procesus perprojektuojame reguliariai"] },
-          { id: "p3", dim: "process", q: "Ar po pakeitimo matuojate rezultatą ir sprendžiate, ar plėsti, stabdyti ar keisti?", opts: ["Nematuojame rezultato", "Vertiname apytiksliai", "Matuojame vieną pilotą", "Turime pradinę būklę → rezultatą → sprendimą"] },
-          { id: "b1", dim: "business", q: "Ar galite parodyti, kurios DI iniciatyvos kuria verslo vertę?", opts: ["Ne, vertė neaiški", "Jaučiame, bet neįrodome", "Kelioms iniciatyvoms vertė aiški", "Vertė susieta su P&L ar KPI"] },
-          { id: "b2", dim: "business", q: "Ar DI leidžia kurti naują vertę klientui ar naują pasiūlymą, ne tik taupyti laiką?", opts: ["Tik vidinis laiko taupymas", "Svarstome galimybes", "Bandome vieną naują pasiūlymą", "Turime veikiantį naują vertės šaltinį"] },
-          { id: "b3", dim: "business", q: "Ar DI kryptis susieta su strategija ir vadovybės atsakomybe?", opts: ["Ne, tai pavienės iniciatyvos", "Yra interesas iš vadovybės", "Yra planas, bet be aiškių rodiklių", "Yra strategija, savininkas ir rodikliai"] }
+          { id: "p3", dim: "process", q: "Ar įgyvendinę pakeitimą matuojate jo poveikį ir sprendžiate, ar jį plėsti, stabdyti, ar koreguoti?", opts: ["Poveikio nematuojame", "Vertiname jį apytiksliai", "Matuojame vieno bandomojo projekto rezultatus", "Taikome seką: pradinė būklė → pamatuotas rezultatas → sprendimas"] },
+          { id: "b1", dim: "business", q: "Ar galite pagrįsti, kurios DI iniciatyvos kuria verslo vertę?", opts: ["Ne, vertė neaiški", "Numanome vertę, bet negalime jos pagrįsti", "Kelių iniciatyvų vertė aiški", "Vertė susieta su finansiniais rezultatais arba KPI"] },
+          { id: "b2", dim: "business", q: "Ar DI padeda kurti naują vertę klientui arba naują pasiūlymą, o ne tik taupyti laiką?", opts: ["Padeda tik taupyti vidinį darbo laiką", "Nagrinėjame galimybes", "Bandome vieną naują pasiūlymą", "Turime pasiteisinusį naują vertės šaltinį"] },
+          { id: "b3", dim: "business", q: "Ar jūsų DI kryptis susieta su strategija ir aiškia vadovybės atsakomybe?", opts: ["Ne, vykdome tik pavienes iniciatyvas", "Vadovybė domisi šia sritimi", "Turime planą, bet neturime aiškių rodiklių", "Turime strategiją, paskirtą atsakingą asmenį ir aiškius rodiklius"] }
         ],
         bands: [
-          { max: 30, key: "individual", title: "Pavieniai bandymai", desc: "DI naudojamas nereguliariai ir priklauso nuo pavienių žmonių. Didžiausia vertė dabar — paversti tą naudojimą pamatuojamu rolės darbu." },
-          { max: 55, key: "team", title: "Komandos praktika formuojasi", desc: "Yra stiprių naudotojų, bet praktika dar nėra bendras standartas. Vertingiausias žingsnis — užfiksuoti geriausią būdą kaip komandos standartą." },
-          { max: 78, key: "process", title: "Procesai keičiami", desc: "Komanda turi praktiką, bet procesai perprojektuoti ne visur. Vertingiausias žingsnis — perprojektuoti vieną procesą iki pamatuoto rezultato." },
-          { max: 100, key: "business", title: "Verslo modelio lygis", desc: "DI jau keičia jūsų procesus; kitas žingsnis — naują darbo modelį paversti nauja verslo verte ir mastu." }
+          { max: 30, key: "individual", title: "Pavieniai bandymai", desc: "DI naudojamas nereguliariai, o rezultatai priklauso nuo pavienių žmonių. Didžiausia galimybė dabar — DI naudojimą susieti su pamatuojamais konkrečios pareigybės rezultatais." },
+          { max: 55, key: "team", title: "Formuojasi komandos praktika", desc: "Turite patyrusių naudotojų, bet jų darbo praktika dar netapo bendru standartu. Vertingiausias kitas žingsnis — aprašyti geriausią darbo būdą ir paversti jį komandos standartu." },
+          { max: 78, key: "process", title: "Procesai tobulinami", desc: "Komanda jau turi darbo su DI praktiką, tačiau ji dar nėra įtvirtinta visuose perprojektuotuose procesuose. Vertingiausias kitas žingsnis — perprojektuoti vieną procesą ir pamatuoti rezultatą." },
+          { max: 100, key: "business", title: "Keičiamas verslo modelis", desc: "DI jau keičia jūsų procesus. Kitas žingsnis — naujus darbo būdus paversti plečiamais verslo vertės šaltiniais." }
         ],
         routes: {
-          human: { label: "DI produktyvumo programa", href: href("ai-produktyvumo-programa"), kpi: "Vienos pagrindinės rolės laikas / kokybė / apimtis", action: "Pasirinkite vieną rolę ir savaitę matuokite tą patį darbą su DI ir be jo." },
-          team: { label: "Komandos DI darbo standartas", href: href("sprendimai") + "#komanda", kpi: "Užduočių, atliekamų pagal bendrą standartą, dalis", action: "Užrašykite vieno geriausio naudotojo būdą ir išbandykite jį su visa komanda." },
-          process: { label: "Transformation Sprint", href: href("transformation-sprint"), kpi: "Perprojektuoto proceso ciklo laikas arba klaidų dažnis", action: "Pasirinkite vieną brangų procesą ir aprašykite, ką turi daryti žmogus, ką — DI." },
+          human: { label: "DI produktyvumo programa", href: href("ai-produktyvumo-programa"), kpi: "Vienos pagrindinės pareigybės darbo trukmė, kokybė ir apimtis", action: "Pasirinkite vieną pareigybę ir savaitę lyginkite panašų darbą, atliktą su DI ir be jo." },
+          team: { label: "Komandos darbo su DI standartas", href: href("sprendimai") + "#komanda", kpi: "Pagal bendrą standartą atliekamų užduočių dalis", action: "Aprašykite labiausiai patyrusio naudotojo darbo būdą ir išbandykite jį su visa komanda." },
+          process: { label: "Transformation Sprint", href: href("transformation-sprint"), kpi: "Perprojektuoto proceso ciklo trukmė arba klaidų dažnis", action: "Pasirinkite vieną daug išteklių reikalaujantį procesą ir apibrėžkite, kuriuos žingsnius turi atlikti žmogus, o kuriuos — DI." },
           business: { label: "Transformation Sprint", href: href("transformation-sprint"), kpi: "DI iniciatyvų indėlis į maržą arba pajamas", action: "Pasirinkite vieną iniciatyvą ir susiekite ją su konkrečiu verslo rodikliu." }
         },
         ui: {
           progress: function (n, t) { return "Klausimas " + n + " iš " + t; },
           start: "Pradėti vertinimą",
-          resultTitle: "Jūsų orientacinis vaizdas",
-          overall: "Bendra kryptis",
-          byDim: "Pagal dimensijas",
-          gapTitle: "Didžiausia vertės spraga dabar",
+          resultTitle: "Jūsų orientaciniai rezultatai",
+          overall: "Bendras įvertis",
+          byDim: "Rezultatai pagal sritis",
+          gapTitle: "Didžiausia vertės galimybė",
           kpi: "Siūlomas KPI",
-          action: "Pirmas žingsnis per 30 dienų",
-          route: "Racionalus kitas žingsnis",
-          unknownWarn: "Kelis kartus atsakėte \u201Enežinau\u201C. Pats šio matomumo trūkumas jau yra išvada — dažnai pirmas laimėjimas tiesiog yra padaryti dabartinę situaciją pamatuojamą.",
-          disclaimer: "Tai orientacinis momentinis vaizdas, o ne mokslinis palyginimas ar sertifikatas. Jis atspindi jūsų pačių atsakymus.",
-          leadIntro: "Norite šio vaizdo ir trumpo, konkretaus paaiškinimo el. paštu? Palikite kontaktus — rezultatas viršuje jau jūsų.",
-          retake: "Vertinti iš naujo"
+          action: "Pirmasis žingsnis per artimiausias 30 dienų",
+          route: "Rekomenduojamas kitas žingsnis",
+          unknownWarn: "Kelis kartus pasirinkote \u201Enežinau\u201C. Toks informacijos trūkumas savaime yra svarbi išvada — pirmiausia dažnai verta pamatuoti dabartinę situaciją.",
+          disclaimer: "Tai orientacinis vertinimas, o ne mokslinis palyginimas ar sertifikatas. Jis parengtas pagal jūsų atsakymus.",
+          leadIntro: "Norite gauti šiuos rezultatus ir trumpą, jūsų situacijai pritaikytą paaiškinimą el. paštu? Palikite kontaktinius duomenis — rezultatai jau rodomi viršuje.",
+          retake: "Pradėti iš naujo"
         }
       };
 
@@ -688,7 +688,9 @@
           band: r.band.key,
           gap: r.gap,
           unknown: r.unknown,
-          route: r.route.label
+          route: r.gap === "team"
+            ? (IS_EN ? "Team AI working standard" : "Komandos DI darbo standartas")
+            : r.route.label
         };
       }
 
@@ -716,8 +718,8 @@
           if (errBox) {
             errBox.hidden = false;
             errBox.textContent = IS_EN
-              ? "We could not send your message just now. Please try again, or email hello@dipa.lt."
-              : "Nepavyko išsiųsti. Bandykite dar kartą arba parašykite hello@dipa.lt.";
+              ? "We couldn’t send your message. Please try again or email info@dipa.lt."
+              : "Žinutės išsiųsti nepavyko. Bandykite dar kartą arba parašykite adresu info@dipa.lt.";
             if (typeof errBox.focus === "function") errBox.focus();
           }
         });
@@ -743,7 +745,7 @@
     return ASSESS.dims.map(function (d) {
       var v = scores[d.id];
       var pct = v === null ? 0 : v;
-      var val = v === null ? (IS_EN ? "n/a" : "n/d") : v;
+      var val = v === null ? (IS_EN ? "n/a" : "nėra duomenų") : v;
       return (
         '<div class="dim-score"><div class="dim-row"><span>' + esc(d.label) + "</span><em>" + val + "</em></div>" +
         '<div class="dim-track"><i style="width:' + pct + '%"></i></div></div>'
@@ -775,7 +777,7 @@
         '<div class="asq-progress" aria-live="polite"></div>' +
         '<div class="asq">' + qHtml + "</div>" +
         '<div class="asq-foot"><button type="button" class="btn btn-p" id="asq-see" disabled>' +
-        (IS_EN ? "See my result" : "Matyti rezultatą") + "</button>" +
+        (IS_EN ? "View my results" : "Peržiūrėti rezultatus") + "</button>" +
         '<button type="button" class="btn btn-s" id="asq-reset">' + esc(ASSESS.ui.retake) + "</button></div>" +
         '<div class="verdict" id="assessment-result" hidden tabindex="-1"></div>';
 
@@ -904,7 +906,7 @@
         '<h3 id="mpop-title-r">' + esc(res.band.title) + "</h3>" +
         '<p class="mpop-desc">' + esc(res.band.desc) + "</p>" +
         '<div class="mpop-actions"><a class="btn btn-p" href="' + cont + '" data-mpop-continue>' +
-        (IS_EN ? "Get the full 12-question result" : "Gauti pilną 12 klausimų rezultatą") + "</a>" +
+        (IS_EN ? "Complete the full 12-question assessment" : "Atlikti išsamų 12 klausimų vertinimą") + "</a>" +
         '<button type="button" class="btn btn-s" data-mpop-close>' + (IS_EN ? "Close" : "Uždaryti") + "</button></div>" +
         '<p class="mpop-note">' + esc(ASSESS.ui.disclaimer) + "</p>"
       );
@@ -1032,37 +1034,37 @@
     var copy = IS_EN
       ? {
           title: "Cookies on this site",
-          lead: "Necessary cookies keep the site working. Analytics, preferences and marketing cookies stay off until you allow them.",
+          lead: "Necessary cookies keep the site working. Analytics, preference and marketing cookies remain disabled until you consent.",
           accept: "Accept all",
-          necessary: "Necessary only",
-          settings: "Settings",
-          save: "Save selection",
+          necessary: "Allow necessary cookies only",
+          settings: "Manage settings",
+          save: "Save preferences",
           policy: "Cookie policy",
           necTitle: "Necessary",
-          necBody: "Required for security, consent storage and basic navigation. Always on.",
+          necBody: "Required for security, consent storage and essential navigation. These cookies are always enabled.",
           prefTitle: "Preferences",
-          prefBody: "Remember choices such as language or region.",
+          prefBody: "Remember choices such as your language or region.",
           anaTitle: "Analytics",
-          anaBody: "Anonymous measurement of how the site is used, including Google Analytics.",
+          anaBody: "Provide anonymous usage statistics, including through Google Analytics.",
           marTitle: "Marketing",
-          marBody: "Facebook and LinkedIn measurement of campaigns and content."
+          marBody: "Measure campaign and content performance on Facebook and LinkedIn."
         }
       : {
           title: "Slapukai šioje svetainėje",
-          lead: "Būtinieji slapukai reikalingi svetainei veikti. Analitiniai, nuostatiniai ir rinkodaros slapukai įjungiami tik jums sutikus.",
-          accept: "Sutinku su visais",
-          necessary: "Tik būtinuosius",
-          settings: "Nustatymai",
+          lead: "Būtinieji slapukai užtikrina svetainės veikimą. Analitiniai, funkciniai ir rinkodaros slapukai nebus įjungti be jūsų sutikimo.",
+          accept: "Leisti visus",
+          necessary: "Leisti tik būtinuosius",
+          settings: "Tvarkyti nustatymus",
           save: "Išsaugoti pasirinkimą",
           policy: "Slapukų politika",
           necTitle: "Būtinieji",
-          necBody: "Reikalingi saugumui, sutikimo išsaugojimui ir pagrindinei navigacijai. Jų išjungti negalima.",
-          prefTitle: "Nuostatiniai",
-          prefBody: "Įsimena pasirinkimus, pavyzdžiui kalbą ar regioną.",
+          necBody: "Reikalingi saugumui, sutikimo pasirinkimams išsaugoti ir pagrindinėms svetainės funkcijoms. Šie slapukai visada įjungti.",
+          prefTitle: "Funkciniai",
+          prefBody: "Įsimena jūsų pasirinkimus, pavyzdžiui, kalbą arba regioną.",
           anaTitle: "Analitiniai",
-          anaBody: "Anoniminė statistika, kaip naudojatės svetaine, įskaitant Google Analytics.",
+          anaBody: "Renka anoniminę svetainės naudojimo statistiką, įskaitant „Google Analytics“ duomenis.",
           marTitle: "Rinkodaros",
-          marBody: "Facebook ir LinkedIn kampanijų bei turinio matavimas."
+          marBody: "Matuoja kampanijų ir turinio rezultatus „Facebook“ bei „LinkedIn“ platformose."
         };
 
     var rootEl = document.createElement("div");
@@ -1390,7 +1392,7 @@
       "<div>" + owner + "</div>" +
       '<span class="osx-tier ' + cls + '">' + tier + "</span>" +
       '<div class="osx-bar ' + cls + '" style="--w:' + score + '%"><i></i></div>' +
-      '<span class="osx-pill ok">Ready</span>' +
+      '<span class="osx-pill ok">Ready for outreach</span>' +
       "</div>"
     );
   }
@@ -1401,39 +1403,39 @@
         "cockpit",
         kind === "cockpit-compact",
         '<div class="osx-crumb">DIPA OS / Overview</div>' +
-        '<div class="osx-head"><div><h4>Sales Cockpit</h4><p>A/B queue · ICP funnel · next actions</p></div><span class="osx-btn">▶ Run qualification</span></div>' +
+        '<div class="osx-head"><div><h4>Sales Cockpit</h4><p>A/B queue · ICP funnel · next actions</p></div><span class="osx-btn">▶ Run lead qualification</span></div>' +
         '<div class="osx-kpis">' +
         '<div class="osx-kpi"><span class="l">Total leads</span><span class="n">48</span><span class="s">All sources</span></div>' +
-        '<div class="osx-kpi amber"><span class="l">In research</span><span class="n">6</span><span class="s">Scoring now</span></div>' +
-        '<div class="osx-kpi ok"><span class="l">A-tier</span><span class="n">14</span><span class="s">Ready for ROI</span></div>' +
-        '<div class="osx-kpi"><span class="l">Avg maturity</span><span class="n">71</span><span class="s">Qualified set</span></div>' +
+        '<div class="osx-kpi amber"><span class="l">Under research</span><span class="n">6</span><span class="s">Being scored</span></div>' +
+        '<div class="osx-kpi ok"><span class="l">A-tier</span><span class="n">14</span><span class="s">Ready for an ROI session</span></div>' +
+        '<div class="osx-kpi"><span class="l">Average maturity</span><span class="n">71</span><span class="s">Qualified leads</span></div>' +
         "</div>" +
         '<div class="osx-grid2">' +
         '<div class="osx-card"><h5>Today’s priority queue</h5><p class="sub">A/B leads ready for outreach</p>' +
-        '<div class="osx-row" style="grid-template-columns:18px 1fr 40px"><span class="osx-tier a">A</span><div class="osx-lead"><b>Northline Logistics</b><i>Ops director · score 84</i></div><span>Call</span></div>' +
+        '<div class="osx-row" style="grid-template-columns:18px 1fr 40px"><span class="osx-tier a">A</span><div class="osx-lead"><b>Northline Logistics</b><i>Operations director · score 84</i></div><span>Call</span></div>' +
         '<div class="osx-row" style="grid-template-columns:18px 1fr 40px"><span class="osx-tier a">A</span><div class="osx-lead"><b>Helix Materials</b><i>Plant lead · score 79</i></div><span>Call</span></div>' +
-        '<div class="osx-row" style="grid-template-columns:18px 1fr 40px"><span class="osx-tier b">B</span><div class="osx-lead"><b>Cedar Clinic</b><i>Gate opener · reach EB</i></div><span>Prep</span></div>' +
+        '<div class="osx-row" style="grid-template-columns:18px 1fr 40px"><span class="osx-tier b">B</span><div class="osx-lead"><b>Cedar Clinic</b><i>Initial contact · reach economic buyer</i></div><span>Prepare</span></div>' +
         "</div>" +
-        '<div class="osx-card"><h5>ICP tier funnel</h5><p class="sub">After research</p><div class="osx-funnel">' +
+        '<div class="osx-card"><h5>ICP tier funnel</h5><p class="sub">Following research</p><div class="osx-funnel">' +
         '<div><span class="osx-tier a">A</span><div class="osx-bar a" style="--w:78%"><i></i></div><b>14</b></div>' +
         '<div><span class="osx-tier b">B</span><div class="osx-bar b" style="--w:62%"><i></i></div><b>16</b></div>' +
         '<div><span class="osx-tier c">C</span><div class="osx-bar c" style="--w:28%"><i></i></div><b>11</b></div>' +
         '<div><span class="osx-tier d">D</span><div class="osx-bar d" style="--w:18%"><i></i></div><b>7</b></div>' +
         "</div>" +
-        '<div class="osx-live"><i class="osx-dot"></i><span>Playbook ready · Northline</span></div>' +
-        '<div class="osx-live"><i class="osx-dot warn"></i><span>Red KPI on A-tier velocity</span></div>' +
+        '<div class="osx-live"><i class="osx-dot"></i><span>Northline playbook ready</span></div>' +
+        '<div class="osx-live"><i class="osx-dot warn"></i><span>A-tier velocity below target</span></div>' +
         "</div></div>"
       ),
       leads: osxApp(
         "leads",
         false,
         '<div class="osx-crumb">DIPA OS / Workspace / Leads</div>' +
-        '<div class="osx-head"><div><h4>Leads</h4><p>Intake → Deep Research → A/B/C/D routing</p></div><span class="osx-btn">+ New lead</span></div>' +
+        '<div class="osx-head"><div><h4>Leads</h4><p>Intake → in-depth research → A/B/C/D routing</p></div><span class="osx-btn">+ New lead</span></div>' +
         '<div class="osx-kpis">' +
-        '<div class="osx-kpi"><span class="l">Total</span><span class="n">48</span><span class="s">In the board</span></div>' +
-        '<div class="osx-kpi ok"><span class="l">Tier A</span><span class="n">14</span><span class="s">ROI session</span></div>' +
-        '<div class="osx-kpi amber"><span class="l">In progress</span><span class="n">6</span><span class="s">Research</span></div>' +
-        '<div class="osx-kpi"><span class="l">Needs check</span><span class="n">2</span><span class="s">Human review</span></div>' +
+        '<div class="osx-kpi"><span class="l">Total</span><span class="n">48</span><span class="s">On the board</span></div>' +
+        '<div class="osx-kpi ok"><span class="l">Tier A</span><span class="n">14</span><span class="s">Ready for an ROI session</span></div>' +
+        '<div class="osx-kpi amber"><span class="l">In progress</span><span class="n">6</span><span class="s">Research under way</span></div>' +
+        '<div class="osx-kpi"><span class="l">Needs review</span><span class="n">2</span><span class="s">Human review required</span></div>' +
         "</div>" +
         '<div class="osx-filters"><i class="on">All 48</i><i>A 14</i><i>B 16</i><i>C 11</i><i>D 7</i></div>' +
         '<div class="osx-tbl">' +
@@ -1446,7 +1448,7 @@
         "</div>"
       ),
       playbook: osxPanel(
-        '<div class="osx-head"><div><h4>Sales playbook · call prep</h4><p>Built from research — method, pain, reframe, ROI</p></div></div>' +
+        '<div class="osx-head"><div><h4>Sales playbook · call preparation</h4><p>Built from research — method, pain, reframe and ROI</p></div></div>' +
         '<div class="osx-book">' +
         '<article><div class="k">Recommended method</div><p>Challenger. Leadership sees the waste, but treats the fix as a two-year programme. Show a 90-day cut, not a platform tour.</p></article>' +
         '<article><div class="k">#1 Pain hypothesis</div><p>Supervisors lose 10–12 hours a week re-keying field notes into the system of record. Margin leaks before anyone opens a dashboard.</p></article>' +
@@ -1458,12 +1460,12 @@
         "qa",
         false,
         '<div class="osx-crumb">DIPA OS / Workspace / Call QA</div>' +
-        '<div class="osx-head"><div><h4>QA &amp; Performance</h4><p>Score by meeting type — Discovery, ROI, Custom, Upsell</p></div><span class="osx-btn">+ New evaluation</span></div>' +
+        '<div class="osx-head"><div><h4>QA &amp; Performance</h4><p>Scores by meeting type — Discovery, ROI, Custom and Upsell</p></div><span class="osx-btn">+ New evaluation</span></div>' +
         '<div class="osx-kpis">' +
         '<div class="osx-kpi"><span class="l">Sessions</span><span class="n">29</span><span class="s">This cycle</span></div>' +
-        '<div class="osx-kpi ok"><span class="l">Go</span><span class="n">4</span><span class="s">Pass the bar</span></div>' +
-        '<div class="osx-kpi amber"><span class="l">Needs work</span><span class="n">18</span><span class="s">Coach tomorrow</span></div>' +
-        '<div class="osx-kpi"><span class="l">Avg score</span><span class="n">62</span><span class="s">Out of 100</span></div>' +
+        '<div class="osx-kpi ok"><span class="l">Passed</span><span class="n">4</span><span class="s">Meet the standard</span></div>' +
+        '<div class="osx-kpi amber"><span class="l">Needs work</span><span class="n">18</span><span class="s">Coaching scheduled</span></div>' +
+        '<div class="osx-kpi"><span class="l">Average score</span><span class="n">62</span><span class="s">Out of 100</span></div>' +
         "</div>" +
         '<div class="osx-tbl qa">' +
         '<div class="osx-row hd"><span>Session</span><span>Rep</span><span>Type</span><span>Verdict</span><span>Score</span></div>' +
@@ -1482,33 +1484,33 @@
         '<div class="osx-kpi warn"><span class="l">Anomalies</span><span class="n">2</span><span class="s">Red KPIs</span></div>' +
         '<div class="osx-kpi amber"><span class="l">At risk</span><span class="n">3</span><span class="s">Amber</span></div>' +
         '<div class="osx-kpi ok"><span class="l">On target</span><span class="n">9</span><span class="s">Green</span></div>' +
-        '<div class="osx-kpi"><span class="l">Not entered</span><span class="n">4</span><span class="s">Need a number</span></div>' +
+        '<div class="osx-kpi"><span class="l">Missing</span><span class="n">4</span><span class="s">Values required</span></div>' +
         "</div>" +
         '<div class="osx-tbl kpi">' +
         '<div class="osx-row hd"><span></span><span>KPI</span><span>Owner</span><span>Target</span><span>Actual</span></div>' +
         '<div class="osx-row"><i class="osx-st red"></i><div class="osx-lead"><b>A-tier velocity</b><i>Sales</i></div><span>A. Vale</span><span>8</span><span>4</span></div>' +
         '<div class="osx-row"><i class="osx-st red"></i><div class="osx-lead"><b>Discovery → ROI</b><i>Sales</i></div><span>L. Holm</span><span>35%</span><span>22%</span></div>' +
-        '<div class="osx-row"><i class="osx-st amber"></i><div class="osx-lead"><b>Avg call score</b><i>Quality</i></div><span>N. Kade</span><span>70</span><span>62</span></div>' +
+        '<div class="osx-row"><i class="osx-st amber"></i><div class="osx-lead"><b>Average call score</b><i>Quality</i></div><span>N. Kade</span><span>70</span><span>62</span></div>' +
         '<div class="osx-row"><i class="osx-st ok"></i><div class="osx-lead"><b>Time to next step</b><i>Flow</i></div><span>A. Vale</span><span>1.0 d</span><span>0.9 d</span></div>' +
         "</div>"
       ),
       problems: osxPanel(
-        '<div class="osx-head"><div><h4>Problems · PDCA</h4><p>Cause → countermeasure → check. Effect on the KPI.</p></div></div>' +
+        '<div class="osx-head"><div><h4>Problems · PDCA</h4><p>Cause → countermeasure → check. Impact on the KPI.</p></div></div>' +
         '<div class="osx-kanban">' +
-        '<div class="osx-col"><h5>Cause</h5><div class="osx-ticket"><b>A-tier stall &gt; 5 days</b><span>6 cards sitting after research</span></div><div class="osx-ticket"><b>Discovery without EB</b><span>Gate opener treated as buyer</span></div></div>' +
-        '<div class="osx-col"><h5>Countermeasure</h5><div class="osx-ticket"><b>Book 3 EB meetings</b><span>B-tier this week only</span></div></div>' +
+        '<div class="osx-col"><h5>Cause</h5><div class="osx-ticket"><b>A-tier opportunities stalled for &gt; 5 days</b><span>6 opportunities stalled after research</span></div><div class="osx-ticket"><b>Discovery without an economic buyer</b><span>Initial contact treated as the buyer</span></div></div>' +
+        '<div class="osx-col"><h5>Countermeasure</h5><div class="osx-ticket"><b>Arrange 3 economic-buyer meetings</b><span>Focus on B-tier this week</span></div></div>' +
         '<div class="osx-col"><h5>Check</h5><div class="osx-ticket"><b>A-tier velocity 4 → 8</b><span>Review Friday morning</span></div></div>' +
         "</div>"
       ),
       advisor: osxPanel(
-        '<div class="osx-head"><div><h4>ASAICHI advisor</h4><p>Advise-only · a person confirms · always a number</p></div><span class="osx-pill">This week</span></div>' +
+        '<div class="osx-head"><div><h4>ASAICHI advisor</h4><p>Recommendations only · human approval required · always quantified</p></div><span class="osx-pill">This week</span></div>' +
         '<div class="osx-adv">' +
-        '<p class="q">We took in €48k. Why. What we change next week.</p>' +
+        '<p class="q">We generated €48k. Why — and what should we change next week?</p>' +
         "<ol>" +
-        "<li>Close the 6 A-tier cards older than 5 days — they are the stall, not new intake.</li>" +
-        "<li>Book 3 Executive Buyer meetings on B-tier. Last week: 1 of 6.</li>" +
-        "<li>Discovery misses pain lock — 4 of 7 calls. One coaching block, not a new script.</li>" +
-        "<li>Do not add pipeline. Finish the A queue before the next campaign.</li>" +
+        "<li>Close the 6 A-tier opportunities older than 5 days — they are the bottleneck, not lead intake.</li>" +
+        "<li>Arrange 3 meetings with economic buyers for B-tier leads. Last week: 1 of 6.</li>" +
+        "<li>Discovery calls fail to establish the pain point — 4 of 7 calls. Schedule one coaching session, not a new script.</li>" +
+        "<li>Do not add to the pipeline. Finish the A-tier queue before the next campaign.</li>" +
         "</ol>" +
         '<p class="note">Weakest point: conversion after qualification. The system proposes. The team decides.</p>' +
         "</div>"
@@ -1517,14 +1519,14 @@
         "reviews",
         false,
         '<div class="osx-crumb">DIPA OS / System / Agent reviews</div>' +
-        '<div class="osx-head"><div><h4>Agent reviews</h4><p>Correct / partial / wrong becomes the next rule</p></div></div>' +
+        '<div class="osx-head"><div><h4>Agent reviews</h4><p>Each correct, partial or incorrect rating informs the next rule</p></div></div>' +
         '<div class="osx-card">' +
         "<h5>Summary · 12 reviews</h5>" +
         '<div class="osx-sum"><div><b>78%</b><span>Accuracy</span></div><div><b>4.1/5</b><span>Rating</span></div><div><b style="color:#1A7A4C">8</b><span>Correct</span></div><div><b style="color:#C43B16">1</b><span>Wrong</span></div></div>' +
         '<div class="osx-seg"><i style="width:68%;background:#1A7A4C"></i><i style="width:24%;background:#C9A227"></i><i style="width:8%;background:#C43B16"></i></div>' +
         '<div class="osx-tags"><span class="osx-pill">Interpretation · 3</span><span class="osx-pill">Missing data · 2</span><span class="osx-pill">Routing · 1</span></div>' +
         "</div>" +
-        '<div class="osx-card" style="margin-top:8px"><h5>Improvement guidelines</h5><p class="sub">Reviews on this cycle → rules for the next lead and the next call.</p><span class="osx-btn">✦ Generate guidelines</span></div>'
+        '<div class="osx-card" style="margin-top:8px"><h5>Improvement guidelines</h5><p class="sub">Reviews from this cycle → rules for the next lead and call.</p><span class="osx-btn">✦ Generate guidelines</span></div>'
       )
     };
 
