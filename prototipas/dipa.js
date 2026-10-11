@@ -776,20 +776,52 @@
       root.innerHTML =
         '<div class="asq-progress" aria-live="polite"></div>' +
         '<div class="asq">' + qHtml + "</div>" +
-        '<div class="asq-foot"><button type="button" class="btn btn-p" id="asq-see" disabled>' +
+        '<div class="asq-foot"><button type="button" class="btn btn-p is-disabled" id="asq-see" aria-disabled="true">' +
         (IS_EN ? "View my results" : "Peržiūrėti rezultatus") + "</button>" +
+        '<button type="button" class="btn btn-s" id="asq-review" hidden>' +
+        (IS_EN ? "Show answers" : "Rodyti atsakymus") + "</button>" +
         '<button type="button" class="btn btn-s" id="asq-reset">' + esc(ASSESS.ui.retake) + "</button></div>" +
         '<div class="verdict" id="assessment-result" hidden tabindex="-1"></div>';
 
       updateProgress();
     }
 
+    function unanswered() {
+      return ASSESS.questions.filter(function (q) { return answers[q.id] === undefined; });
+    }
+
+    function seeLabel(remaining) {
+      if (!remaining) return IS_EN ? "View my results" : "Peržiūrėti rezultatus";
+      return IS_EN
+        ? "Answer " + remaining + " more " + (remaining === 1 ? "question" : "questions")
+        : "Dar liko atsakyti: " + remaining;
+    }
+
     function updateProgress() {
-      var done = ASSESS.questions.filter(function (q) { return answers[q.id] !== undefined; }).length;
+      var remaining = unanswered();
+      var done = ASSESS.questions.length - remaining.length;
       var el = root.querySelector(".asq-progress");
       if (el) el.textContent = ASSESS.ui.progress(done, ASSESS.questions.length);
       var see = document.getElementById("asq-see");
-      if (see) see.disabled = done < ASSESS.questions.length;
+      if (see) {
+        see.textContent = seeLabel(remaining.length);
+        see.classList.toggle("is-disabled", remaining.length > 0);
+        see.setAttribute("aria-disabled", remaining.length ? "true" : "false");
+      }
+      Array.prototype.forEach.call(root.querySelectorAll(".asq-q"), function (q) {
+        q.classList.remove("is-missing");
+      });
+    }
+
+    function scrollToEl(el) {
+      var rootEl = document.documentElement;
+      var previous = rootEl.style.scrollBehavior;
+      rootEl.style.scrollBehavior = "auto";
+      var nav = document.querySelector("nav.main");
+      var offset = (nav ? nav.getBoundingClientRect().height : 74) + 16;
+      var y = el.getBoundingClientRect().top + window.pageYOffset - offset;
+      window.scrollTo(0, Math.max(0, y));
+      rootEl.style.scrollBehavior = previous;
     }
 
     function showResult() {
@@ -813,7 +845,13 @@
         "</div>" +
         '<p class="asq-disclaimer">' + esc(ASSESS.ui.disclaimer) + "</p>";
       box.hidden = false;
-      box.focus();
+      var narrow = window.matchMedia && window.matchMedia("(max-width: 700px)").matches;
+      var questions = root.querySelector(".asq");
+      var review = document.getElementById("asq-review");
+      if (narrow && questions) {
+        questions.hidden = true;
+        if (review) review.hidden = false;
+      }
       if (leadForm) {
         leadForm.hidden = false;
         leadForm._assessmentResult = res;
@@ -821,6 +859,14 @@
       window.dispatchEvent(new CustomEvent("dipa:analytics", {
         detail: { event: "assessment_result", band: res.band.key, overall: res.overall, language: IS_EN ? "en" : "lt" }
       }));
+      void root.offsetHeight;
+      scrollToEl(box);
+      window.requestAnimationFrame(function () {
+        scrollToEl(box);
+        if (!narrow) {
+          try { box.focus({ preventScroll: true }); } catch (err) {}
+        }
+      });
     }
 
     root.addEventListener("click", function (e) {
@@ -836,7 +882,26 @@
         updateProgress();
         return;
       }
-      if (e.target.closest("#asq-see")) { showResult(); return; }
+      if (e.target.closest("#asq-see")) {
+        var missing = unanswered()[0];
+        if (missing) {
+          var target = root.querySelector('[data-qwrap="' + missing.id + '"]');
+          if (target) {
+            target.classList.add("is-missing");
+            scrollToEl(target);
+          }
+          return;
+        }
+        showResult();
+        return;
+      }
+      if (e.target.closest("#asq-review")) {
+        var list = root.querySelector(".asq");
+        if (list) list.hidden = false;
+        e.target.closest("#asq-review").hidden = true;
+        if (list) scrollToEl(list);
+        return;
+      }
       if (e.target.closest("#asq-reset")) {
         answers = {};
         persistAnswers(answers);

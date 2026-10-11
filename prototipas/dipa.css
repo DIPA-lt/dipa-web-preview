@@ -799,8 +799,8 @@ nav.main .wrap{height:var(--nav-h);display:flex;align-items:center;gap:36px}
 .asq-btn{padding:9px 16px;border:1px solid var(--line-strong);border-radius:var(--r);font-size:.875rem;color:var(--muted);transition:all .16s var(--out)}
 .asq-btn:hover{border-color:var(--brand-lift);color:var(--ink)}
 .asq-btn[aria-pressed="true"]{background:var(--brand-dim);border-color:var(--brand-lift);color:var(--ink)}
-.verdict{border:1px solid var(--line);border-left:2px solid var(--signal);background:var(--surface);padding:32px;margin-top:24px}
-.verdict[hidden]{display:none}
+.verdict{border:1px solid var(--line);border-left:2px solid var(--signal);background:var(--surface);padding:32px;margin-top:24px;scroll-margin-top:calc(var(--nav-h) + 16px)}
+.verdict[hidden]{display:none !important}
 .verdict .lvl{font-size:.625rem;letter-spacing:.16em;text-transform:uppercase;color:var(--signal);font-weight:600}
 .verdict h3{margin-top:12px}
 .verdict .rec{margin-top:20px;padding-top:20px;border-top:1px solid var(--line)}
@@ -918,6 +918,7 @@ footer{background:var(--footer-bg);color:var(--footer-muted);padding:var(--secti
 
 /* ---------- Formos ---------- */
 .form{display:grid;gap:18px;max-width:720px}
+.form[hidden]{display:none !important}
 .field label{display:block;font-size:.8125rem;font-weight:500;color:var(--ink);margin-bottom:8px}
 .field input,.field select,.field textarea{
   width:100%;background:#fff;border:1px solid var(--line);border-radius:var(--r);
@@ -1258,6 +1259,14 @@ section.rv:nth-of-type(even) .phases.flow > article:hover .ph{
 @media(max-width:600px){.asq-q{padding:22px 20px}}
 .asq-unknown{color:var(--muted-2);border-style:dashed}
 .asq-foot{display:flex;flex-wrap:wrap;gap:12px;margin-top:24px}
+.asq[hidden],#asq-review[hidden]{display:none !important}
+.btn.is-disabled{opacity:.5}
+.asq-q.is-missing{background:rgba(196,59,22,.06);box-shadow:inset 3px 0 0 var(--warn)}
+@media(max-width:700px){
+  .asq-opts{flex-direction:column;padding-left:0}
+  .asq-btn,.asq-foot .btn{width:100%;justify-content:center;text-align:left}
+  .verdict{padding:24px 20px}
+}
 .asq-sub{font-size:.625rem;letter-spacing:.16em;text-transform:uppercase;color:var(--muted-2);font-weight:600;margin-bottom:14px}
 .dim-scores{margin-top:24px;padding-top:20px;border-top:1px solid var(--line)}
 .dim-score{margin-bottom:14px}
