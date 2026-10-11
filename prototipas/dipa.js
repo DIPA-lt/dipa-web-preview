@@ -51,8 +51,12 @@
 
   function root() {
     var p = pathParts();
-    if (p.length && SLUGS[p[p.length - 1]]) p.pop();
-    if (p.length && p[p.length - 1] === "en") p.pop();
+    var nested = p.indexOf("di-mokymai");
+    if (nested !== -1) p = p.slice(0, nested);
+    else {
+      if (p.length && SLUGS[p[p.length - 1]]) p.pop();
+      if (p.length && p[p.length - 1] === "en") p.pop();
+    }
     return p.length ? "/" + p.join("/") + "/" : "/";
   }
 
@@ -607,7 +611,7 @@
         kind: kind,
         submissionId: fields._submissionId || uuid(),
         locale: IS_EN ? "en" : "lt",
-        sourcePage: pageSlug() || "home",
+        sourcePage: document.body.getAttribute("data-page") || pageSlug() || "home",
         sourceUrl: location.origin + location.pathname,
         consentVersion: DIPA_API.consentVersion,
         utm: utmParams(),
@@ -1324,7 +1328,11 @@
 
   function initSeo() {
     var slug = pageSlug();
-    var canonical = PROD_ORIGIN + slugPath(IS_EN, slug);
+    var parts = pathParts();
+    var nested = parts.indexOf("di-mokymai") !== -1;
+    var canonical = nested
+      ? PROD_ORIGIN + "/" + parts.join("/") + "/"
+      : PROD_ORIGIN + slugPath(IS_EN, slug);
     var ltUrl = PROD_ORIGIN + slugPath(false, slug);
     var enUrl = PROD_ORIGIN + slugPath(true, slug);
     var title = document.title;
@@ -1332,9 +1340,11 @@
     var desc = descEl ? descEl.getAttribute("content") || "" : "";
 
     setLink("canonical", canonical);
-    setLink("alternate", ltUrl, "lt");
-    setLink("alternate", enUrl, "en");
-    setLink("alternate", ltUrl, "x-default");
+    if (!nested) {
+      setLink("alternate", ltUrl, "lt");
+      setLink("alternate", enUrl, "en");
+      setLink("alternate", ltUrl, "x-default");
+    }
 
     setMeta('meta[property="og:type"]', "property", "og:type", "website");
     setMeta('meta[property="og:site_name"]', "property", "og:site_name", "DIPA");

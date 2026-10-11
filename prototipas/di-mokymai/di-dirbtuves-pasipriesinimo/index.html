@@ -1,0 +1,78 @@
+<!DOCTYPE html>
+<html lang="lt">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>DI dirbtuvės skeptiškai komandai | DIPA</title>
+<meta name="description" content="Komandoms, kuriose dalis žmonių DI nepasitiki: praktinis pirmas žingsnis, aiškios ribos ir žmogaus patikra.">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600&family=Instrument+Serif:ital@1&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="../../dipa.css">
+</head>
+<body data-page="di-dirbtuves-pasipriesinimo">
+<a class="skip-link" href="#turinys">Pereiti prie pagrindinio turinio</a>
+<div id="chrome-top"></div>
+<div class="wrap crumbs"><a href="../../">Pradžia</a><span>/</span>DI dirbtuvės skeptiškai komandai</div>
+<main id="turinys">
+  <section class="hero inner">
+    <div class="wrap">
+      <div class="eyebrow">Kai komanda neskuba</div>
+      <h1>Vieni sako „čia neveiks“. <em class="acc">Parodome tai jų pačių darbe.</em></h1>
+      <p class="lead" style="margin-top:28px">Dirbtuvės komandai, kurioje vieni abejoja, kiti bijo suklysti, o treti nežino, nuo ko pradėti. Imame vieną realią užduotį, parodome skirtumą ir sutariame, kur sprendimą vis tiek tvirtina žmogus.</p>
+      <div class="hero-cta">
+        <a class="btn btn-p" href="#uzklausa">Registruotis pokalbiui</a>
+        <a class="btn btn-s" href="../../diagnostika/">Pirmiausia — DI vertės diagnostika</a>
+      </div>
+    </div>
+  </section>
+
+  <section class="rv">
+    <div class="wrap">
+      <div class="hg hg-3">
+        <div><div class="mono">01</div><h3 class="sm">Abejojantiems</h3><p class="t-muted small" style="margin-top:12px">Ne bendras pažadas, o ta pati užduotis, atlikta įprastai ir su DI.</p></div>
+        <div><div class="mono">02</div><h3 class="sm">Atsargiems</h3><p class="t-muted small" style="margin-top:12px">Aiškios ribos: ką DI gali parengti ir kur rezultatą turi patvirtinti žmogus.</p></div>
+        <div><div class="mono">03</div><h3 class="sm">Pradedantiems</h3><p class="t-muted small" style="margin-top:12px">Vienas pirmas žingsnis konkrečiai pareigybei, ne visos įmonės transformacija.</p></div>
+      </div>
+    </div>
+  </section>
+
+  <section class="rv">
+    <div class="wrap">
+      <div class="axiom">
+        <span class="ax-tag">DIPA principas</span>
+        <p>Pirmiausia išgryninkite darbą. <em class="acc">Tik tada automatizuokite.</em></p>
+      </div>
+    </div>
+  </section>
+
+  <section class="rv" id="uzklausa">
+    <div class="wrap">
+      <div class="sec-head">
+        <h2>Papasakokite, kur komanda <em class="acc">stringa</em></h2>
+        <p class="lead">Atsakome per dvi darbo dienas. Jei užtenka trumpesnio vidinio žingsnio, taip ir pasakysime.</p>
+      </div>
+      <form class="form" data-form="lead">
+        <div class="form-fields">
+          <div class="hg hg-2" style="margin-bottom:18px">
+            <div class="field"><label for="p-first">Vardas *</label><input id="p-first" name="firstName" autocomplete="given-name" required></div>
+            <div class="field"><label for="p-last">Pavardė *</label><input id="p-last" name="lastName" autocomplete="family-name" required></div>
+            <div class="field"><label for="p-company">Įmonė *</label><input id="p-company" name="company" autocomplete="organization" required></div>
+            <div class="field"><label for="p-email">Darbo el. paštas *</label><input id="p-email" name="email" type="email" autocomplete="email" required></div>
+            <div class="field"><label for="p-phone">Telefonas</label><input id="p-phone" name="phone" type="tel" autocomplete="tel"></div>
+          </div>
+          <div class="field"><label for="p-message">Kas komandoje kelia daugiausia abejonių? (nebūtina)</label><textarea id="p-message" name="message" placeholder="Pavyzdžiui: bijo klaidų, nemato naudos, nežino nuo ko pradėti."></textarea></div>
+          <div class="hp-field" aria-hidden="true"><label>Nepildykite šio lauko<input type="text" name="company_url" tabindex="-1" autocomplete="off"></label></div>
+          <div class="form-consent"><input id="p-consent" type="checkbox" name="privacyConsent" required> <label for="p-consent">Sutinku, kad DIPA tvarkytų mano duomenis ir susisiektų dėl šios užklausos, kaip aprašyta <a href="../../privatumo-politika/">Privatumo politikoje</a>.</label></div>
+          <div style="margin-top:24px"><button class="btn btn-p" type="submit">Pateikti užklausą</button></div>
+          <p class="form-err" role="alert" hidden></p>
+        </div>
+        <div class="form-ok" tabindex="-1">Dėkojame. Užklausą gavome ir atsakysime per dvi darbo dienas.</div>
+      </form>
+    </div>
+  </section>
+</main>
+<div id="chrome-bottom"></div>
+<script src="../../dipa.js"></script>
+</body>
+</html>
