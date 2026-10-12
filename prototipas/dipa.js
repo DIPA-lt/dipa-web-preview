@@ -706,6 +706,8 @@
       if (!intent) intent = downloadUrl ? "download" : "lead";
       if (formId) payload.formId = formId.slice(0, 80);
       if (formTitle) payload.formTitle = formTitle.slice(0, 160);
+      var documentName = (form.getAttribute("data-document") || "").trim();
+      if (documentName) payload.document = documentName.slice(0, 200);
       payload.intent = intent;
 
       sending = true;
