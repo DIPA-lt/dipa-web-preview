@@ -646,6 +646,7 @@
   /* Wire a <form> element to the production API. The DOM provides field names. */
   function wireForm(form) {
     var kind = form.getAttribute("data-form"); // "lead" | "assessment"
+    var downloadUrl = form.getAttribute("data-download");
     var okBox = form.querySelector(".form-ok");
     var errBox = form.querySelector(".form-err");
     var submitBtn = form.querySelector('[type="submit"]');
@@ -709,11 +710,17 @@
         .then(function () {
           form.classList.remove("is-sending");
           form.classList.add("is-sent");
-          if (okBox) { okBox.hidden = false; okBox.focus(); }
+          if (okBox) okBox.hidden = false;
           // Analytics: event only, never PII or free text.
           window.dispatchEvent(new CustomEvent("dipa:analytics", {
             detail: { event: kind === "assessment" ? "assessment_submit" : "lead_submit", language: IS_EN ? "en" : "lt", page_path: location.pathname }
           }));
+          // Presentation forms open the file. They are not a request for a callback.
+          if (downloadUrl) {
+            window.location.assign(downloadUrl);
+            return;
+          }
+          if (okBox) okBox.focus();
         })
         .catch(function (err) {
           sending = false;
