@@ -253,6 +253,16 @@ nav.main .wrap{height:var(--nav-h);display:flex;align-items:center;gap:36px}
 .brief p + p{margin-top:14px}
 .brief strong{color:var(--ink);font-weight:600}
 
+.quotes{display:grid;gap:16px}
+@media(min-width:800px){.quotes{grid-template-columns:1fr 1fr}}
+@media(min-width:1100px){.quotes{grid-template-columns:1fr 1fr 1fr}}
+.quotes article{border:1px solid var(--line);background:#fff;padding:24px;min-width:0}
+.quotes .who{display:flex;align-items:center;gap:12px;margin-bottom:16px}
+.quotes img{width:56px;height:56px;border-radius:50%;object-fit:cover;flex-shrink:0}
+.quotes .who b{display:block;color:var(--ink);font-weight:600;font-size:.9375rem;letter-spacing:-.01em}
+.quotes .who span{display:block;margin-top:2px;color:var(--muted-2);font-size:.8125rem}
+.quotes p{margin:0;color:var(--ink-2);font-size:.9375rem;line-height:1.55}
+
 .agenda{list-style:none;margin:40px 0 0;padding:0;border-top:1px solid var(--line)}
 .agenda li{display:grid;gap:6px 40px;padding:26px 0;border-bottom:1px solid var(--line)}
 @media(min-width:800px){.agenda li{grid-template-columns:200px minmax(0,1fr);align-items:start;padding:28px 4px}}
