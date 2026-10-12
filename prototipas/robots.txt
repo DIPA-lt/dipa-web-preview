@@ -1,8 +1,4 @@
 User-agent: *
-Disallow: /
+Allow: /
 
-User-agent: Googlebot
-Disallow: /
-
-User-agent: Bingbot
-Disallow: /
+Sitemap: https://dipa.lt/sitemap.xml
