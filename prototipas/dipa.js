@@ -700,6 +700,10 @@
       }
 
       var payload = buildPayload(kind, fields, extra);
+      var formId = (form.getAttribute("data-form-id") || "").trim();
+      var formTitle = (form.getAttribute("data-form-label") || "").trim();
+      if (formId) payload.formId = formId.slice(0, 80);
+      if (formTitle) payload.formTitle = formTitle.slice(0, 160);
 
       sending = true;
       form.classList.add("is-sending");
